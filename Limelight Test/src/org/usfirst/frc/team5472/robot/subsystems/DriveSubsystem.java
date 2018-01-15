@@ -6,20 +6,22 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends Subsystem{
 	
-//	private AHRS navx;
+	private AHRS navx;
 	private TalonSRX left, right;
 	private ControlMode leftControlMode, rightControlMode;
 	private double experimentalLeftScalar = 1.0 / 12489.0;
 	private double experimentalRightScalar = 1.0 / 12270.0;
 	
 	public DriveSubsystem() {
-//		navx = new AHRS(Port.kMXP);
+		navx = new AHRS(Port.kMXP);
 		
 		left = new TalonSRX(3);
 		right = new TalonSRX(4);
@@ -63,6 +65,10 @@ public class DriveSubsystem extends Subsystem{
 		right.setSelectedSensorPosition(0, 0, 100);
 	}
 	
+	public int getRawLeft() {
+		return left.getSelectedSensorPosition(0);
+	}
+	
 	public double getLeftPosition() {
 		return left.getSelectedSensorPosition(0) * experimentalLeftScalar;
 	}
@@ -71,12 +77,20 @@ public class DriveSubsystem extends Subsystem{
 		return left.getSelectedSensorVelocity(0) * experimentalLeftScalar;
 	}
 	
+	public int getRawRight() {
+		return right.getSelectedSensorPosition(0);
+	}
+	
 	public double getRightPosition() {
 		return right.getSelectedSensorPosition(0) * experimentalRightScalar;
 	}
 	
 	public double getRightVelocity() {
 		return right.getSelectedSensorVelocity(0) * experimentalRightScalar;
+	}
+	
+	public double getHeading() {
+		return navx.getAngle();
 	}
 	
 	public void reportDebugInformation() {

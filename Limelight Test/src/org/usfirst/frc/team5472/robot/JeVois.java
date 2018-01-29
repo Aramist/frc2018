@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5472.robot;
+ package org.usfirst.frc.team5472.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
 
@@ -16,11 +16,24 @@ public class JeVois {
 		return new String(port.read(port.getBytesReceived()));
 	}
 	
-	public void write(String toWrite) {
+	public void write(String toWrite) {	
 		port.writeString(toWrite);
 	}
 	
 	public void parse() {
+		
+		
+
+		String[] end = new String[6];
+		String out = read();
+		int i = 0;
+		for(String a:out.split(","))
+		{		
+			end[i] = a.split(":")[1];
+			i++;
+		}		
+		
+				
 		
 	}
 }

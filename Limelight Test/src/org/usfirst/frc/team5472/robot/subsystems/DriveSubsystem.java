@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.commands.JoystickDriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,35 +14,46 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends Subsystem{
 	
 //	private AHRS navx;
-	private TalonSRX left, right;
+	private TalonSRX left, right; //, followerLeft, followerRight;
 	private ControlMode leftControlMode, rightControlMode;
-	private double experimentalLeftScalar = 1.0 / 12489.0;
-	private double experimentalRightScalar = 1.0 / 12270.0;
+//	private Solenoid leftSolenoid, rightSolenoid;
 	
 	public DriveSubsystem() {
 //		navx = new AHRS(Port.kMXP);
 		
-		left = new TalonSRX(3);
-		right = new TalonSRX(4);
+		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
+		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
+//		followerLeft = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
+//		followerRight = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
+//		leftSolenoid = new Solenoid(RobotMap.leftSolenoid);
+//		rightSolenoid = new Solenoid(RobotMap.rightSolenoid);
 		
 		left.setInverted(true);
+//		followerLeft.setInverted(true);
 		right.setInverted(false);
+//		followerRight.setInverted(false);
 		
 		left.setNeutralMode(NeutralMode.Brake);
+//		followerLeft.setNeutralMode(NeutralMode.Brake);
 		right.setNeutralMode(NeutralMode.Brake);
+//		followerRight.setNeutralMode(NeutralMode.Brake);
 		
 		
 		//Results of experiment:
 		//Left: 12489 Ticks per Meter
 		//Right: 12270 Ticks per Meter
 		left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
+//		followerLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
 		right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
+//		followerRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
 		
 		leftControlMode = ControlMode.PercentOutput;
 		rightControlMode = ControlMode.PercentOutput;
 		
 		left.set(leftControlMode, 0);
+//		followerLeft.set(ControlMode.Follower, left.getDeviceID());
 		right.set(rightControlMode, 0);
+//		followerRight.set(ControlMode.Follower, right.getDeviceID());
 	}
 	
 	public void setControlMode(ControlMode newMode) {
@@ -58,25 +70,39 @@ public class DriveSubsystem extends Subsystem{
 		setDefaultCommand(new JoystickDriveCommand());
 	}
 	
+//	public void shiftGear()
+//	{
+//		leftSolenoid.set(!leftSolenoid.get());
+//		rightSolenoid.set(!rightSolenoid.get());
+//	}
+	
 	public void resetEncoders() {
 		left.setSelectedSensorPosition(0, 0, 100);
 		right.setSelectedSensorPosition(0, 0, 100);
 	}
 	
+	public int getLeftRaw() {
+		return left.getSelectedSensorPosition(0);
+	}
+	
 	public double getLeftPosition() {
-		return left.getSelectedSensorPosition(0) * experimentalLeftScalar;
+		return left.getSelectedSensorPosition(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 	
 	public double getLeftVelocity() {
-		return left.getSelectedSensorVelocity(0) * experimentalLeftScalar;
+		return left.getSelectedSensorVelocity(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
+	}
+	
+	public int getRightRaw() {
+		return right.getSelectedSensorPosition(0);
 	}
 	
 	public double getRightPosition() {
-		return right.getSelectedSensorPosition(0) * experimentalRightScalar;
+		return right.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 	
 	public double getRightVelocity() {
-		return right.getSelectedSensorVelocity(0) * experimentalRightScalar;
+		return right.getSelectedSensorVelocity(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 	
 	public void reportDebugInformation() {

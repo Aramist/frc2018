@@ -7,19 +7,26 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends Subsystem{
 	
+<<<<<<< HEAD
 //	private AHRS navx;
 	private TalonSRX left, right; //, followerLeft, followerRight;
+=======
+	private AHRS navx;
+	private TalonSRX left, right;
+>>>>>>> branch 'devel' of https://github.com/Aramist/frc2018.git
 	private ControlMode leftControlMode, rightControlMode;
 //	private Solenoid leftSolenoid, rightSolenoid;
 	
 	public DriveSubsystem() {
-//		navx = new AHRS(Port.kMXP);
+		navx = new AHRS(Port.kMXP);
 		
 		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
@@ -81,7 +88,11 @@ public class DriveSubsystem extends Subsystem{
 		right.setSelectedSensorPosition(0, 0, 100);
 	}
 	
+<<<<<<< HEAD
 	public int getLeftRaw() {
+=======
+	public int getRawLeft() {
+>>>>>>> branch 'devel' of https://github.com/Aramist/frc2018.git
 		return left.getSelectedSensorPosition(0);
 	}
 	
@@ -97,12 +108,20 @@ public class DriveSubsystem extends Subsystem{
 		return right.getSelectedSensorPosition(0);
 	}
 	
+	public int getRawRight() {
+		return right.getSelectedSensorPosition(0);
+	}
+	
 	public double getRightPosition() {
 		return right.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 	
 	public double getRightVelocity() {
 		return right.getSelectedSensorVelocity(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
+	}
+	
+	public double getHeading() {
+		return navx.getAngle();
 	}
 	
 	public void reportDebugInformation() {

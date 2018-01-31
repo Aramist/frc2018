@@ -12,6 +12,7 @@ public class IntakeSubsystem extends Subsystem {
 	private VictorSP left = new VictorSP(1);
 	private VictorSP right = new VictorSP(2);
 	public static String solenoidState = "Closed";
+	// comment
 
 	public void changeState() {
 		Value current = grab.get();

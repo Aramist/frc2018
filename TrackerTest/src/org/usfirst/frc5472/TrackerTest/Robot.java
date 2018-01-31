@@ -123,6 +123,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Jim", j.getY());
+		SmartDashboard.putString("Grabber", IntakeSubsystem.solenoidState);
+
 		// SmartDashboard.putString("JeVois Target", jevois.read());
 
 	}

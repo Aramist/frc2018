@@ -11,6 +11,7 @@ public class IntakeSubsystem extends Subsystem {
 	private DoubleSolenoid grab = new DoubleSolenoid(0, 1);
 	private VictorSP left = new VictorSP(1);
 	private VictorSP right = new VictorSP(2);
+	public static String solenoidState = "Closed";
 
 	public void changeState() {
 		Value current = grab.get();
@@ -18,6 +19,10 @@ public class IntakeSubsystem extends Subsystem {
 			grab.set(Value.kReverse);
 		else
 			grab.set(Value.kForward);
+		if (current == Value.kReverse)
+			solenoidState = "Closed";
+		else
+			solenoidState = "Open";
 	}
 
 	public void feedIn() {

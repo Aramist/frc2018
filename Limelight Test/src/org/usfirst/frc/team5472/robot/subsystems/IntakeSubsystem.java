@@ -49,6 +49,10 @@ public class IntakeSubsystem extends Subsystem{
 		constrictor.set(Value.kForward);
 	}
 	
+	public boolean gripIsOpen() {
+		return getSolenoidValue().equals(Value.kReverse);
+	}
+	
 	public Value getSolenoidValue() {
 		return constrictor.get();
 	}

@@ -9,20 +9,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends Subsystem{
 	
-<<<<<<< HEAD
-//	private AHRS navx;
-	private TalonSRX left, right; //, followerLeft, followerRight;
-=======
 	private AHRS navx;
-	private TalonSRX left, right;
->>>>>>> branch 'devel' of https://github.com/Aramist/frc2018.git
-	private ControlMode leftControlMode, rightControlMode;
+	private TalonSRX left, right; //, followerLeft, followerRight;
+	private ControlMode controlMode;
 //	private Solenoid leftSolenoid, rightSolenoid;
 	
 	public DriveSubsystem() {
@@ -35,9 +30,9 @@ public class DriveSubsystem extends Subsystem{
 //		leftSolenoid = new Solenoid(RobotMap.leftSolenoid);
 //		rightSolenoid = new Solenoid(RobotMap.rightSolenoid);
 		
-		left.setInverted(true);
+		left.setInverted(false);
 //		followerLeft.setInverted(true);
-		right.setInverted(false);
+		right.setInverted(true);
 //		followerRight.setInverted(false);
 		
 		left.setNeutralMode(NeutralMode.Brake);
@@ -54,22 +49,21 @@ public class DriveSubsystem extends Subsystem{
 		right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
 //		followerRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
 		
-		leftControlMode = ControlMode.PercentOutput;
-		rightControlMode = ControlMode.PercentOutput;
+		controlMode = ControlMode.PercentOutput;
 		
-		left.set(leftControlMode, 0);
+		left.set(controlMode, 0);
 //		followerLeft.set(ControlMode.Follower, left.getDeviceID());
-		right.set(rightControlMode, 0);
+		right.set(controlMode, 0);
 //		followerRight.set(ControlMode.Follower, right.getDeviceID());
 	}
 	
 	public void setControlMode(ControlMode newMode) {
-		leftControlMode = rightControlMode = newMode;
+		controlMode = newMode;
 	}
 	
 	public void drive(double left, double right) {
-		this.left.set(leftControlMode, left);
-		this.right.set(rightControlMode, right);
+		this.left.set(controlMode, left);
+		this.right.set(controlMode, right);
 	}
 	
 	@Override
@@ -88,11 +82,7 @@ public class DriveSubsystem extends Subsystem{
 		right.setSelectedSensorPosition(0, 0, 100);
 	}
 	
-<<<<<<< HEAD
 	public int getLeftRaw() {
-=======
-	public int getRawLeft() {
->>>>>>> branch 'devel' of https://github.com/Aramist/frc2018.git
 		return left.getSelectedSensorPosition(0);
 	}
 	
@@ -122,6 +112,10 @@ public class DriveSubsystem extends Subsystem{
 	
 	public double getHeading() {
 		return navx.getAngle();
+	}
+	
+	public void resetHeading() {
+		navx.zeroYaw();
 	}
 	
 	public void reportDebugInformation() {

@@ -33,7 +33,7 @@ public class Autonomous {
 	public void start() {
 		switch(autoSelector.getSelected()){
 		case DEFAULT:
-			selectedCommand = new PassAutoLine();
+			selectedCommand = new EatBox();
 			selectedCommand.start();
 		case LIMELIGHT:
 			break;

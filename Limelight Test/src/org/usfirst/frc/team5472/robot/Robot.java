@@ -11,6 +11,7 @@ import org.usfirst.frc.team5472.robot.autonomous.Autonomous;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
 //	private JeVois jevois;
 	
 	public static Controls controls;
+	public static PowerDistributionPanel pdp;
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static Limelight limelight;
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		controls = new Controls();
 		auto = new Autonomous();
+		pdp = new PowerDistributionPanel();
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		limelight = new Limelight();
@@ -74,8 +77,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		driveSubsystem.reportDebugInformation();
-//		limelight.reportDebugInformation();
+		
+		System.out.printf("Left Current: %d\tRight Current: %d", intakeSubsystem.getLeftMotorCurrent(), intakeSubsystem.getRightMotorCurrent());
 	}
 	
 	@Override

@@ -41,7 +41,9 @@ public class Constants {
 	public static Config TRAJECTORY_CONFIG = new Config(FitMethod.HERMITE_QUINTIC, 1, 0.05, ROBOT_MAX_VELOCITY, 1, 60);
 	
 	public static int INTAKE_LEFT_MOTOR_PWM = 1;
+	public static int INTAKE_LEFT_MOTOR_PDP = 2;
 	public static int INTAKE_RIGHT_MOTOR_PWM = 2;
+	public static int INTAKE_RIGHT_MOTOR_PDP = 15;
 	public static int INTAKE_SOLENOID_ID_FORW = 0; //It's a double solenoid
 	public static int INTAKE_SOLENOID_ID_BACK = 1;
 	public static double INTAKE_INPUT_SPEED = 0.6;

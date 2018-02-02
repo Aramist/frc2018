@@ -1,14 +1,17 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
 import org.usfirst.frc.team5472.robot.Constants;
+import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakeSubsystem extends Subsystem{
 	
+	private PowerDistributionPanel pdp;
 	private VictorSP leftSide;
 	private VictorSP rightSide;
 	
@@ -18,6 +21,7 @@ public class IntakeSubsystem extends Subsystem{
 		leftSide = new VictorSP(Constants.INTAKE_LEFT_MOTOR_PWM);
 		rightSide = new VictorSP(Constants.INTAKE_RIGHT_MOTOR_PWM);
 		constrictor = new DoubleSolenoid(Constants.INTAKE_SOLENOID_ID_FORW, Constants.INTAKE_SOLENOID_ID_BACK);
+		pdp = Robot.pdp;
 		
 		leftSide.setInverted(true);
 	}
@@ -61,4 +65,11 @@ public class IntakeSubsystem extends Subsystem{
 		return Math.abs(leftSide.get());
 	}
 	
+	public double getLeftMotorCurrent() {
+		return pdp.getCurrent(Constants.INTAKE_LEFT_MOTOR_PDP);
+	}
+	
+	public double getRightMotorCurrent() {
+		return pdp.getCurrent(Constants.INTAKE_RIGHT_MOTOR_PDP);
+	}
 }

@@ -9,6 +9,7 @@ package org.usfirst.frc.team5472.robot;
 
 import org.usfirst.frc.team5472.robot.autonomous.Autonomous;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
 	
 	public static Controls controls;
 	public static DriveSubsystem driveSubsystem;
+	public static IntakeSubsystem intakeSubsystem;
 	public static Limelight limelight;
 
 	@Override
@@ -33,8 +35,14 @@ public class Robot extends TimedRobot {
 		controls = new Controls();
 		auto = new Autonomous();
 		driveSubsystem = new DriveSubsystem();
+		intakeSubsystem = new IntakeSubsystem();
 		limelight = new Limelight();
 //		jevois = new JeVois();
+	}
+	
+	@Override
+	public void disabledInit() {
+		auto.end();
 	}
 	
 	@Override
@@ -59,13 +67,15 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		limelight.setLed(false);
 		driveSubsystem.resetEncoders();
+		driveSubsystem.resetHeading();
+		auto.end();
 	}
 	
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		driveSubsystem.reportDebugInformation();
-		limelight.reportDebugInformation();
+//		driveSubsystem.reportDebugInformation();
+//		limelight.reportDebugInformation();
 	}
 	
 	@Override

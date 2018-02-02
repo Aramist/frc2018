@@ -52,4 +52,6 @@ public class Constants {
 	public static int DRIVE_RIGHT_TALON_CAN = 4;
 	public static int DRIVE_RIGHT_FOLLOWER_CAN = 6;
 	
+	public static double LIMELIGHT_TARGET_AREA_THRESHOLD = 90;
+	public static double LIMELIGHT_APPROACH_BOX_KP = 0.01;
 }

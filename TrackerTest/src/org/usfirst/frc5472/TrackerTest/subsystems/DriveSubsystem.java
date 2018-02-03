@@ -62,8 +62,12 @@ public class DriveSubsystem extends Subsystem {
 		return right.get();
 	}
 
-	public void shiftGear() {
-		gearMode.set(!gearMode.get());
+	public void shiftGearEnable() {
+		gearMode.set(true);
+	}
+
+	public void shiftGearDisable() {
+		gearMode.set(false);
 	}
 
 	@Override

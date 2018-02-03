@@ -4,17 +4,17 @@ import org.usfirst.frc5472.TrackerTest.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShiftGearCommand extends Command {
+public class ShiftGearCommandDisable extends Command {
 	private boolean completed = false;
 
-	public ShiftGearCommand() {
+	public ShiftGearCommandDisable() {
 		requires(Robot.getInstance().getDriveSubsystem());
 	}
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getDriveSubsystem().shiftGear();
-		completed = true;
+		Robot.getInstance().getDriveSubsystem().shiftGearDisable();
+
 	}
 
 	@Override

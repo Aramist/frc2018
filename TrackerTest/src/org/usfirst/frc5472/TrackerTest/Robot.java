@@ -16,6 +16,7 @@ import org.usfirst.frc5472.TrackerTest.subsystems.IntakeSubsystem;
 import org.usfirst.frc5472.TrackerTest.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -133,6 +134,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Jim", j.getY());
 		SmartDashboard.putString("Grabber", IntakeSubsystem.solenoidState);
 		SmartDashboard.putBoolean("GIBBLOCK", limitSwitch.get());
+		SmartDashboard.putNumber("XBOX", oi.getXbox().getTriggerAxis(Hand.kLeft));
 		// SmartDashboard.putString("JeVois Target", jevois.read());
 
 	}

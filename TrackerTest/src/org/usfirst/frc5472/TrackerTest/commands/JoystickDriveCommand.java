@@ -48,7 +48,7 @@ public class JoystickDriveCommand extends Command {
 	@Override
 	public void execute() {
 		double r = joystick.getY();
-		Robot.getInstance().getDriveSubsystem().driver(r + joystick.getTwist(), r - joystick.getTwist());
+		Robot.getInstance().getDriveSubsystem().driver(r - joystick.getTwist(), r + joystick.getTwist(), r - joystick.getTwist(), r + joystick.getTwist());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

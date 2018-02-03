@@ -74,8 +74,7 @@ public class OI {
 		intakeButton = new JoystickButton(xbox, 1);
 		feedInButton = new JoystickButton(xbox, 5);
 		feedOutButton = new JoystickButton(xbox, 6);
-		liftButton = new JoystickButton(xbox, 4);
-		lowerButton = new JoystickButton(xbox, 3);
+
 		shiftGearButton = new JoystickButton(joystick1, 1);
 
 		button2.whenPressed(new TestCommand());

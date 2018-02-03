@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5472.robot.commands;
+package org.usfirst.frc.team5472.robot.autonomous;
 
 import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Robot;

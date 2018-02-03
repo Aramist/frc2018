@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
 import org.usfirst.frc.team5472.robot.Constants;
-import org.usfirst.frc.team5472.robot.commands.FollowPath;
 
 import com.team5472.robot.pathfinder.from_c.Pathfinder;
 import com.team5472.robot.pathfinder.from_c.Segment;

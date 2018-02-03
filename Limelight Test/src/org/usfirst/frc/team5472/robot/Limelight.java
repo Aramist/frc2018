@@ -56,6 +56,7 @@ public class Limelight {
 	}
 	
 	public boolean isConnected() {
+		checkConnection();
 		return limeLightConnected;
 	}
 	

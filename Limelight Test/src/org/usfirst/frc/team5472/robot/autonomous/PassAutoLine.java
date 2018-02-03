@@ -17,8 +17,8 @@ public class PassAutoLine extends CommandGroup{
 	
 	public PassAutoLine() {
 		Waypoint[] points = {
-				new Waypoint(0, 0, 0),
-				new Waypoint(0, 1, 0)
+				new Waypoint(0, 0, 90),
+				new Waypoint(0, 1, 90)
 		};
 		Segment[] trajectory = Pathfinder.generate(points, Constants.TRAJECTORY_CONFIG);
 		TankModifier modifier = new TankModifier(trajectory);

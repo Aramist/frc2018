@@ -1,27 +1,27 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
 import org.usfirst.frc.team5472.robot.Constants;
-import org.usfirst.frc.team5472.robot.Robot;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakeSubsystem extends Subsystem{
 	
-	private PowerDistributionPanel pdp;
-	private VictorSP leftSide;
-	private VictorSP rightSide;
+	private TalonSRX leftSide;
+	private TalonSRX rightSide;
+	
+	private static final ControlMode MODE = ControlMode.PercentOutput;
 	
 	private DoubleSolenoid constrictor;
 	
 	public IntakeSubsystem() {
-		leftSide = new VictorSP(Constants.INTAKE_LEFT_MOTOR_PWM);
-		rightSide = new VictorSP(Constants.INTAKE_RIGHT_MOTOR_PWM);
+		leftSide = new TalonSRX(Constants.INTAKE_LEFT_MOTOR_CAN);
+		rightSide = new TalonSRX(Constants.INTAKE_RIGHT_MOTOR_CAN);
 		constrictor = new DoubleSolenoid(Constants.INTAKE_SOLENOID_ID_FORW, Constants.INTAKE_SOLENOID_ID_BACK);
-		pdp = Robot.pdp;
 		
 		leftSide.setInverted(true);
 	}
@@ -31,18 +31,18 @@ public class IntakeSubsystem extends Subsystem{
 	}
 	
 	public void start() {
-		leftSide.set(Constants.INTAKE_INPUT_SPEED);
-		rightSide.set(Constants.INTAKE_INPUT_SPEED);
+		leftSide.set(MODE, Constants.INTAKE_INPUT_SPEED);
+		rightSide.set(MODE, Constants.INTAKE_INPUT_SPEED);
 	}
 	
 	public void reverse() {
-		leftSide.set(-Constants.INTAKE_OUTPUT_SPEED);
-		rightSide.set(-Constants.INTAKE_OUTPUT_SPEED);
+		leftSide.set(MODE, -Constants.INTAKE_OUTPUT_SPEED);
+		rightSide.set(MODE, -Constants.INTAKE_OUTPUT_SPEED);
 	}
 	
 	public void stop() {
-		leftSide.set(0.0);
-		rightSide.set(0.0);
+		leftSide.set(MODE, 0.0);
+		rightSide.set(MODE, 0.0);
 	}
 	
 	public void open() {
@@ -62,14 +62,7 @@ public class IntakeSubsystem extends Subsystem{
 	}
 	
 	public double getMotorSpeed() {
-		return Math.abs(leftSide.get());
+		return Math.abs(leftSide.getMotorOutputPercent());
 	}
 	
-	public double getLeftMotorCurrent() {
-		return pdp.getCurrent(Constants.INTAKE_LEFT_MOTOR_PDP);
-	}
-	
-	public double getRightMotorCurrent() {
-		return pdp.getCurrent(Constants.INTAKE_RIGHT_MOTOR_PDP);
-	}
 }

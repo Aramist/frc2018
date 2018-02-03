@@ -13,7 +13,6 @@ import org.usfirst.frc.team5472.robot.commands.ToggleLights;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Controls {
 	
@@ -49,8 +48,6 @@ public class Controls {
 		
 		flashLights.whenPressed(new FlashLights());
 		boxCollected.whenPressed(new FlashLights());
-		
-		SmartDashboard.putData("Toggle Lights", new ToggleLights());
 	}
 	
 	public Joystick getJoystick() {

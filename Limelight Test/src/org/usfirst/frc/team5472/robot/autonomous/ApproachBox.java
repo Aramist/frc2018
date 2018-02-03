@@ -42,12 +42,12 @@ public class ApproachBox extends Command{
 	public void execute() {
 		if(!limelight.isConnected() && this.timeSinceInitialized() > 1.0) {
 			finished = true;
-			System.err.println("No connection to Limelight Camera");
+			System.out.println("No connection to Limelight Camera");
 			return;
 			//Limelight is off and more than a second has passed. Give up.
 		} else if ((this.timeSinceInitialized() > 1.0) && (targetStamp == 0.0) && (Timer.getFPGATimestamp() - targetLost > 0.2)) {
 			finished = true;
-			System.err.println("time" + this.timeSinceInitialized() + " target " + limelight.targetExists());
+			System.out.println("time" + this.timeSinceInitialized() + " target " + limelight.targetExists());
 			return;
 			//No target and more than a second has passed. Give up.
 		}

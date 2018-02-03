@@ -23,9 +23,9 @@ public class FlashLights extends Command{
 		new Thread(() -> {
 			for(int i = 0; i < 5; i++) {
 				limelight.setLed(!initialState);
-				Timer.delay(0.3);
+				Timer.delay(0.1);
 				limelight.setLed(initialState);
-				Timer.delay(0.3);
+				Timer.delay(0.1);
 			}
 			
 		}).start();

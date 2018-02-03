@@ -26,4 +26,8 @@ public class LimitSwitch extends Button{
 		//true  false -> false
 	}
 	
+	public boolean getRaw() {
+		return di.get();
+	}
+	
 }

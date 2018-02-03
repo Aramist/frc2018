@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends Subsystem{
 	
 	private AHRS navx;
-	private TalonSRX left, right; //, followerLeft, followerRight;
+	private TalonSRX left, right, followerLeft, followerRight;
 	private ControlMode controlMode;
 //	private Solenoid leftSolenoid, rightSolenoid;
 	
@@ -25,15 +25,15 @@ public class DriveSubsystem extends Subsystem{
 		
 		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
-//		followerLeft = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
-//		followerRight = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
+		followerLeft = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
+		followerRight = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
 //		leftSolenoid = new Solenoid(RobotMap.leftSolenoid);
 //		rightSolenoid = new Solenoid(RobotMap.rightSolenoid);
 		
 		left.setInverted(false);
-//		followerLeft.setInverted(true);
+		followerLeft.setInverted(false);
 		right.setInverted(true);
-//		followerRight.setInverted(false);
+		followerRight.setInverted(true);
 		
 		left.setNeutralMode(NeutralMode.Brake);
 //		followerLeft.setNeutralMode(NeutralMode.Brake);
@@ -52,9 +52,9 @@ public class DriveSubsystem extends Subsystem{
 		controlMode = ControlMode.PercentOutput;
 		
 		left.set(controlMode, 0);
-//		followerLeft.set(ControlMode.Follower, left.getDeviceID());
+		followerLeft.set(ControlMode.Follower, left.getDeviceID());
 		right.set(controlMode, 0);
-//		followerRight.set(ControlMode.Follower, right.getDeviceID());
+		followerRight.set(ControlMode.Follower, right.getDeviceID());
 	}
 	
 	public void setControlMode(ControlMode newMode) {

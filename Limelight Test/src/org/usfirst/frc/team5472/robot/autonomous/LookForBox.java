@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LookForBox extends Command{
 	
-	private static final double TURN_SPEED = 0.20;
+	private static final double TURN_SPEED = 0.40;
 	private static final double TARGET_LIFETIME = 0.5;
 	
 	private boolean finished = false;

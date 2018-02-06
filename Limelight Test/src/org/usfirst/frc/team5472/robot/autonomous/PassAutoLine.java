@@ -19,6 +19,6 @@ public class PassAutoLine extends CommandGroup {
 		// left = modifier.getLeft();
 		// right = modifier.getRight();
 		// addSequential(new FollowPath(left, right));
-		addSequential(new LiftCommand(500));
+		addSequential(new LiftCommand(1000));
 	}
 }

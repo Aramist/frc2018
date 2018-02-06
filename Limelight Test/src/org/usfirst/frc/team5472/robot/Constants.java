@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5472.robot;
 
-import com.team5472.robot.pathfinder.from_c.Trajectory.Config;
-import com.team5472.robot.pathfinder.from_c.fit.FitMethod;
+import com.team5472.robot.pathfinder.Trajectory.Config;
+import com.team5472.robot.pathfinder.fit.FitMethod;
 
 public class Constants {
 	public static final String AUTONOMOUS_CHOOSER_NAME = "Select an Autonomous Program: ";
@@ -67,9 +67,10 @@ public class Constants {
 	public static final int LIFT_TALON_CAN = 5;
 	public static final double LIFT_PIDF_P = 0.4;
 	public static final double LIFT_PIDF_I = 0.0;
-	public static final double LIFT_PIDF_D = 0.2;
-	public static final double LIFT_PIDF_F = 0.00;
+	public static final double LIFT_PIDF_D = 0.0;
+	public static final double LIFT_PIDF_F = 0.0;
+	public static final int LIFT_PIDF_INTZONE = 40;
 
 	public static final double LIMELIGHT_TARGET_AREA_THRESHOLD = 90;
-	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.01;
+	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
 }

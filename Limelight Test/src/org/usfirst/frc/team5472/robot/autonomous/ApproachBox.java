@@ -65,15 +65,15 @@ public class ApproachBox extends Command{
 			if(limelight.getTargetArea() > Constants.LIMELIGHT_TARGET_AREA_THRESHOLD) {
 				finished = true;
 			}
-			double error = limelight.getHorizontalAngle();
+			double error = 10 + limelight.getHorizontalAngle();
 			double pGain = error * Constants.LIMELIGHT_APPROACH_BOX_KP;
-			drive.drive(0.4 + pGain, 0.4 - pGain);
+			drive.drive(0.3 + pGain, 0.3 - pGain);
 		}
 	}
 	
 	@Override
 	public void end() {
-		Timer.delay(0.1);
+		Timer.delay(0.2);
 		drive.drive(0.0, 0.0);
 	}
 	

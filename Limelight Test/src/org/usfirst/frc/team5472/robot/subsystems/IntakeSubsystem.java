@@ -23,7 +23,8 @@ public class IntakeSubsystem extends Subsystem{
 		rightSide = new TalonSRX(Constants.INTAKE_RIGHT_MOTOR_CAN);
 		constrictor = new DoubleSolenoid(Constants.INTAKE_SOLENOID_ID_FORW, Constants.INTAKE_SOLENOID_ID_BACK);
 		
-		leftSide.setInverted(true);
+		rightSide.setInverted(true);
+		leftSide.setInverted(false);
 	}
 	
 	@Override
@@ -46,15 +47,15 @@ public class IntakeSubsystem extends Subsystem{
 	}
 	
 	public void open() {
-		constrictor.set(Value.kReverse);
-	}
-	
-	public void close() {
 		constrictor.set(Value.kForward);
 	}
 	
+	public void close() {
+		constrictor.set(Value.kReverse);
+	}
+	
 	public boolean gripIsOpen() {
-		return getSolenoidValue().equals(Value.kReverse);
+		return getSolenoidValue().equals(Value.kForward);
 	}
 	
 	public Value getSolenoidValue() {

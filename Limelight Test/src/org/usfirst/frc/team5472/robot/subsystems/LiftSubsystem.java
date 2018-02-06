@@ -23,6 +23,7 @@ public class LiftSubsystem extends Subsystem {
 		liftMotor.config_kI(0, Constants.LIFT_PIDF_I, 100);
 		liftMotor.config_kD(0, Constants.LIFT_PIDF_D, 100);
 		liftMotor.config_kF(0, Constants.LIFT_PIDF_F, 100);
+		liftMotor.config_IntegralZone(0, Constants.LIFT_PIDF_INTZONE, 100);
 		// liftMotor.configForwardSoftLimitEnable(true, 33500);
 	}
 

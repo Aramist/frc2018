@@ -18,12 +18,12 @@ public class LiftDefault extends Command {
 	@Override
 	public void initialize() {
 		lift = Robot.liftSubsystem;
-		stick = Robot.controls.getJoystick();
+		stick = Robot.controls.getXBOX();
 	}
 
 	@Override
 	public void execute() {
-
+		lift.setLiftPercent(stick.getRawAxis(5) * 0.6);
 	}
 
 	@Override

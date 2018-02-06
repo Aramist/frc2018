@@ -55,6 +55,17 @@ public class DriveSubsystem extends Subsystem{
 //		followerLeft.set(ControlMode.Follower, left.getDeviceID());
 		right.set(controlMode, 0);
 //		followerRight.set(ControlMode.Follower, right.getDeviceID());
+		
+		left.config_kP(0, 0.1, 100);
+		left.config_kD(0, 0.0, 100);
+		left.config_kI(0, 0.0, 100);
+		left.config_kF(0, 0.2, 100);
+		
+		right.config_kP(0, 0.1, 100);
+		right.config_kD(0, 0.0, 100);
+		right.config_kI(0, 0.0, 100);
+		right.config_kF(0, 0.2, 100);
+		
 	}
 	
 	public void setControlMode(ControlMode newMode) {

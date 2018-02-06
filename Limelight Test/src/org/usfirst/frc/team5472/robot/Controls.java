@@ -25,11 +25,12 @@ public class Controls {
 	private JoystickButton disableVision = new JoystickButton(stick, 9);
 	private JoystickButton switchPipeline = new JoystickButton(stick, 11);
 	private JoystickButton boxPipeline = new JoystickButton(stick, 12);
-	private JoystickButton flashLights = new JoystickButton(stick, 6);
 	
 	private JoystickButton intakeIn = new JoystickButton(stick, 3);
 	private JoystickButton intakeOut = new JoystickButton(stick, 4);
 	private JoystickButton toggleGrip = new JoystickButton(stick, 1);
+	
+	private LimitSwitch boxGrabbed = new LimitSwitch(0);
 	
 	public Controls() {
 		toggleLights.whenReleased(new ToggleLights());
@@ -45,7 +46,7 @@ public class Controls {
 		
 		toggleGrip.whenPressed(new GripToggle());
 		
-		flashLights.whenPressed(new FlashLights());
+		boxGrabbed.whenPressed(new FlashLights());
 		
 		SmartDashboard.putData("Toggle Lights", new ToggleLights());
 	}

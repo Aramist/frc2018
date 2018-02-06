@@ -1,12 +1,11 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
 import org.usfirst.frc.team5472.robot.Constants;
-import org.usfirst.frc.team5472.robot.commands.FollowPath;
 
-import com.team5472.robot.pathfinder.from_c.Pathfinder;
-import com.team5472.robot.pathfinder.from_c.Segment;
-import com.team5472.robot.pathfinder.from_c.Waypoint;
-import com.team5472.robot.pathfinder.from_c.modifiers.TankModifier;
+import com.team5472.robot.pathfinder.Pathfinder;
+import com.team5472.robot.pathfinder.Segment;
+import com.team5472.robot.pathfinder.Waypoint;
+import com.team5472.robot.pathfinder.modifiers.TankModifier;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -17,10 +16,16 @@ public class PassAutoLine extends CommandGroup{
 	
 	public PassAutoLine() {
 		Waypoint[] points = {
-				new Waypoint(0, 0, 0),
-				new Waypoint(0, 1, 0)
+				new Waypoint(0, 0, 90),
+				new Waypoint(0, 0.25, 90),
 		};
 		Segment[] trajectory = Pathfinder.generate(points, Constants.TRAJECTORY_CONFIG);
+		for(Segment seg : trajectory) {
+			System.out.println("Segment info");
+			System.out.println(seg.position);
+			System.out.println(seg.velocity);
+			System.out.println(seg.acceleration);
+		}
 		TankModifier modifier = new TankModifier(trajectory);
 		modifier.modify(Constants.ROBOT_WHEELBASE_WIDTH);
 		left = modifier.getLeft();

@@ -20,7 +20,6 @@ public class Controls {
 	private Joystick stick = new Joystick(0);
 	private Joystick xbox = new Joystick(1);
 
-	// TEMPORARY
 	private JoystickButton toggleLights = new JoystickButton(stick, 2);
 	private JoystickButton enableVision = new JoystickButton(stick, 10);
 	private JoystickButton disableVision = new JoystickButton(stick, 9);
@@ -58,7 +57,7 @@ public class Controls {
 	public Joystick getJoystick() {
 		return stick;
 	}
-	
+
 	public Joystick getXBOX() {
 		return xbox;
 	}

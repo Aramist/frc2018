@@ -19,11 +19,7 @@ public class LimitSwitch extends Button{
 	
 	@Override
 	public boolean get() {
-		return !(di.get() ^ normallyOpen);
-		//false true -> false
-		//false false -> true
-		//true  true -> true
-		//true  false -> false
+		return di.get() == normallyOpen;
 	}
 	
 	public boolean getRaw() {

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5472.robot;
 
-import com.team5472.robot.pathfinder.Trajectory.Config;
-import com.team5472.robot.pathfinder.fit.FitMethod;
+import com.team5472.robot.pathfinder.from_c.Trajectory.Config;
+import com.team5472.robot.pathfinder.from_c.fit.FitMethod;
 
 public class Constants {
 	public static final String AUTONOMOUS_CHOOSER_NAME = "Select an Autonomous Program: ";
@@ -27,21 +27,14 @@ public class Constants {
 
 	}
 
-	public static final double WHEEL_DIAMETER = 0.10; // meters
-	public static final double ROBOT_WHEELBASE_WIDTH = 0.75; // meters. Distance
-																// from center
-																// of left
-																// wheels to
-																// center of
-																// right wheels.
-	public static final double LEFT_ENCODER_TICKS_PER_METER = 1.0 / 12489.0;
-	public static final double RIGHT_ENCODER_TICKS_PER_METER = 1.0 / 12270.0;
-	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER; // ticks
-																															// /
-																															// revolution
-	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER; // ticks
-																															// /
-																															// revolution
+	// Measured in meters.
+	public static final double WHEEL_DIAMETER = 0.10;
+	// Measured in meters. Distance from center of left wheels to center of right wheels.
+	public static final double ROBOT_WHEELBASE_WIDTH = 0.75; 
+	public static final double LEFT_ENCODER_TICKS_PER_METER = 12489.0;
+	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12270.0;
+	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
+	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double ROBOT_MAX_VELOCITY = 1.7; // m/s
 	public static final double ENCODER_FOLLOWER_P = 1;
 	public static final double ENCODER_FOLLOWER_I = 0;
@@ -52,8 +45,7 @@ public class Constants {
 
 	public static final int INTAKE_LEFT_MOTOR_CAN = 6;
 	public static final int INTAKE_RIGHT_MOTOR_CAN = 7;
-	public static final int INTAKE_SOLENOID_ID_FORW = 1; // It's a double
-															// solenoid
+	public static final int INTAKE_SOLENOID_ID_FORW = 1; // double solenoid
 	public static final int INTAKE_SOLENOID_ID_BACK = 2;
 	public static final double INTAKE_INPUT_SPEED = 0.6;
 	public static final double INTAKE_OUTPUT_SPEED = 1.0;
@@ -65,12 +57,11 @@ public class Constants {
 	public static final int DRIVE_SHIFT_SOLENOID = 0;
 
 	public static final int LIFT_TALON_CAN = 5;
-	public static final double LIFT_PIDF_P = 0.4;
+	public static final double LIFT_PIDF_P = 0.3;
 	public static final double LIFT_PIDF_I = 0.0;
-	public static final double LIFT_PIDF_D = 0.0;
+	public static final double LIFT_PIDF_D = 0.2;
 	public static final double LIFT_PIDF_F = 0.0;
 	public static final int LIFT_PIDF_INTZONE = 40;
 
-	public static final double LIMELIGHT_TARGET_AREA_THRESHOLD = 90;
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
 }

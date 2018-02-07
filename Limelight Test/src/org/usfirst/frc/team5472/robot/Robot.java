@@ -17,13 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
 
-	/*
-	 * Limelight experiment: Distance of 1.397 meters, tx = 0.18, ty = 5.4: ta =
-	 * 1.82 Distance of 0.787 meters, tv = 0
-	 */
-
 	private Autonomous auto;
-	// private JeVois jevois;
 
 	public static Controls controls;
 	public static DriveSubsystem driveSubsystem;
@@ -39,7 +33,6 @@ public class Robot extends TimedRobot {
 		intakeSubsystem = new IntakeSubsystem();
 		liftSubsystem = new LiftSubsystem();
 		limelight = new Limelight();
-		// jevois = new JeVois();
 	}
 
 	@Override
@@ -79,7 +72,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.err.println(liftSubsystem.getPosition());
 	}
 
 	@Override

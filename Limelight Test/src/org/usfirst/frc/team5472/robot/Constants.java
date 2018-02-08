@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5472.robot;
 
-import com.team5472.robot.pathfinder.from_c.Trajectory.Config;
-import com.team5472.robot.pathfinder.from_c.fit.FitMethod;
+import com.team5472.robot.pathfinder.Trajectory.Config;
+import com.team5472.robot.pathfinder.fit.FitMethod;
 
 public class Constants {
 	public static final String AUTONOMOUS_CHOOSER_NAME = "Select an Autonomous Program: ";

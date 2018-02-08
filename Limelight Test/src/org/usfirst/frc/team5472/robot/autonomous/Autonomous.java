@@ -6,11 +6,11 @@ import java.nio.file.Paths;
 import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Constants.AutonomousProgram;
 
-import com.team5472.robot.pathfinder.from_c.IO;
-import com.team5472.robot.pathfinder.from_c.Pathfinder;
-import com.team5472.robot.pathfinder.from_c.Segment;
-import com.team5472.robot.pathfinder.from_c.Trajectory.Config;
-import com.team5472.robot.pathfinder.from_c.Waypoint;
+import com.team5472.robot.pathfinder.IO;
+import com.team5472.robot.pathfinder.Pathfinder;
+import com.team5472.robot.pathfinder.Segment;
+import com.team5472.robot.pathfinder.Trajectory.Config;
+import com.team5472.robot.pathfinder.Waypoint;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;

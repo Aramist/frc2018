@@ -5,9 +5,9 @@ import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.team5472.robot.pathfinder.from_c.Segment;
-import com.team5472.robot.pathfinder.from_c.followers.Encoder;
-import com.team5472.robot.pathfinder.from_c.followers.EncoderConfig;
+import com.team5472.robot.pathfinder.Segment;
+import com.team5472.robot.pathfinder.followers.Encoder;
+import com.team5472.robot.pathfinder.followers.EncoderConfig;
 
 import edu.wpi.first.wpilibj.command.Command;
 

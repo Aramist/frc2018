@@ -9,17 +9,14 @@ import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class EatBox extends CommandGroup
+public class ObtainBox extends CommandGroup
 {
 	/*
 	 * Goes through the motions of obtaining possession of a power cube
 	 * 
-	 * 
-	 * 
-	 * Someone please give this a better name
 	 */
 	
-	public EatBox() {
+	public ObtainBox() {
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());
 		addParallel(new GripOpen());

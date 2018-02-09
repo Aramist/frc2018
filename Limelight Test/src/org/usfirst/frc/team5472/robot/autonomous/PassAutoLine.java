@@ -20,12 +20,6 @@ public class PassAutoLine extends CommandGroup{
 				new Waypoint(0, 0.25, 90),
 		};
 		Segment[] trajectory = Pathfinder.generate(points, Constants.TRAJECTORY_CONFIG);
-		for(Segment seg : trajectory) {
-			System.out.println("Segment info");
-			System.out.println(seg.position);
-			System.out.println(seg.velocity);
-			System.out.println(seg.acceleration);
-		}
 		TankModifier modifier = new TankModifier(trajectory);
 		modifier.modify(Constants.ROBOT_WHEELBASE_WIDTH);
 		left = modifier.getLeft();

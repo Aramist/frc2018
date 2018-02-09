@@ -109,10 +109,6 @@ public class DriveSubsystem extends Subsystem{
 		return right.getSelectedSensorPosition(0);
 	}
 	
-	public int getRawRight() {
-		return right.getSelectedSensorPosition(0);
-	}
-	
 	public double getRightPosition() {
 		return right.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}

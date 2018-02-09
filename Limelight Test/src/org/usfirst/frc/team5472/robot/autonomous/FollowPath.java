@@ -47,7 +47,7 @@ public class FollowPath extends Command{
 	@Override
 	public void initialize() {
 		drive = Robot.driveSubsystem;
-		drive.setControlMode(ControlMode.Velocity);
+		drive.setControlMode(ControlMode.PercentOutput);
 		drive.drive(0, 0);
 		drive.resetEncoders();
 	}

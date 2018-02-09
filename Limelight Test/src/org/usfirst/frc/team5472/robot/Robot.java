@@ -72,6 +72,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		System.out.println("Left: " + driveSubsystem.getLeftRaw());
+		System.out.println("Right: " + driveSubsystem.getRightRaw());
 	}
 
 	@Override

@@ -28,11 +28,11 @@ public class Constants {
 	}
 
 	// Measured in meters.
-	public static final double WHEEL_DIAMETER = 0.10;
+	public static final double WHEEL_DIAMETER = 0.1016;
 	// Measured in meters. Distance from center of left wheels to center of right wheels.
-	public static final double ROBOT_WHEELBASE_WIDTH = 0.75; 
-	public static final double LEFT_ENCODER_TICKS_PER_METER = 12489.0;
-	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12270.0;
+	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
+	public static final double LEFT_ENCODER_TICKS_PER_METER = 0;
+	public static final double RIGHT_ENCODER_TICKS_PER_METER = 0;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double ROBOT_MAX_VELOCITY = 1.7; // m/s

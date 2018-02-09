@@ -22,11 +22,9 @@ public class JoystickDriveCommand extends Command{
 	@Override
 	public void execute() {
 		double y = -instance.getY();
-		double x = instance.getTwist() / 2;
+		double x = instance.getTwist() * 2;
 		
-		double left = y + x;
-		double right = y - x;
-		Robot.driveSubsystem.drive(left, right);
+		Robot.driveSubsystem.drive(y + x, y - x);
 	}
 	
 	public boolean isFinished() {

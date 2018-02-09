@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends Subsystem {
 
 	private AHRS navx;
-	private TalonSRX left, right, followerLeft, followerRight;
+	private TalonSRX left, right, leftFollower, rightFollower;
 	private ControlMode controlMode;
 	private Solenoid shiftSolenoid;// , rightSolenoid;
 
@@ -25,14 +25,14 @@ public class DriveSubsystem extends Subsystem {
 
 		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
-		followerLeft = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
-		followerRight = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
+		leftFollower = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
+		rightFollower = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
 		shiftSolenoid = new Solenoid(Constants.DRIVE_SHIFT_SOLENOID);
 
 		left.setInverted(false);
-		followerLeft.setInverted(false);
+		leftFollower.setInverted(false);
 		right.setInverted(true);
-		followerRight.setInverted(true);
+		rightFollower.setInverted(true);
 
 		// left.setNeutralMode(NeutralMode.Brake);
 		// followerLeft.setNeutralMode(NeutralMode.Brake);
@@ -42,19 +42,19 @@ public class DriveSubsystem extends Subsystem {
 		// Results of experiment:
 		// Left: 12489 Ticks per Meter
 		// Right: 12270 Ticks per Meter
-		left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
+		leftFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 		// followerLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
 		// 0, 100);
-		right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 100);
+		rightFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 		// followerRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
 		// 0, 100);
 
 		controlMode = ControlMode.PercentOutput;
 
 		left.set(controlMode, 0);
-		followerLeft.set(controlMode, left.getDeviceID());
+		leftFollower.set(controlMode, left.getDeviceID());
 		right.set(controlMode, 0);
-		followerRight.set(controlMode, right.getDeviceID());
+		rightFollower.set(controlMode, right.getDeviceID());
 	}
 
 	public void setControlMode(ControlMode newMode) {
@@ -64,8 +64,15 @@ public class DriveSubsystem extends Subsystem {
 	public void drive(double left, double right) {
 		this.left.set(controlMode, left);
 		this.right.set(controlMode, right);
-		this.followerLeft.set(controlMode, left);
-		this.followerRight.set(controlMode, right);
+		this.leftFollower.set(controlMode, left);
+		this.rightFollower.set(controlMode, right);
+	}
+	
+	public void turn(double throttle, double twist) {
+		left.set(controlMode, throttle + twist);
+		leftFollower.set(controlMode, throttle - twist);
+		right.set(controlMode, throttle - twist);
+		rightFollower.set(controlMode, throttle + twist);
 	}
 
 	@Override
@@ -86,8 +93,8 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void resetEncoders() {
-		left.setSelectedSensorPosition(0, 0, 100);
-		right.setSelectedSensorPosition(0, 0, 100);
+		left.setSelectedSensorPosition(0, 0, 0);
+		right.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	public int getLeftRaw() {
@@ -103,10 +110,6 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public int getRightRaw() {
-		return right.getSelectedSensorPosition(0);
-	}
-
-	public int getRawRight() {
 		return right.getSelectedSensorPosition(0);
 	}
 

@@ -32,8 +32,8 @@ public class Constants {
 	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12270.0;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2.0 * Math.PI * WHEEL_DIAMETER; // ticks / revolution
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2.0 * Math.PI * WHEEL_DIAMETER; // ticks / revolution
-	public static final double ROBOT_MAX_VELOCITY = 3; // m/s
-	public static final double ENCODER_FOLLOWER_P = 3.0;
+	public static final double ROBOT_MAX_VELOCITY = 2.0; // m/s
+	public static final double ENCODER_FOLLOWER_P = 1.0;
 	public static final double ENCODER_FOLLOWER_I = 0.0;
 	public static final double ENCODER_FOLLOWER_D = 0.0;
 	public static final double ENCODER_FOLLOWER_V = 1.0 / ROBOT_MAX_VELOCITY;

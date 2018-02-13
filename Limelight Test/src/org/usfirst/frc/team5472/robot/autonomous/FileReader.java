@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
+//FileReader begin
 public class FileReader {
 	private String fileName;
 	private String content;

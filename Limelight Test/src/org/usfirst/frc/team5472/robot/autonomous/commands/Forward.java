@@ -5,11 +5,11 @@ import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Forward extends Command{
 	
-	private boolean finished;
 	private double distance;
 	
 	private DriveSubsystem drive;
@@ -17,7 +17,6 @@ public class Forward extends Command{
 	
 	public Forward(double distance) {
 		this.distance = distance;
-		this.finished = false;
 		
 		requires(Robot.driveSubsystem);
 	}
@@ -40,6 +39,8 @@ public class Forward extends Command{
 	public void end() {
 		controller.disable();
 		drive.drive(-0.1, -0.1);
+		Timer.delay(0.05);
+		drive.drive(0.0, 0.0);
 	}
 	
 	@Override

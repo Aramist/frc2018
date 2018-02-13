@@ -25,8 +25,10 @@ public class LiftDefault extends Command {
 	@Override
 	public void execute() {
 //		lift.setLiftPercent(stick.getRawAxis(5) * 0.6);
-		double x = Math.max(0, (stick.getRawAxis(2) - 0.05) / 1.25);
-		lift.setLiftPercent(x);
+//		double x = Math.max(0, (stick.getRawAxis(2) - 0.05) / 1.25);
+		int x = (int)(stick.getRawAxis(2) * 10);
+		int y = (int)(stick.getRawAxis(3) * 5);
+		lift.setPosition(lift.getPosition() + x - y);
 	}
 
 	@Override

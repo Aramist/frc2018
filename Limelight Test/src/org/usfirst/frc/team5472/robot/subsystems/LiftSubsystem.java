@@ -20,6 +20,7 @@ public class LiftSubsystem extends Subsystem {
 		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		liftMotor.setSensorPhase(true);
 		liftMotor.configPeakOutputForward(0.4, 10);
+		liftMotor.configPeakOutputReverse(0.1, 10);
 		liftMotor.config_kP(0, Constants.LIFT_PIDF_P, 10);
 		liftMotor.config_kI(0, Constants.LIFT_PIDF_I, 10);
 		liftMotor.config_kD(0, Constants.LIFT_PIDF_D, 10);

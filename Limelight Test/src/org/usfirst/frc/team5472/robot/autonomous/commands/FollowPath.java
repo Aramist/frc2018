@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5472.robot.autonomous;
+package org.usfirst.frc.team5472.robot.autonomous.commands;
 
 import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Robot;
@@ -13,14 +13,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class FollowPath extends Command{
 	
-	private static boolean almostEqual(double a, double b) {
-		return Math.abs(a - b) <= 1e-4;
-	}
+//	private static boolean almostEqual(double a, double b) {
+//		return Math.abs(a - b) <= 1e-4;
+//	}
 	
 	private Segment[] left;
 	private Segment[] right;
 	private int currentIndex;
-	private boolean finished;
 	
 	private Encoder leftFollower;
 	private Encoder rightFollower;
@@ -32,13 +31,12 @@ public class FollowPath extends Command{
 		left = leftTrajectory;
 		right = rightTrajectory;
 		currentIndex = 0;
-		finished = false;
 		
-		leftFollower = new Encoder(new EncoderConfig(currentIndex, 0, Constants.WHEEL_DIAMETER,
+		leftFollower = new Encoder(new EncoderConfig(currentIndex, (int) Constants.LEFT_ENCODER_TICKS_PER_REV, Constants.WHEEL_DIAMETER,
 				Constants.ENCODER_FOLLOWER_P, Constants.ENCODER_FOLLOWER_I,
 				Constants.ENCODER_FOLLOWER_D, Constants.ENCODER_FOLLOWER_V,
 				Constants.ENCODER_FOLLOWER_A), left);
-		rightFollower = new Encoder(new EncoderConfig(currentIndex, 0, Constants.WHEEL_DIAMETER,
+		rightFollower = new Encoder(new EncoderConfig(currentIndex, (int) Constants.RIGHT_ENCODER_TICKS_PER_REV, Constants.WHEEL_DIAMETER,
 				Constants.ENCODER_FOLLOWER_P, Constants.ENCODER_FOLLOWER_I,
 				Constants.ENCODER_FOLLOWER_D, Constants.ENCODER_FOLLOWER_V,
 				Constants.ENCODER_FOLLOWER_A), right);
@@ -57,11 +55,14 @@ public class FollowPath extends Command{
 		double leftOutput = leftFollower.calculate(drive.getLeftRaw());
 		double rightOutput = rightFollower.calculate(drive.getRightRaw());
 		drive.drive(leftOutput, rightOutput);
-		if(almostEqual(leftOutput, 0.0) && almostEqual(rightOutput, 0.0))
-			finished = true;
+	}
+	
+	@Override
+	public void end() {
+		drive.drive(-0.1, -0.1);
 	}
 	
 	protected boolean isFinished() {
-		return finished;
+		return leftFollower.isFinished();
 	}
 }

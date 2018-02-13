@@ -1,34 +1,30 @@
-package org.usfirst.frc.team5472.robot.autonomous;
+package org.usfirst.frc.team5472.robot.autonomous.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftCommand extends Command {
-
+public class RaiseLiftLow extends Command{
+	
 	private boolean finished = false;
-	private int position;
 	private LiftSubsystem lift;
-
-	public LiftCommand(int position) {
-		this.position = position;
-		requires(Robot.liftSubsystem);
-	}
 
 	@Override
 	public void initialize() {
-		this.lift = Robot.liftSubsystem;
+		lift = Robot.liftSubsystem;
 	}
-
+	
 	@Override
 	public void execute() {
-		lift.setPosition(position);
+		lift.setPosition(5000.0);
 		finished = true;
 	}
-
+	
+	
 	@Override
 	protected boolean isFinished() {
 		return finished;
 	}
+	
 }

@@ -5,9 +5,14 @@ import org.usfirst.frc.team5472.robot.commands.JoystickDriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,19 +47,28 @@ public class DriveSubsystem extends Subsystem {
 		// Results of experiment:
 		// Left: 12489 Ticks per Meter
 		// Right: 12270 Ticks per Meter
-		leftFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		leftFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		leftFollower.setSensorPhase(true);
 		// followerLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
 		// 0, 100);
-		rightFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		rightFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		rightFollower.setSensorPhase(true);
 		// followerRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
 		// 0, 100);
 
 		controlMode = ControlMode.PercentOutput;
+		
+		left.setNeutralMode(NeutralMode.Coast);
+		leftFollower.setNeutralMode(NeutralMode.Coast);
+		right.setNeutralMode(NeutralMode.Coast);
+		rightFollower.setNeutralMode(NeutralMode.Coast);
 
-		left.set(controlMode, 0);
-		leftFollower.set(controlMode, left.getDeviceID());
-		right.set(controlMode, 0);
-		rightFollower.set(controlMode, right.getDeviceID());
+		left.set(controlMode, 10);
+		leftFollower.set(controlMode, 10);
+		right.set(controlMode, 10);
+		rightFollower.set(controlMode, 10);
+		
+		highGear();
 	}
 
 	public void setControlMode(ControlMode newMode) {
@@ -85,40 +99,40 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void highGear() {
-		shiftSolenoid.set(false);
-	}
-
-	public void lowGear() {
 		shiftSolenoid.set(true);
 	}
 
+	public void lowGear() {
+		shiftSolenoid.set(false);
+	}
+
 	public void resetEncoders() {
-		left.setSelectedSensorPosition(0, 0, 0);
-		right.setSelectedSensorPosition(0, 0, 0);
+		leftFollower.setSelectedSensorPosition(0, 0, 0);
+		rightFollower.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	public int getLeftRaw() {
-		return left.getSelectedSensorPosition(0);
+		return leftFollower.getSelectedSensorPosition(0);
 	}
 
 	public double getLeftPosition() {
-		return left.getSelectedSensorPosition(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return leftFollower.getSelectedSensorPosition(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getLeftVelocity() {
-		return left.getSelectedSensorVelocity(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return leftFollower.getSelectedSensorVelocity(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public int getRightRaw() {
-		return right.getSelectedSensorPosition(0);
+		return rightFollower.getSelectedSensorPosition(0);
 	}
 
 	public double getRightPosition() {
-		return right.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return rightFollower.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getRightVelocity() {
-		return right.getSelectedSensorVelocity(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return rightFollower.getSelectedSensorVelocity(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getHeading() {
@@ -128,7 +142,36 @@ public class DriveSubsystem extends Subsystem {
 	public void resetHeading() {
 		navx.zeroYaw();
 	}
-
+	
+	// Autonomous Stuff
+	public static double truncate(double value, double limit) {
+		limit = Math.abs(limit);
+		return value > limit ? limit : value < -limit ? -limit : value;
+	}
+	
+	private final PIDSource driveVelocitySource = new PIDSource(){
+		public double pidGet() {
+			return (getLeftVelocity() + getRightVelocity()) / 2.0;
+		}
+		public PIDSourceType getPIDSourceType() {return PIDSourceType.kRate;}
+		public void setPIDSourceType(PIDSourceType t) {}
+	};
+	
+	private final PIDOutput driveOutput = (double output) -> {
+		drive(output, output);
+	};
+	
+	private final PIDSource drivePositionSource = new PIDSource() {
+		public double pidGet() {
+			return (getLeftPosition() + getRightPosition()) / 2;
+		}
+		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
+		public void setPIDSourceType(PIDSourceType t) {}
+	};
+	
+	public final PIDController drivePositionController = new PIDController(Constants.ENCODER_FOLLOWER_P, Constants.ENCODER_FOLLOWER_I, Constants.ENCODER_FOLLOWER_D,
+																			Constants.ENCODER_FOLLOWER_V, drivePositionSource, driveOutput);
+	
 	public void reportDebugInformation() {
 		/**
 		 * Reports the following information: - Voltage......(For each motor

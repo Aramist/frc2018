@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5472.robot.autonomous;
+package org.usfirst.frc.team5472.robot.autonomous.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +14,7 @@ public class Delay extends Command{
 	
 	@Override
 	public void execute() {
+		//TODO: Run a test to see if commands execute in main thread
 		Timer.delay(time);
 		finished = true;
 	}

@@ -17,14 +17,16 @@ public class LiftSubsystem extends Subsystem {
 	public LiftSubsystem() {
 		liftMotor = new TalonSRX(Constants.LIFT_TALON_CAN);
 		liftMotor.setNeutralMode(NeutralMode.Brake);
-		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		liftMotor.setSensorPhase(true);
+		liftMotor.configPeakOutputForward(0.4, 10);
+		liftMotor.configPeakOutputReverse(0.1, 10);
 		liftMotor.config_kP(0, Constants.LIFT_PIDF_P, 10);
 		liftMotor.config_kI(0, Constants.LIFT_PIDF_I, 10);
 		liftMotor.config_kD(0, Constants.LIFT_PIDF_D, 10);
 		liftMotor.config_kF(0, Constants.LIFT_PIDF_F, 10);
 		liftMotor.config_IntegralZone(0, Constants.LIFT_PIDF_INTZONE, 10);
-		liftMotor.configForwardSoftLimitThreshold(33500, 10);
+		liftMotor.configForwardSoftLimitThreshold(35000, 10);
 		liftMotor.configForwardSoftLimitEnable(true, 10);
 		liftMotor.configReverseSoftLimitThreshold(0, 10);
 		liftMotor.configReverseSoftLimitEnable(true, 10);
@@ -35,11 +37,11 @@ public class LiftSubsystem extends Subsystem {
 	}
 
 	public void stopLift() {
-		setLiftPercent(0);
+		setLiftPercent(0.2);
 	}
 
 	public void resetEncoder() {
-		liftMotor.setSelectedSensorPosition(0, 0, 10);
+		liftMotor.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	public double getPosition() {
@@ -49,7 +51,7 @@ public class LiftSubsystem extends Subsystem {
 	public void setPosition(double position) {
 		liftMotor.set(ControlMode.Position, position);
 	}
-
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new LiftDefault());

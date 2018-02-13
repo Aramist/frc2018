@@ -1,8 +1,9 @@
-package org.usfirst.frc.team5472.robot.autonomous;
+package org.usfirst.frc.team5472.robot.autonomous.commands;
 
 import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Limelight;
 import org.usfirst.frc.team5472.robot.Robot;
+import org.usfirst.frc.team5472.robot.autonomous.Recorder;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -22,8 +23,11 @@ public class ApproachBox extends Command{
 	private double targetStamp;
 	private double targetLost;
 	
-	public ApproachBox() {
+	private Recorder backtrack;
+	
+	public ApproachBox(Recorder recorder) {
 		requires(Robot.driveSubsystem);
+		backtrack = recorder;
 	}
 	
 	@Override
@@ -72,6 +76,7 @@ public class ApproachBox extends Command{
 	public void end() {
 		Timer.delay(0.2);
 		drive.drive(0.0, 0.0);
+		backtrack.stop();
 	}
 	
 	protected boolean isFinished() {

@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Left Distance: " + driveSubsystem.getLeftPosition());
 	}
 
 	@Override
@@ -66,15 +67,14 @@ public class Robot extends TimedRobot {
 		driveSubsystem.resetEncoders();
 		driveSubsystem.resetHeading();
 		liftSubsystem.resetEncoder();
+		driveSubsystem.highGear();
 		auto.end();
 	}
-
+	
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		System.out.println("Left: " + driveSubsystem.getLeftRaw());
-		System.out.println("Right: " + driveSubsystem.getRightRaw());
+		System.out.println(controls.highLimit.get());
 	}
 
 	@Override

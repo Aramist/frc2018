@@ -1,32 +1,31 @@
-package org.usfirst.frc.team5472.robot.autonomous;
+package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftCommand extends Command {
-
-	private boolean finished = false;
-	private int position;
+public class LiftStop extends Command{
+	
+	
+	private Joystick stick;
 	private LiftSubsystem lift;
-
-	public LiftCommand(int position) {
-		this.position = position;
-		requires(Robot.liftSubsystem);
-	}
-
+	private boolean finished;
+	
 	@Override
 	public void initialize() {
-		this.lift = Robot.liftSubsystem;
+		lift = Robot.liftSubsystem;
+		stick = Robot.controls.getJoystick();
 	}
-
+	
 	@Override
 	public void execute() {
-		lift.setPosition(position);
+		if(Math.max(0, (stick.getRawAxis(2) - 0.05) / 1.25) != 0.0)
+			lift.stopLift();
 		finished = true;
 	}
-
+	
 	@Override
 	protected boolean isFinished() {
 		return finished;

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PlayRecording extends Command {
 	
 	private ArrayList<Reading> velocityData;
+	private boolean reversed = false;
 	private boolean finished;
 	
 	private DriveSubsystem drive;
@@ -21,6 +22,11 @@ public class PlayRecording extends Command {
 		finished = false;
 	}
 	
+	public PlayRecording(Recorder record, boolean reversed) {
+		this(record);
+		this.reversed = reversed;
+	}
+	
 	@Override
 	public void initialize() {
 		this.drive = Robot.driveSubsystem;
@@ -28,16 +34,27 @@ public class PlayRecording extends Command {
 	
 	@Override
 	public void execute() {
-		new Thread(() -> {
-			int index = 0;
-			int length = velocityData.size();
-			while(!isCanceled() && index < length) {
-				Reading currentVelocity = velocityData.get(index);
-				drive.drive(currentVelocity.left, currentVelocity.right);
-				Timer.delay(0.05);
-			}
-			finished = true;
-		}).start();
+		if(!reversed)
+			new Thread(() -> {
+				int index = 0;
+				int length = velocityData.size();
+				while(!isCanceled() && index < length) {
+					Reading currentVelocity = velocityData.get(index++);
+					drive.drive(currentVelocity.left, currentVelocity.right);
+					Timer.delay(0.05);
+				}
+				finished = true;
+			}).start();
+		else
+			new Thread(() -> {
+				int index = velocityData.size() - 1;
+				while(!isCanceled() && index >= 0) {
+					Reading currentVelocity = velocityData.get(index--);
+					drive.drive(currentVelocity.left, currentVelocity.right);
+					Timer.delay(0.05);
+				}
+				finished = true;
+			}).start();
 	}
 	
 	@Override

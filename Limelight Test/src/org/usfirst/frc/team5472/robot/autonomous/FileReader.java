@@ -13,7 +13,9 @@ import java.util.stream.Stream;
 public class FileReader {
 	private String fileName;
 	private BufferedReader buf;
-	private ArrayList<String> content= new ArrayList<String>();
+	private ArrayList<String> content = new ArrayList<String>();
+	public static ArrayList<String> commands = new ArrayList<String>();
+	public static ArrayList<String> arguments = new ArrayList<String>();
 
 	public FileReader(String startPosition, String switchOrScale, String gameData) {
 		fileName = startPosition + switchOrScale + gameData + ".txt";
@@ -23,23 +25,22 @@ public class FileReader {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public ArrayList<String> readFile() {
 		try {
-				Stream<String> x = buf.lines();
-				Object[] obj= x.toArray();
-				for(Object s : obj) {
-					
-					content.add(new String((String)s));
-				}
-				
-				
-			
+			Stream<String> x = buf.lines();
+			Object[] obj = x.toArray();
+			for (Object s : obj) {
+				content.add(new String((String) s));
+			}
+
 		} catch (Exception e) {
 			System.out.println("Error Reading File");
 		}
-		return content;
+		for (String a : content) {
+			if (a.equals("F") || a.equals("T"))
+				commands.add(a);
+			else
+				arguments.add(a);
+		}
 	}
 
 }

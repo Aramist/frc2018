@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5472.robot;
 
-import com.team5472.robot.pathfinder.Trajectory.Config;
-import com.team5472.robot.pathfinder.fit.FitMethod;
-
 public class Constants {
 	public static final String AUTONOMOUS_CHOOSER_NAME = "Select an Autonomous Program: ";
 
@@ -29,7 +26,12 @@ public class Constants {
 
 	// Measured in meters.
 	public static final double WHEEL_DIAMETER = 0.1016;
-	// Measured in meters. Distance from center of left wheels to center of right wheels.
+	// Measured in meters. Distance from center of left wheels to center of
+	// right wheels.
+	public static final double width;
+	public static final double length;
+	public static final double v;
+
 	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
 	public static final double LEFT_ENCODER_TICKS_PER_METER = 12300;
 	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12800;

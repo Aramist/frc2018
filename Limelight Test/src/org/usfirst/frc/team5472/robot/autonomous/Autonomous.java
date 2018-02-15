@@ -1,17 +1,6 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.usfirst.frc.team5472.robot.Constants;
-import org.usfirst.frc.team5472.robot.Constants.AutonomousProgram;
 import org.usfirst.frc.team5472.robot.autonomous.commands.PassAutoLine;
-
-import com.team5472.robot.pathfinder.IO;
-import com.team5472.robot.pathfinder.Pathfinder;
-import com.team5472.robot.pathfinder.Segment;
-import com.team5472.robot.pathfinder.Trajectory.Config;
-import com.team5472.robot.pathfinder.Waypoint;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -99,26 +88,5 @@ public class Autonomous {
 		String gameSpecificData = DriverStation.getInstance().getGameSpecificMessage();
 		if (gameSpecificData != null)
 			this.gameSpecificData = gameSpecificData;
-	}
-
-	public Segment[] getPathFromFile(String pathName) throws Exception {
-		Path filePath = Paths.get("/home/lvuser/trajectories/" + pathName + ".traj");
-		if (!filePath.toFile().exists()) {
-			throw new Exception("File does not exist"); // TODO: use a less
-														// generic exception
-														// class
-		}
-		return IO.deserialize(filePath);
-	}
-
-	public void writePathToFile(String pathName, Segment[] trajectory) {
-		Path filePath = Paths.get("/home/lvuser/trajectories/" + pathName + ".traj");
-		IO.serialize(filePath, trajectory);
-	}
-
-	public Segment[] generatePath(String pathName, Waypoint[] waypoints, Config config) {
-		Segment[] trajectory = Pathfinder.generate(waypoints, config);
-		writePathToFile(pathName, trajectory);
-		return trajectory;
 	}
 }

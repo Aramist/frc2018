@@ -38,29 +38,17 @@ public class DriveSubsystem extends Subsystem {
 		leftFollower.setInverted(false);
 		right.setInverted(true);
 		rightFollower.setInverted(true);
-
-		// left.setNeutralMode(NeutralMode.Brake);
-		// followerLeft.setNeutralMode(NeutralMode.Brake);
-		// right.setNeutralMode(NeutralMode.Brake);
-		// followerRight.setNeutralMode(NeutralMode.Brake);
-
-		// Results of experiment:
-		// Left: 12489 Ticks per Meter
-		// Right: 12270 Ticks per Meter
+		
 		leftFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		leftFollower.setSensorPhase(true);
-		// followerLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
-		// 0, 100);
 		rightFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		rightFollower.setSensorPhase(true);
-		// followerRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
-		// 0, 100);
 
 		controlMode = ControlMode.PercentOutput;
 		
-		left.setNeutralMode(NeutralMode.Coast);
+		left.setNeutralMode(NeutralMode.Brake);
 		leftFollower.setNeutralMode(NeutralMode.Coast);
-		right.setNeutralMode(NeutralMode.Coast);
+		right.setNeutralMode(NeutralMode.Brake);
 		rightFollower.setNeutralMode(NeutralMode.Coast);
 
 		left.set(controlMode, 10);
@@ -149,14 +137,6 @@ public class DriveSubsystem extends Subsystem {
 		return value > limit ? limit : value < -limit ? -limit : value;
 	}
 	
-	private final PIDSource driveVelocitySource = new PIDSource(){
-		public double pidGet() {
-			return (getLeftVelocity() + getRightVelocity()) / 2.0;
-		}
-		public PIDSourceType getPIDSourceType() {return PIDSourceType.kRate;}
-		public void setPIDSourceType(PIDSourceType t) {}
-	};
-	
 	private final PIDOutput driveOutput = (double output) -> {
 		drive(output, output);
 	};
@@ -169,36 +149,6 @@ public class DriveSubsystem extends Subsystem {
 		public void setPIDSourceType(PIDSourceType t) {}
 	};
 	
-	public final PIDController drivePositionController = new PIDController(Constants.ENCODER_FOLLOWER_P, Constants.ENCODER_FOLLOWER_I, Constants.ENCODER_FOLLOWER_D,
-																			Constants.ENCODER_FOLLOWER_V, drivePositionSource, driveOutput);
-	
-	public void reportDebugInformation() {
-		/**
-		 * Reports the following information: - Voltage......(For each motor
-		 * controller) - Current......(For each motor controller) -
-		 * Temperature..(For each motor controller) - Velocity.....(Left side
-		 * and Right side) - Encoder Readings - Bearing......(Relative to
-		 * starting position of robot, not North) - Heading......(Relative to
-		 * vision target, if any)
-		 */
-
-		// SmartDashboard.putNumber("Left Voltage", left.getBusVoltage());
-		// SmartDashboard.putNumber("Left Current", left.getOutputCurrent());
-		// SmartDashboard.putNumber("Left Temperature", left.getTemperature());
-		// SmartDashboard.putNumber("Left Output",
-		// left.getMotorOutputPercent());
-		SmartDashboard.putNumber("Left Encoder", getLeftPosition());
-		SmartDashboard.putNumber("Left Encoder Velocity", getLeftVelocity());
-		//
-		//
-		// SmartDashboard.putNumber("Right Current", right.getOutputCurrent());
-		// SmartDashboard.putNumber("Right Voltage", right.getBusVoltage());
-		// SmartDashboard.putNumber("Right Temperature",
-		// right.getTemperature());
-		// SmartDashboard.putNumber("Right Output",
-		// right.getMotorOutputPercent());
-		SmartDashboard.putNumber("Right Encoder", getRightPosition());
-		SmartDashboard.putNumber("Right Encoder Velocity", getRightVelocity());
-		// SmartDashboard.putNumber("Bearing", navx.getAngle());
-	}
+	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
+																			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
 }

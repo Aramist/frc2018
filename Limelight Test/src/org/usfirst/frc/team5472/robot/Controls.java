@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class Controls {
 
-	private Joystick stick = new Joystick(0);
-//	private Joystick xbox = new Joystick(1);
+	private Joystick playerOne = new Joystick(0);
+	private Joystick playerTwo = new Joystick(1);
 
 //	private JoystickButton toggleLights = new JoystickButton(stick, 2);
 //	private JoystickButton enableVision = new JoystickButton(stick, 10);
@@ -23,13 +23,13 @@ public class Controls {
 //	private JoystickButton switchPipeline = new JoystickButton(stick, 11);
 //	private JoystickButton boxPipeline = new JoystickButton(stick, 12);
 //	private JoystickButton flashLights = new JoystickButton(stick, 6);
-	private JoystickButton shiftGear = new JoystickButton(stick, 3);
+	private JoystickButton shiftGear = new JoystickButton(playerOne, 3);
 
-	private JoystickButton intakeIn = new JoystickButton(stick, 5);
-	private JoystickButton intakeOut = new JoystickButton(stick, 6);
-	private JoystickButton toggleGrip = new JoystickButton(stick, 1);
+	private JoystickButton intakeIn = new JoystickButton(playerTwo, 5);
+	private JoystickButton intakeOut = new JoystickButton(playerTwo, 6);
+	private JoystickButton toggleGrip = new JoystickButton(playerTwo, 1);
 	
-	private JoystickButton highButton = new JoystickButton(stick, 4);
+	private JoystickButton highButton = new JoystickButton(playerOne, 4);
 	
 	public LimitSwitch highLimit = new LimitSwitch(0);
 
@@ -56,6 +56,22 @@ public class Controls {
 	}
 
 	public Joystick getJoystick() {
-		return stick;
+		return playerOne;
+	}
+	
+	public double getLiftUpAxis() {
+		return playerTwo.getRawAxis(3);
+	}
+	
+	public double getLiftDownAxis() {
+		return playerTwo.getRawAxis(2);
+	}
+	
+	public double getDriveVerticalAxis() {
+		return playerOne.getRawAxis(1);
+	}
+	
+	public double getDriveHorizontalAxis() {
+		return playerOne.getRawAxis(0);
 	}
 }

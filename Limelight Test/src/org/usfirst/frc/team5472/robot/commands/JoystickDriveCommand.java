@@ -11,7 +11,7 @@ public class JoystickDriveCommand extends Command{
 	private Controls controls = Robot.controls;
 	
 	public JoystickDriveCommand() {
-		requires(Robot.driveSubsystem);
+		requires(Robot.drive);
 	}
 	
 	@Override
@@ -23,7 +23,10 @@ public class JoystickDriveCommand extends Command{
 		double y = -controls.getDriveVerticalAxis();
 		double x = controls.getDriveHorizontalAxis() / 2;
 		
-		Robot.driveSubsystem.drive(y + x, y - x);
+		y = Math.abs(y) < 0.15 ? 0 : y;
+		x = Math.abs(x) < 0.05 ? 0 : x;
+		
+		Robot.drive.drive(y + x, y - x);
 	}
 	
 	public boolean isFinished() {

@@ -26,13 +26,13 @@ public class ApproachBox extends Command{
 	private Recorder backtrack;
 	
 	public ApproachBox(Recorder recorder) {
-		requires(Robot.driveSubsystem);
+		requires(Robot.drive);
 		backtrack = recorder;
 	}
 	
 	@Override
 	public void initialize() {
-		drive = Robot.driveSubsystem;
+		drive = Robot.drive;
 		limelight = Robot.limelight;
 		drive.setControlMode(ControlMode.PercentOutput);
 		drive.resetEncoders();

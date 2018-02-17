@@ -4,22 +4,27 @@ import org.usfirst.frc.team5472.robot.Controls;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftStop extends Command{
 	
 	private LiftSubsystem lift;
-	private Controls controls = Robot.controls;
+	private Controls controls;
 	private boolean finished;
 	
 	@Override
 	public void initialize() {
-		lift = Robot.liftSubsystem;
-		
+		lift = Robot.lift;
+		controls = Robot.controls;
 	}
 	
 	@Override
 	public void execute() {
+		if(DriverStation.getInstance().isAutonomous()) {
+			finished = true;
+			return;
+		}
 		if(Math.max(0, (controls.getLiftUpAxis() - 0.05) / 1.25) != 0.0)
 			lift.stopLift();
 		finished = true;

@@ -25,28 +25,50 @@ public class Recorder {
 			left = l;
 			right = r;
 		}
+		
+		public String toString() {
+			return "{" + left + ", " + right + "}";
+		}
 	}
+	
+	protected static class Segment{
+		public Reading position;
+		public Reading velocity;
+		
+		public Segment() {}
+		public Segment(Reading p, Reading v) {
+			position = p;
+			velocity = v;
+		}
+		
+		public String toString() {
+			return position.toString() + " " + velocity.toString();
+		}
+	}
+	
+	protected static final double dt = 0.05;
 	
 	private boolean enabled = false;
 	private DriveSubsystem drive;
-	private ArrayList<Reading> velocityData;
+	private ArrayList<Segment> data;
 	private Thread readerThread;
 	
 	public Recorder() {
-		drive = Robot.driveSubsystem;
-		velocityData = new ArrayList<Reading>();
+		drive = Robot.drive;
+		data = new ArrayList<>();
 	}
 	
-	protected Recorder(ArrayList<Reading> velocityReadings) {
-		drive = Robot.driveSubsystem;
-		this.velocityData = velocityReadings;
+	protected Recorder(ArrayList<Segment> segments) {
+		drive = Robot.drive;
+		data = segments;
 	}
 	
 	public void start() {
 		Runnable readerTask = () -> {
 			while (enabled) {
-				velocityData.add(new Reading(drive.getLeftVelocity(), drive.getRightVelocity()));
-				Timer.delay(0.05);
+				data.add(new Segment(new Reading(drive.getLeftPosition(), drive.getRightPosition()),
+						 			 new Reading(drive.getLeftVelocity(), drive.getRightVelocity())));
+				Timer.delay(dt);
 			}
 		};
 		readerThread = new Thread(readerTask);
@@ -67,13 +89,16 @@ public class Recorder {
 			FileOutputStream fos = new FileOutputStream(filePath.toFile());
 			DataOutputStream dos = new DataOutputStream(fos);
 			//First write the path length
-			//then write each Reading. Left followed by right.
-			dos.writeInt(velocityData.size());
-			for(Reading r : velocityData) {
-				dos.writeDouble(r.left);
-				dos.writeDouble(r.right);
+			//then write each Reading. Position followed by Velocity, Left followed by Right
+			dos.writeInt(data.size());
+			for(Segment seg : data) {
+				dos.writeDouble(seg.position.left);
+				dos.writeDouble(seg.position.right);
+				dos.writeDouble(seg.velocity.left);
+				dos.writeDouble(seg.velocity.right);
 			}
 			dos.close();
+			System.out.println("Saved " + data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,23 +106,25 @@ public class Recorder {
 	
 	public static Recorder load(String name) {
 		int length = 0;
-		ArrayList<Reading> readings = new ArrayList<Reading>();
+		ArrayList<Segment> segments = new ArrayList<>();
 		try {
 			File file = Paths.get("/home/lvuser/paths/" + name + ".path").toFile();
 			FileInputStream fis = new FileInputStream(file);
 			DataInputStream dis = new DataInputStream(fis);
 			length = dis.readInt();
 			for(int i = 0; i < length; i++)
-				readings.add(new Reading(dis.readDouble(), dis.readDouble()));
+				segments.add(new Segment(
+						new Reading(dis.readDouble(), dis.readDouble()),
+						new Reading(dis.readDouble(), dis.readDouble())));
 			dis.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return new Recorder(readings);
+		return new Recorder(segments);
 	}
 	
-	protected ArrayList<Reading> getVelocityReadings(){
-		return velocityData;
+	protected ArrayList<Segment> getSegments(){
+		return data;
 	}
 }

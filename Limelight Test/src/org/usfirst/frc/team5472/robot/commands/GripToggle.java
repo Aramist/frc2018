@@ -12,7 +12,7 @@ public class GripToggle extends Command{
 	
 	@Override
 	public void initialize() {
-		intake = Robot.intakeSubsystem;
+		intake = Robot.intake;
 		finished = false;
 	}
 	

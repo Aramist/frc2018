@@ -12,7 +12,7 @@ public class ShiftGear extends Command {
 
 	@Override
 	public void initialize() {
-		this.drive = Robot.driveSubsystem;
+		this.drive = Robot.drive;
 	}
 
 	@Override

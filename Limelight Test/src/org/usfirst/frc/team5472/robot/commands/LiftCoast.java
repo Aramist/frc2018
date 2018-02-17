@@ -1,24 +1,22 @@
 package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
-import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GripOpen extends Command{
+public class LiftCoast extends Command{
 	
-	private IntakeSubsystem intake;
 	private boolean finished;
+	private LiftSubsystem lift;
 	
-	@Override
-	public void initialize() {
-		intake = Robot.intake;
-		finished = false;
+	public LiftCoast() {
+		lift = Robot.lift;
 	}
 	
 	@Override
 	public void execute() {
-		intake.open();
+		lift.enableCoast();
 		finished = true;
 	}
 	
@@ -26,5 +24,5 @@ public class GripOpen extends Command{
 	protected boolean isFinished() {
 		return finished;
 	}
-	
+
 }

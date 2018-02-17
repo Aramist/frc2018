@@ -12,7 +12,7 @@ public class HighGear extends Command {
 	
 	@Override
 	public void initialize() {
-		drive = Robot.driveSubsystem;
+		drive = Robot.drive;
 	}
 	
 	@Override

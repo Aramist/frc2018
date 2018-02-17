@@ -17,22 +17,22 @@ public class Forward extends Command{
 	
 	public Forward(double distance) {
 		this.distance = distance;
-		
-		requires(Robot.driveSubsystem);
+		requires(Robot.drive);
 	}
 	
 	@Override
 	public void initialize() {
-		drive = Robot.driveSubsystem;
+		drive = Robot.drive;
 		controller = drive.drivePositionController;
 		
 		drive.resetEncoders();
 		controller.reset();
 		controller.setSetpoint(distance);
-		controller.setAbsoluteTolerance(0.05); //5 cm
-		controller.setInputRange(0, 10);
-		controller.setOutputRange(0, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
+		controller.setAbsoluteTolerance(0.02); //5 cm
+		controller.setInputRange(-10, 10);
+		controller.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
 		controller.enable();
+		System.out.println("Controller enabled");
 	}
 	
 	@Override
@@ -41,6 +41,7 @@ public class Forward extends Command{
 		drive.drive(-0.1, -0.1);
 		Timer.delay(0.05);
 		drive.drive(0.0, 0.0);
+		System.out.println("Done driving forward");
 	}
 	
 	@Override

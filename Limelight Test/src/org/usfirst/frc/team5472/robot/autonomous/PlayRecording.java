@@ -2,23 +2,28 @@ package org.usfirst.frc.team5472.robot.autonomous;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Robot;
-import org.usfirst.frc.team5472.robot.autonomous.Recorder.Reading;
+import org.usfirst.frc.team5472.robot.autonomous.Recorder.Segment;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlayRecording extends Command {
-	
-	private ArrayList<Reading> velocityData;
+
+	private ArrayList<Segment> segments;
 	private boolean reversed = false;
 	private boolean finished;
 	
 	private DriveSubsystem drive;
 	
 	public PlayRecording(Recorder record) {
-		this.velocityData = record.getVelocityReadings();
+		drive = Robot.drive;
+		this.segments = record.getSegments();
+		drive.setControlMode(ControlMode.PercentOutput);
 		finished = false;
 	}
 	
@@ -29,7 +34,8 @@ public class PlayRecording extends Command {
 	
 	@Override
 	public void initialize() {
-		this.drive = Robot.driveSubsystem;
+		this.drive = Robot.drive;
+		drive.setControlMode(ControlMode.PercentOutput);
 	}
 	
 	@Override
@@ -37,21 +43,28 @@ public class PlayRecording extends Command {
 		if(!reversed)
 			new Thread(() -> {
 				int index = 0;
-				int length = velocityData.size();
+				int length = segments.size();
 				while(!isCanceled() && index < length) {
-					Reading currentVelocity = velocityData.get(index++);
-					drive.drive(currentVelocity.left, currentVelocity.right);
-					Timer.delay(0.05);
+					Segment current = segments.get(index++);
+					System.out.println("Left Velocity: " + current.velocity.left);
+					System.out.println("Left Position: " + current.position.left);
+					double left = calculateLeft(current.position.left, current.velocity.left);
+					double right = calculateRight(current.position.right, current.velocity.right);
+					drive.drive(left, right);
+					Timer.delay(Recorder.dt);
 				}
 				finished = true;
 			}).start();
 		else
 			new Thread(() -> {
-				int index = velocityData.size() - 1;
-				while(!isCanceled() && index >= 0) {
-					Reading currentVelocity = velocityData.get(index--);
-					drive.drive(currentVelocity.left, currentVelocity.right);
-					Timer.delay(0.05);
+				int index = 0;
+				int length = segments.size();
+				while(!isCanceled() && index < length) {
+					Segment current = segments.get(index);
+					double left = calculateLeft(-current.position.left, -current.velocity.left);
+					double right = calculateRight(-current.position.right, -current.velocity.right);
+					drive.drive(left, right);
+					Timer.delay(Recorder.dt);
 				}
 				finished = true;
 			}).start();
@@ -62,4 +75,34 @@ public class PlayRecording extends Command {
 		return finished;
 	}
 	
+	
+	private double previousLeftError = 0;
+	private double calculateLeft(double position, double velocity) {
+		double distanceTraveled = drive.getLeftPosition();
+		double error = position - distanceTraveled;
+		double p = Constants.DRIVE_FOLLOWER_P;
+		double d = Constants.DRIVE_FOLLOWER_D;
+		double v = Constants.DRIVE_FOLLOWER_V;
+		double dt = Recorder.dt;
+		double calculated = p * error 
+				+ d * ((error - previousLeftError) / dt)
+				+ v * velocity;
+		previousLeftError = error;
+		return calculated;
+	}
+	
+	private double previousRightError = 0;
+	private double calculateRight(double position, double velocity) {
+		double distanceTraveled = drive.getRightPosition();
+		double error = position - distanceTraveled;
+		double p = Constants.DRIVE_FOLLOWER_P;
+		double d = Constants.DRIVE_FOLLOWER_D;
+		double v = Constants.DRIVE_FOLLOWER_V;
+		double dt = Recorder.dt;
+		double calculated = p * error 
+				+ d * ((error - previousRightError) / dt)
+				+ v * velocity;
+		previousRightError = error;
+		return calculated;
+	}
 }

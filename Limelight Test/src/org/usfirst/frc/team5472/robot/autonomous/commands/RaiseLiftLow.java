@@ -7,18 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RaiseLiftLow extends Command{
 	
-	private boolean finished = false;
 	private LiftSubsystem lift;
+	private boolean finished;
 
 	@Override
 	public void initialize() {
-		lift = Robot.liftSubsystem;
+		lift = Robot.lift;
 	}
 	
 	@Override
 	public void execute() {
-		lift.setPosition(5000.0);
-		finished = true;
+		lift.setSetpoint(20000);
+		finished = lift.onTarget();
 	}
 	
 	

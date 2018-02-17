@@ -13,10 +13,9 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends Subsystem {
 
@@ -26,7 +25,7 @@ public class DriveSubsystem extends Subsystem {
 	private Solenoid shiftSolenoid;// , rightSolenoid;
 
 	public DriveSubsystem() {
-		navx = new AHRS(Port.kMXP);
+		navx = new AHRS(SPI.Port.kMXP);
 
 		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
@@ -51,10 +50,10 @@ public class DriveSubsystem extends Subsystem {
 		right.setNeutralMode(NeutralMode.Brake);
 		rightFollower.setNeutralMode(NeutralMode.Coast);
 
-		left.set(controlMode, 10);
-		leftFollower.set(controlMode, 10);
-		right.set(controlMode, 10);
-		rightFollower.set(controlMode, 10);
+		left.set(controlMode, 0);
+		leftFollower.set(controlMode, 0);
+		right.set(controlMode, 0);
+		rightFollower.set(controlMode, 0);
 		
 		highGear();
 	}
@@ -104,11 +103,11 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public double getLeftPosition() {
-		return leftFollower.getSelectedSensorPosition(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return leftFollower.getSelectedSensorPosition(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getLeftVelocity() {
-		return leftFollower.getSelectedSensorVelocity(0) * Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return leftFollower.getSelectedSensorVelocity(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public int getRightRaw() {
@@ -116,15 +115,15 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public double getRightPosition() {
-		return rightFollower.getSelectedSensorPosition(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return rightFollower.getSelectedSensorPosition(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getRightVelocity() {
-		return rightFollower.getSelectedSensorVelocity(0) * Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return rightFollower.getSelectedSensorVelocity(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getHeading() {
-		return navx.getAngle();
+		return -navx.getAngle();
 	}
 
 	public void resetHeading() {
@@ -141,6 +140,18 @@ public class DriveSubsystem extends Subsystem {
 		drive(output, output);
 	};
 	
+	private final PIDOutput turnOutput = (double output) -> {
+		drive(-output, output);
+	};
+	
+	private final PIDSource turnAngleSource = new PIDSource() {
+		public double pidGet() {
+			return getHeading();
+		}
+		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
+		public void setPIDSourceType(PIDSourceType t) {}
+	};
+	
 	private final PIDSource drivePositionSource = new PIDSource() {
 		public double pidGet() {
 			return (getLeftPosition() + getRightPosition()) / 2;
@@ -151,4 +162,5 @@ public class DriveSubsystem extends Subsystem {
 	
 	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
 																			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
+	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, turnAngleSource, turnOutput);
 }

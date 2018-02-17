@@ -23,13 +23,13 @@ public class LookForBox extends Command{
 	private Recorder backtrack;
 	
 	public LookForBox() {
-		requires(Robot.driveSubsystem);
+		requires(Robot.drive);
 		backtrack = new Recorder();
 	}
 	
 	@Override
 	public void initialize() {
-		drive = Robot.driveSubsystem;
+		drive = Robot.drive;
 		limelight = Robot.limelight;
 		drive.resetHeading();
 		backtrack.start();

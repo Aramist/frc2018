@@ -61,16 +61,16 @@ public class Autonomous {
 	public void start() {
 		selectedCommand = new PassAutoLine();
 		selectedCommand.start();
-		StartingPosition startPos = starting.getSelected();
-		Plan thePlan = plan.getSelected();
-		switch(startPos) {
-		case CENTER:
-			startingCenter(thePlan);
-		case LEFT:
-			startingLeft(thePlan);
-		case RIGHT:
-			startingRight(thePlan);
-		}
+//		StartingPosition startPos = starting.getSelected();
+//		Plan thePlan = plan.getSelected();
+//		switch(startPos) {
+//		case CENTER:
+//			startingCenter(thePlan);
+//		case LEFT:
+//			startingLeft(thePlan);
+//		case RIGHT:
+//			startingRight(thePlan);
+//		}
 	}
 	
 	public void startingCenter(Plan thePlan) {}

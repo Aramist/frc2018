@@ -28,19 +28,19 @@ public class Constants {
 	public static final double WHEEL_DIAMETER = 0.1016;
 	// Measured in meters. Distance from center of left wheels to center of
 	// right wheels.
-	public static final double ROBOT_WIDTH = 1.0;
-	public static final double ROBOT_LENGTH = 1.0;
-	public static final double V_CONSTANT = 0.10;
+	public static final double ROBOT_WIDTH = 0.7112;
+	public static final double ROBOT_LENGTH = 0.8382;
+	public static final double V_CONSTANT = 0.30;
 
 	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
 	public static final double LEFT_ENCODER_TICKS_PER_METER = 12300;
 	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12800;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
-	public static final double ROBOT_MAX_VELOCITY = 5; // m/s
-	public static final double DRIVE_FOLLOWER_P = 1;
-	public static final double DRIVE_FOLLOWER_I = 0;
-	public static final double DRIVE_FOLLOWER_D = 0;
+	public static final double ROBOT_MAX_VELOCITY = 5.0; // m/s
+	public static final double DRIVE_FOLLOWER_P = 0.6;
+	public static final double DRIVE_FOLLOWER_I = 0.0;
+	public static final double DRIVE_FOLLOWER_D = 0.2;
 	public static final double DRIVE_FOLLOWER_V = 1.0 / ROBOT_MAX_VELOCITY;
 	public static final double DRIVE_FOLLOWER_A = 0;
 
@@ -56,14 +56,16 @@ public class Constants {
 	public static final int DRIVE_RIGHT_TALON_CAN = 4;
 	public static final int DRIVE_RIGHT_FOLLOWER_CAN = 3;
 	public static final int DRIVE_SHIFT_SOLENOID = 0;
-	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.2;
-	public static final double DRIVE_AUTO_TURN_KP = 1.0;
+	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.6;
+	public static final double DRIVE_AUTO_TURN_P = 0.4;
+	public static final double DRIVE_AUTO_TURN_I = 0.0;
+	public static final double DRIVE_AUTO_TURN_D = 0.4;
 
 	public static final int LIFT_TALON_CAN = 5;
-	public static final double LIFT_PIDF_P = 0.003;
-	public static final double LIFT_PIDF_I = 0.0;
-	public static final double LIFT_PIDF_D = 0.002;
-	public static final double LIFT_PIDF_F = 0.2;
+	public static final double LIFT_PIDF_P = 0.0003;
+	public static final double LIFT_PIDF_I = 0.0000;
+	public static final double LIFT_PIDF_D = 0.0001;
+	public static final double LIFT_PIDF_F = 0.3000;
 	public static final int LIFT_PIDF_INTZONE = 40;
 
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;

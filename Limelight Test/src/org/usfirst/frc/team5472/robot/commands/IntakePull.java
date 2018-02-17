@@ -12,7 +12,7 @@ public class IntakePull extends Command{
 	
 	@Override
 	public void initialize() {
-		intake = Robot.intakeSubsystem;
+		intake = Robot.intake;
 		finished = false;
 	}
 	

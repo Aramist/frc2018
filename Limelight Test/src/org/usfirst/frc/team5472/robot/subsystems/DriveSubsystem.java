@@ -1,6 +1,9 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team5472.robot.Constants;
+import org.usfirst.frc.team5472.robot.DataProvider;
 import org.usfirst.frc.team5472.robot.commands.JoystickDriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -17,7 +20,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveSubsystem extends Subsystem {
+public class DriveSubsystem extends Subsystem implements DataProvider{
 
 	private AHRS navx;
 	private TalonSRX left, right, leftFollower, rightFollower;
@@ -163,4 +166,20 @@ public class DriveSubsystem extends Subsystem {
 	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
 																			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
 	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, turnAngleSource, turnOutput);
+
+	public HashMap<String, double[]> getData(){
+		HashMap<String, double[]> toReturn = new HashMap<>();
+		toReturn.put("Motor Output Percent (fl, fr, bl, br)", new double[] {
+				leftFollower.getMotorOutputPercent(), rightFollower.getMotorOutputPercent(),
+				left.getMotorOutputPercent(), right.getMotorOutputPercent()
+		});
+		toReturn.put("Motor Output Current (fl, fr, bl, br)", new double[] {
+				leftFollower.getOutputCurrent(), rightFollower.getOutputCurrent(),
+				left.getOutputCurrent(), right.getOutputCurrent()
+		});
+		toReturn.put("Motor Encoder Position (left, right)", new double[] {
+				getLeftPosition(), getRightPosition()
+		});
+		return toReturn;
+	}
 }

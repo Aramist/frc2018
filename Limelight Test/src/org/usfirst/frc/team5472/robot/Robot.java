@@ -10,6 +10,7 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.autonomous.Autonomous;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.LedSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,16 +24,20 @@ public class Robot extends TimedRobot {
 	public static DriveSubsystem drive;
 	public static IntakeSubsystem intake;
 	public static LiftSubsystem lift;
+	public static LedSubsystem led;
 	public static Limelight limelight;
-
+	private static DataLogger logger;
+	
 	@Override
 	public void robotInit() {
 		drive = new DriveSubsystem();
 		intake = new IntakeSubsystem();
 		lift = new LiftSubsystem();
+		led = new LedSubsystem();
 		limelight = new Limelight();
 		auto = new Autonomous();
 		controls = new Controls();
+		logger = new DataLogger();
 	}
 
 	@Override
@@ -41,8 +46,7 @@ public class Robot extends TimedRobot {
 		drive.resetEncoders();
 		drive.resetHeading();
 		lift.resetEncoder();
-		lift.setSetpoint(0);
-		lift.disable();
+		logger.end();
 	}
 
 	@Override
@@ -56,14 +60,18 @@ public class Robot extends TimedRobot {
 		drive.resetEncoders();
 		drive.resetHeading();
 		lift.resetEncoder();
+		logger.start();
 		auto.start();
-		lift.setSetpoint(0);
-		lift.enable();
 	}
 
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		logger.appendData(drive);
+		logger.appendData(lift);
+		logger.appendData(intake);
+		logger.appendData(limelight);
+		logger.appendData(led);
 	}
 
 	@Override
@@ -73,14 +81,18 @@ public class Robot extends TimedRobot {
 		drive.resetHeading();
 		lift.resetEncoder();
 		drive.highGear();
+		logger.start();
 		auto.end();
-		lift.setSetpoint(0);
-		lift.disable();
 	}
 	
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		logger.appendData(drive);
+		logger.appendData(lift);
+		logger.appendData(intake);
+		logger.appendData(limelight);
+		logger.appendData(led);
 	}
 	
 	@Override

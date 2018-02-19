@@ -5,7 +5,6 @@ import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
 import org.usfirst.frc.team5472.robot.commands.IntakePush;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
-import org.usfirst.frc.team5472.robot.commands.LiftCoast;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
 
@@ -25,9 +24,7 @@ public class Controls {
 	
 	private JoystickButton highButton = new JoystickButton(playerOne, 4);
 	
-	private JoystickButton liftDown = new JoystickButton(playerTwo, 1);
-	
-	public LimitSwitch highLimit = new LimitSwitch(0);
+	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH);
 
 	
 	public Controls() {
@@ -43,8 +40,6 @@ public class Controls {
 		toggleGrip.whenPressed(new GripToggle());
 		
 		highLimit.whileActive(new LiftStop());
-
-		liftDown.whenPressed(new LiftCoast());
 	}
 
 	public Joystick getPlayerOne() {

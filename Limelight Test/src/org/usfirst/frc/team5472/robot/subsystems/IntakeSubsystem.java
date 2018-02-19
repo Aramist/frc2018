@@ -1,6 +1,9 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team5472.robot.Constants;
+import org.usfirst.frc.team5472.robot.DataProvider;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -9,7 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class IntakeSubsystem extends Subsystem{
+public class IntakeSubsystem extends Subsystem implements DataProvider{
 	
 	private TalonSRX leftSide;
 	private TalonSRX rightSide;
@@ -66,4 +69,17 @@ public class IntakeSubsystem extends Subsystem{
 		return Math.abs(leftSide.getMotorOutputPercent());
 	}
 	
+	public HashMap<String, double[]> getData(){
+		HashMap<String, double[]> toReturn = new HashMap<>();
+		toReturn.put("Intake Output Percent (left, right) ", new double[] {
+				leftSide.getMotorOutputPercent(), rightSide.getMotorOutputPercent()
+		});
+		toReturn.put("Intake Output Current (left, right) ", new double[] {
+				leftSide.getOutputCurrent(), rightSide.getOutputCurrent()
+		});
+		toReturn.put("Solenoid State ", new double[] {
+				gripIsOpen() ? 1 : 0
+		});
+		return toReturn;
+	}
 }

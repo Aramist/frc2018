@@ -39,12 +39,14 @@ public class Constants {
 	public static final double DRIVE_AUTO_TURN_D = 0.4;
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
 
-	public static final int LIFT_TALON_CAN = 5;
+	public static final int LIFT_TALON_CAN = 10;
 	public static final double LIFT_PIDF_P = 0.0040;
 	public static final double LIFT_PIDF_I = 0.0000;
 	public static final double LIFT_PIDF_D = 0.0001;
 	public static final double LIFT_PIDF_F = 0.2000;
 	public static final int LIFT_PIDF_INTZONE = 40;
+	
+	public static final int LIMIT_SWITCH_HIGH = 3;
 	
 	public static final int LED_RED_DIO = 0;
 	public static final int LED_GREEN_DIO = 1;

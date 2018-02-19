@@ -22,7 +22,7 @@ public class DriveSubsystem extends Subsystem {
 	private AHRS navx;
 	private TalonSRX left, right, leftFollower, rightFollower;
 	private ControlMode controlMode;
-	private Solenoid shiftSolenoid;// , rightSolenoid;
+	private Solenoid shiftSolenoid;
 
 	public DriveSubsystem() {
 		navx = new AHRS(SPI.Port.kMXP);

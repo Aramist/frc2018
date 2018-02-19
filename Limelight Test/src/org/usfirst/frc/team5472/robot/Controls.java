@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.autonomous.Recorder;
-import org.usfirst.frc.team5472.robot.autonomous.commands.StartRecording;
-import org.usfirst.frc.team5472.robot.autonomous.commands.StopRecording;
 import org.usfirst.frc.team5472.robot.commands.GripToggle;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
@@ -20,12 +17,6 @@ public class Controls {
 	private Joystick playerOne = new Joystick(0);
 	private Joystick playerTwo = new Joystick(1);
 
-//	private JoystickButton toggleLights = new JoystickButton(stick, 2);
-//	private JoystickButton enableVision = new JoystickButton(stick, 10);
-//	private JoystickButton disableVision = new JoystickButton(stick, 9);
-//	private JoystickButton switchPipeline = new JoystickButton(stick, 11);
-//	private JoystickButton boxPipeline = new JoystickButton(stick, 12);
-//	private JoystickButton flashLights = new JoystickButton(stick, 6);
 	private JoystickButton shiftGear = new JoystickButton(playerOne, 3);
 
 	private JoystickButton intakeIn = new JoystickButton(playerOne, 5);
@@ -40,11 +31,6 @@ public class Controls {
 
 	
 	public Controls() {
-//		toggleLights.whenReleased(new ToggleLights());
-//		enableVision.whenReleased(new EnableVision());
-//		disableVision.whenReleased(new DisableVision());
-//		switchPipeline.whenReleased(new SwitchPipeline());
-//		boxPipeline.whenReleased(new BoxPipeline());
 		shiftGear.whenPressed(new ShiftGear());
 		shiftGear.whenReleased(new ShiftGear());
 		highButton.whenPressed(new HighGear());
@@ -56,18 +42,9 @@ public class Controls {
 
 		toggleGrip.whenPressed(new GripToggle());
 		
-//		highLimit.whenPressed(new LowGear());
 		highLimit.whileActive(new LiftStop());
 
-		
 		liftDown.whenPressed(new LiftCoast());
-		
-		JoystickButton startRecording = new JoystickButton(playerTwo, 10);
-		JoystickButton stopRecording = new JoystickButton(playerTwo, 9);
-		
-		Recorder record = new Recorder();
-		startRecording.whenPressed(new StartRecording(record));
-		stopRecording.whenPressed(new StopRecording(record));
 	}
 
 	public Joystick getPlayerOne() {

@@ -14,7 +14,6 @@ public class Delay extends Command{
 	
 	@Override
 	public void execute() {
-		//TODO: Run a test to see if commands execute in main thread
 		Timer.delay(time);
 		finished = true;
 	}

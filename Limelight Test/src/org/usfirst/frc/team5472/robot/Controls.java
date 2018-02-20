@@ -27,7 +27,8 @@ public class Controls {
 	
 	private JoystickButton liftDown = new JoystickButton(playerTwo, 1);
 	
-	public LimitSwitch highLimit = new LimitSwitch(0);
+	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH);
+	
 
 	
 	public Controls() {

@@ -1,10 +1,11 @@
 package org.usfirst.frc.team5472.robot;
 
+import java.util.HashMap;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Limelight {
+public class Limelight implements DataProvider{
 	
 	/**
 	 * All of these const variables are keys (and values in some cases) for the 'limelight' NetworkTable. 
@@ -118,9 +119,20 @@ public class Limelight {
 		return fromTable == 1 ? true : false;
 	}
 	
-	public void reportDebugInformation() {
-		SmartDashboard.putString("Light On?", getLed() ? "yes" : "no");
-		SmartDashboard.putString("Vision Processing Enabled?", getVisionProcessingEnabled() ? "yes" : "no");
-		SmartDashboard.putString("Which Pipeline is in Use?", getActivePipeline() == SWITCH_DETECTION ? "Switch" : "Box");
+	public HashMap<String, double[]> getData(){
+		HashMap<String, double[]> toReturn = new HashMap<>();
+		toReturn.put("Limelight Connected ", new double[] {
+				isConnected() ? 1 : 0
+		});
+		toReturn.put("Vision Target Exists ", new double[] {
+				targetExists() ? 1 : 0
+		});
+		toReturn.put("Vision Target Angle ", new double[] {
+				getHorizontalAngle()
+		});
+		toReturn.put("Vision Target Area ", new double[] {
+				getTargetArea()
+		});
+		return toReturn;
 	}
 }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5472.robot.autonomous.commands;
 
+import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 
@@ -23,9 +24,10 @@ public class Turn extends Command{
 	public void initialize() {
 		turnController.reset();
 		turnController.setSetpoint(setpoint);
-		turnController.setInputRange(-360, 360);
-		turnController.setOutputRange(-0.7, 0.7);
-		turnController.setAbsoluteTolerance(0.5);
+		turnController.setContinuous();
+		turnController.setInputRange(0, 360);
+		turnController.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
+		turnController.setAbsoluteTolerance(0.25);
 		turnController.enable();
 	}
 

@@ -25,10 +25,9 @@ public class LiftDefault extends Command {
 	public void execute() {
 		if(DriverStation.getInstance().isAutonomous())
 			return;
-		double x = Math.max(0, (controls.getLiftUpAxis()) / 1.25);
-		double y = Math.max(-0.5, (-controls.getLiftDownAxis()) / 1.00);
-		if(x+y != 0)
-			lift.setPercent(x + y);
+		double x = controls.getLiftUpAxis();
+		double y = -controls.getLiftDownAxis() / 5.0;
+		lift.setPercent(x + y);
 		if(lift.getPosition() < 8000)
 			lift.enableBrake();
 	}

@@ -1,6 +1,9 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team5472.robot.Constants;
+import org.usfirst.frc.team5472.robot.DataProvider;
 import org.usfirst.frc.team5472.robot.commands.LiftDefault;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,7 +17,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class LiftSubsystem extends Subsystem {
+public class LiftSubsystem extends Subsystem implements DataProvider{
 
 	private TalonSRX liftMotor;
 	
@@ -27,9 +30,9 @@ public class LiftSubsystem extends Subsystem {
 		liftMotor.setNeutralMode(NeutralMode.Brake);
 		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		liftMotor.setSensorPhase(true);
-		liftMotor.configPeakOutputForward(0.8, 10);
+		liftMotor.configPeakOutputForward(1.0, 10);
 		liftMotor.configPeakOutputReverse(-0.2, 10);
-		liftMotor.configForwardSoftLimitThreshold(33500, 10);
+		liftMotor.configForwardSoftLimitThreshold(35000, 10);
 		liftMotor.configForwardSoftLimitEnable(true, 10);
 		liftMotor.configReverseSoftLimitThreshold(0, 10);
 		liftMotor.configReverseSoftLimitEnable(true, 10);
@@ -49,7 +52,7 @@ public class LiftSubsystem extends Subsystem {
 		positionController = new PIDController(Constants.LIFT_PIDF_P, Constants.LIFT_PIDF_I, Constants.LIFT_PIDF_D, Constants.LIFT_PIDF_F, positionSource, positionOutput);
 		positionController.setSetpoint(0.0);
 		positionController.setInputRange(0, 34000);
-		positionController.setOutputRange(0.0, 1.0);
+		positionController.setOutputRange(-0.1, 1.0);
 		positionController.setAbsoluteTolerance(50);
 	}
 
@@ -109,6 +112,14 @@ public class LiftSubsystem extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new LiftDefault());
+	}
+	
+	public HashMap<String, double[]> getData(){
+		HashMap<String, double[]> toReturn = new HashMap<>();
+		toReturn.put("Lift Position ", new double[] {getPosition()});
+		toReturn.put("Lift Current ", new double[] {liftMotor.getOutputCurrent()});
+		toReturn.put("Lift Output Percent ", new double[] {liftMotor.getMotorOutputPercent()});
+		return toReturn;
 	}
 
 }

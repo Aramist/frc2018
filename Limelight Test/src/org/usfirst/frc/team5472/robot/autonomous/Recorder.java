@@ -127,4 +127,19 @@ public class Recorder {
 	protected ArrayList<Segment> getSegments(){
 		return data;
 	}
+	
+	public double[][][] toTalonTrajectory(){
+		int size = data.size();
+		double[][] left = new double[size][3];
+		double[][] right = new double[size][3];
+		Segment current;
+		
+		for(int i = 0; i < size; i++) {
+			current = data.get(i);
+			left[i] = new double[] {current.position.left, current.velocity.left, dt * 1000};
+			right[i] = new double[] {current.position.right, current.velocity.right, dt * 1000};
+		}
+		
+		return new double[][][] {left, right};
+	}
 }

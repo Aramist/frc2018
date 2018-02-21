@@ -52,7 +52,7 @@ public class LedSubsystem implements DataProvider{
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
-		toReturn.put("LED Color ", new double[] {
+		toReturn.put("LED Color", new double[] {
 				currentColor.getRed() ? 255 : 0,
 				currentColor.getGreen() ? 255 : 0,
 				currentColor.getBlue() ? 255 : 0

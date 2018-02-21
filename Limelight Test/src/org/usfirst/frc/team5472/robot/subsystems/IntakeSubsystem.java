@@ -71,13 +71,13 @@ public class IntakeSubsystem extends Subsystem implements DataProvider{
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
-		toReturn.put("Intake Output Percent ", new double[] {
+		toReturn.put("Intake Output Percent", new double[] {
 				leftSide.getMotorOutputPercent(), rightSide.getMotorOutputPercent()
 		});
-		toReturn.put("Intake Output Current ", new double[] {
+		toReturn.put("Intake Output Current", new double[] {
 				leftSide.getOutputCurrent(), rightSide.getOutputCurrent()
 		});
-		toReturn.put("Intake Solenoid State ", new double[] {
+		toReturn.put("Intake Solenoid State", new double[] {
 				gripIsOpen() ? 1 : 0
 		});
 		return toReturn;

@@ -7,16 +7,21 @@
 
 package org.usfirst.frc.team5472.robot;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team5472.robot.autonomous.Autonomous;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LedSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Robot extends TimedRobot {
+public class Robot extends TimedRobot implements DataProvider{
 
 	private Autonomous auto;
 
@@ -28,6 +33,8 @@ public class Robot extends TimedRobot {
 	public static Limelight limelight;
 	private static DataLogger logger;
 	
+	private AnalogInput pressureSensor;
+	
 	@Override
 	public void robotInit() {
 		drive = new DriveSubsystem();
@@ -38,6 +45,8 @@ public class Robot extends TimedRobot {
 		auto = new Autonomous();
 		controls = new Controls();
 		logger = new DataLogger();
+		
+		pressureSensor = new AnalogInput(0);
 	}
 
 	@Override
@@ -54,6 +63,8 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		if (auto != null)
 			auto.checkGameSpecificData();
+		
+		SmartDashboard.putNumber("Pressure: ", getPressure());
 	}
 
 	@Override
@@ -74,7 +85,10 @@ public class Robot extends TimedRobot {
 		logger.appendData(intake);
 		logger.appendData(limelight);
 		logger.appendData(led);
+		logger.appendData(this);
 		logger.writeFrame();
+		
+		SmartDashboard.putNumber("Pressure: ", getPressure());
 	}
 
 	@Override
@@ -97,7 +111,10 @@ public class Robot extends TimedRobot {
 		logger.appendData(intake);
 		logger.appendData(limelight);
 		logger.appendData(led);
+		logger.appendData(this);
 		logger.writeFrame();
+		
+		SmartDashboard.putNumber("Pressure: ", getPressure());
 	}
 	
 	@Override
@@ -107,5 +124,26 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		Scheduler.getInstance().run();
+	}
+	
+	public double getPressure() {
+		return (250 * (pressureSensor.getVoltage() / 4.95)) - 29;
+	}
+	
+	public HashMap<String, double[]> getData(){
+		HashMap<String, double[]> toReturn = new HashMap<>();
+		toReturn.put("Battery Voltage", new double[] {
+				RobotController.getBatteryVoltage()
+		});
+		toReturn.put("CAN Bus Utilization", new double[] {
+				RobotController.getCANStatus().percentBusUtilization
+		});
+		toReturn.put("Brown Out", new double[] {
+				RobotController.isBrownedOut() ? 1.0 : 0.0
+		});
+		toReturn.put("Pressure", new double[] {
+				getPressure()
+		});
+		return toReturn;
 	}
 }

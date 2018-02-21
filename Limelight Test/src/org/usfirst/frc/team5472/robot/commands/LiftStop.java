@@ -25,8 +25,8 @@ public class LiftStop extends Command{
 			finished = true;
 			return;
 		}
-		if(Math.max(0, (controls.getLiftUpAxis() - 0.05) / 1.25) != 0.0)
-			lift.stopLift();
+		if (controls.getLiftUpAxis() > 0.05)
+			lift.hold();
 		finished = true;
 	}
 	

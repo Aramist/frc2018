@@ -11,11 +11,11 @@ public class PassAutoLine extends CommandGroup {
 	public PassAutoLine() {
 		addParallel(new GripClose());
 		
-		addParallel(new RaiseLiftLow(), 4);
+//		addParallel(new RaiseLiftLow(), 4);
 		addSequential(new Forward(4.826), 3);
 		addSequential(new Turn(-19), 3);
 		
-		addParallel(new RaiseLiftHigh(), 4);
+//		addParallel(new RaiseLiftHigh(), 4);
 		addSequential(new Forward(1.800), 4);
 		addSequential(new IntakePush());
 		addSequential(new Delay(0.5));

@@ -228,16 +228,19 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
-		toReturn.put("Motor Output Percent ", new double[] {
+		toReturn.put("Drive Motor Output Percent", new double[] {
 				leftFollower.getMotorOutputPercent(), rightFollower.getMotorOutputPercent(),
 				left.getMotorOutputPercent(), right.getMotorOutputPercent()
 		});
-		toReturn.put("Motor Output Current ", new double[] {
+		toReturn.put("Drive Motor Output Current", new double[] {
 				leftFollower.getOutputCurrent(), rightFollower.getOutputCurrent(),
 				left.getOutputCurrent(), right.getOutputCurrent()
 		});
-		toReturn.put("Motor Encoder Position ", new double[] {
+		toReturn.put("Drive Motor Encoder Position", new double[] {
 				getLeftPosition(), getRightPosition()
+		});
+		toReturn.put("Drive Motor Encoder Velocity", new double[] {
+				getLeftVelocity(), getRightVelocity()
 		});
 		return toReturn;
 	}

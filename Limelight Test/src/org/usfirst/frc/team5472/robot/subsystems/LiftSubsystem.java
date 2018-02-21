@@ -28,10 +28,11 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	public LiftSubsystem() {
 		liftMotor = new TalonSRX(Constants.LIFT_TALON_CAN);
 		liftMotor.setNeutralMode(NeutralMode.Brake);
-		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-		liftMotor.setSensorPhase(true);
+		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		liftMotor.setInverted(false); //Inverted from practice
+		liftMotor.setSensorPhase(false); //Inverted from practice
 		liftMotor.configPeakOutputForward(1.0, 10);
-		liftMotor.configPeakOutputReverse(-0.2, 10);
+		liftMotor.configPeakOutputReverse(-0.1, 10);
 		liftMotor.configForwardSoftLimitThreshold(35000, 10);
 		liftMotor.configForwardSoftLimitEnable(true, 10);
 		liftMotor.configReverseSoftLimitThreshold(0, 10);
@@ -52,7 +53,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController = new PIDController(Constants.LIFT_PIDF_P, Constants.LIFT_PIDF_I, Constants.LIFT_PIDF_D, Constants.LIFT_PIDF_F, positionSource, positionOutput);
 		positionController.setSetpoint(0.0);
 		positionController.setInputRange(0, 34000);
-		positionController.setOutputRange(-0.1, 1.0);
+		positionController.setOutputRange(-0.0, 1.0);
 		positionController.setAbsoluteTolerance(50);
 	}
 
@@ -60,8 +61,8 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		liftMotor.set(ControlMode.PercentOutput, percent); 
 	}
 
-	public void stopLift() {
-		setPercent(0);
+	public void hold() {
+		setPercent(0.15);
 	}
 
 	public void resetEncoder() {
@@ -116,9 +117,9 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
-		toReturn.put("Lift Position ", new double[] {getPosition()});
-		toReturn.put("Lift Current ", new double[] {liftMotor.getOutputCurrent()});
-		toReturn.put("Lift Output Percent ", new double[] {liftMotor.getMotorOutputPercent()});
+		toReturn.put("Lift Position", new double[] {getPosition()});
+		toReturn.put("Lift Current", new double[] {liftMotor.getOutputCurrent()});
+		toReturn.put("Lift Output Percent", new double[] {liftMotor.getMotorOutputPercent()});
 		return toReturn;
 	}
 

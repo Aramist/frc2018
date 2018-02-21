@@ -121,16 +121,16 @@ public class Limelight implements DataProvider{
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
-		toReturn.put("Limelight Connected ", new double[] {
+		toReturn.put("Limelight Connected", new double[] {
 				isConnected() ? 1 : 0
 		});
-		toReturn.put("Vision Target Exists ", new double[] {
+		toReturn.put("Vision Target Exists", new double[] {
 				targetExists() ? 1 : 0
 		});
-		toReturn.put("Vision Target Angle ", new double[] {
+		toReturn.put("Vision Target Angle", new double[] {
 				getHorizontalAngle()
 		});
-		toReturn.put("Vision Target Area ", new double[] {
+		toReturn.put("Vision Target Area", new double[] {
 				getTargetArea()
 		});
 		return toReturn;

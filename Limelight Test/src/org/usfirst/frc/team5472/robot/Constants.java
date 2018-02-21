@@ -40,10 +40,10 @@ public class Constants {
 	public static final double INTAKE_OUTPUT_SPEED = 1.0;
 	
 	public static final int LIFT_TALON_CAN = 10;
-	public static final double LIFT_PIDF_P = 0.0040;
+	public static final double LIFT_PIDF_P = 0.0001;
 	public static final double LIFT_PIDF_I = 0.0000;
-	public static final double LIFT_PIDF_D = 0.0080;
-	public static final double LIFT_PIDF_F = 0.2000;
+	public static final double LIFT_PIDF_D = 0.0000;
+	public static final double LIFT_PIDF_F = 0.0000;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;

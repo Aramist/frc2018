@@ -16,6 +16,7 @@ import org.usfirst.frc.team5472.robot.subsystems.LedSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot implements DataProvider{
 	public static Limelight limelight;
 	private static DataLogger logger;
 	
+	
 	private AnalogInput pressureSensor;
 	
 	@Override
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger = new DataLogger();
 		
 		pressureSensor = new AnalogInput(0);
+		
 	}
 
 	@Override
@@ -115,7 +118,10 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.writeFrame();
 		
 		SmartDashboard.putNumber("Pressure: ", getPressure());
-	}
+		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.getRaw());
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.getRaw());
+		
+		}
 	
 	@Override
 	public void testInit() {

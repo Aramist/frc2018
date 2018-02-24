@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5472.robot.commands;
 
+
+
+
 import org.usfirst.frc.team5472.robot.Controls;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
@@ -7,37 +10,30 @@ import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftDefault extends Command {
-
-	private LiftSubsystem lift;
-	private Controls controls = Robot.controls;
+public class LiftDownStop extends Command{
 	
-	public LiftDefault() {
-		requires(Robot.lift);
-	}
-
+	private LiftSubsystem lift;
+	private Controls controls;
+	private boolean finished;
+	
 	@Override
 	public void initialize() {
 		lift = Robot.lift;
+		controls = Robot.controls;
 	}
-
+	
 	@Override
 	public void execute() {
-		if(DriverStation.getInstance().isAutonomous())
+		if(controls.getLiftUpAxis() == 0)
+		lift.setPercent(0.05);
+		else {
 			return;
-		double x = controls.getLiftUpAxis();
-		double y = -controls.getLiftDownAxis() / 3.0;
-		
-				
-		lift.setPercent(x + y);
-		if(lift.getPosition() < 8000)
-			lift.enableBrake();
 		}
+	}
 		
 	
-
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return finished;
 	}
 }

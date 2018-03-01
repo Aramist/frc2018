@@ -29,8 +29,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 
 	private AHRS navx;
 	private TalonSRX left, right, leftFollower, rightFollower;
-	private MotionProfileStatus leftMotionStatus, rightMotionStatus;
-	private Notifier leftMotionRunner, rightMotionRunner;
 	private ControlMode controlMode;
 	private Solenoid shiftSolenoid;
 
@@ -41,17 +39,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
 		leftFollower = new TalonSRX(Constants.DRIVE_LEFT_FOLLOWER_CAN);
 		rightFollower = new TalonSRX(Constants.DRIVE_RIGHT_FOLLOWER_CAN);
-		
-		leftMotionStatus = new MotionProfileStatus();
-		rightMotionStatus = new MotionProfileStatus();
-		
-		leftMotionRunner = new Notifier(() -> {
-			left.processMotionProfileBuffer();
-		});
-		
-		rightMotionRunner = new Notifier(() -> {
-			right.processMotionProfileBuffer();
-		});
 		
 		shiftSolenoid = new Solenoid(Constants.DRIVE_SHIFT_SOLENOID);
 
@@ -185,46 +172,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
 																			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
 	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, turnAngleSource, turnOutput);
-
-	
-	public void runTrajectory(double[][] trajectory, boolean leftSide) {
-		TalonSRX talon = leftSide ? left : right;
-		MotionProfileStatus status = leftSide ? leftMotionStatus : rightMotionStatus;
-		Notifier motionRunner = leftSide ? leftMotionRunner : rightMotionRunner;
-		
-		talon.clearMotionProfileTrajectories();
-		talon.getMotionProfileStatus(status);
-		
-		talon.changeMotionControlFramePeriod(25);
-		
-		if(status.hasUnderrun) {
-			DriverStation.reportError("Trajectory follower has underrun", false);
-			
-			talon.clearMotionProfileHasUnderrun(0);
-		}
-		
-		int trajLength = trajectory.length;
-		for(int i = 0; i < trajLength; i++) {
-			double position = trajectory[i][0];
-			double velocity = trajectory[i][1];
-			TrajectoryPoint pointToPush = new TrajectoryPoint();
-			pointToPush.position = position * (leftSide ? Constants.LEFT_ENCODER_TICKS_PER_METER : Constants.RIGHT_ENCODER_TICKS_PER_METER);
-			pointToPush.velocity = velocity * (leftSide ? Constants.LEFT_ENCODER_TICKS_PER_METER : Constants.RIGHT_ENCODER_TICKS_PER_METER) / 10.0;
-			pointToPush.profileSlotSelect = 0;
-			pointToPush.headingDeg = 0;
-			pointToPush.zeroPos = false;
-			pointToPush.isLastPoint = false;
-			if(i == 0)
-				pointToPush.zeroPos = true;
-			if(i == trajLength - 1)
-				pointToPush.isLastPoint = true;
-			talon.pushMotionProfileTrajectory(pointToPush);
-		}
-		
-		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Enable.value);
-		motionRunner.startPeriodic(0.025);
-	}
-	
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();

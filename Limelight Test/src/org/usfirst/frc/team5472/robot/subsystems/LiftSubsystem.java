@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.DataProvider;
-import org.usfirst.frc.team5472.robot.LimitSwitch;
 import org.usfirst.frc.team5472.robot.commands.LiftDefault;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -22,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftSubsystem extends Subsystem implements DataProvider{
 
-	private TalonSRX liftUpMotor1;
-	private TalonSRX liftUpMotor2;
+	private TalonSRX leftLiftMotor;
+	private TalonSRX rightLiftMotor;
 	
 	private PIDController positionController;
 	private PIDSource positionSource;
@@ -31,28 +29,23 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	
 	public LiftSubsystem() {
 		
-		liftUpMotor1 = new TalonSRX(Constants.LIFT_TALON_CAN1);
-		liftUpMotor1.setNeutralMode(NeutralMode.Brake);
-		liftUpMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		liftUpMotor1.setInverted(true); //Inverted from practice
-		liftUpMotor1.setSensorPhase(false); //Inverted from practice
-		liftUpMotor1.configPeakOutputForward(1.0, 10);
-		liftUpMotor1.configPeakOutputReverse(-0.3, 10);
-		liftUpMotor1.configForwardSoftLimitThreshold(35000, 10);
-		liftUpMotor1.configForwardSoftLimitEnable(true, 10);
-		liftUpMotor1.configReverseSoftLimitThreshold(0, 10);
-		liftUpMotor1.configReverseSoftLimitEnable(true, 10);
-		liftUpMotor2 = new TalonSRX(Constants.LIFT_TALON_CAN2);
-		liftUpMotor2.setNeutralMode(NeutralMode.Brake);
-		liftUpMotor2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		liftUpMotor2.setInverted(false); //Inverted from practice
-		liftUpMotor2.setSensorPhase(true); //Inverted from practice
-		liftUpMotor2.configPeakOutputForward(1.0, 10);
-		liftUpMotor2.configPeakOutputReverse(-0.3, 10);
-		liftUpMotor2.configForwardSoftLimitThreshold(35000, 10);
-		liftUpMotor2.configForwardSoftLimitEnable(true, 10);
-		liftUpMotor2.configReverseSoftLimitThreshold(0, 10);
-		liftUpMotor2.configReverseSoftLimitEnable(true, 10);
+		leftLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_LEFT);
+		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
+		leftLiftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		leftLiftMotor.setInverted(true);
+		leftLiftMotor.setSensorPhase(false);
+		leftLiftMotor.configPeakOutputForward(1.0, 10);
+		leftLiftMotor.configPeakOutputReverse(-0.3, 10);
+		leftLiftMotor.configForwardSoftLimitThreshold(35000, 10);
+		leftLiftMotor.configForwardSoftLimitEnable(true, 10);
+		leftLiftMotor.configReverseSoftLimitThreshold(0, 10);
+		leftLiftMotor.configReverseSoftLimitEnable(true, 10);
+		
+		rightLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_RIGHT);
+		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
+		rightLiftMotor.setInverted(false);
+		rightLiftMotor.configPeakOutputForward(1.0, 10);
+		rightLiftMotor.configPeakOutputReverse(-0.3, 10);
 		
 		positionOutput = (double output) -> {
 			setPercent(output);
@@ -74,11 +67,11 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	}
 
 	public void setPercent(double percent) {
-		liftUpMotor1.set(ControlMode.PercentOutput, percent);
-		liftUpMotor2.set(ControlMode.PercentOutput, percent);
-		SmartDashboard.putNumber("Motar Porcents", percent);
-		SmartDashboard.putNumber("Motor Current 1", liftUpMotor1.getOutputCurrent());
-		SmartDashboard.putNumber("Motor Current 2", liftUpMotor2.getOutputCurrent());
+		leftLiftMotor.set(ControlMode.PercentOutput, percent);
+		rightLiftMotor.set(ControlMode.PercentOutput, percent);
+		SmartDashboard.putNumber("Motor Percent Output", percent);
+		SmartDashboard.putNumber("Left Lift Motor Current", leftLiftMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Right Lift Motor Current", rightLiftMotor.getOutputCurrent());
 	}
 
 	public void hold() {
@@ -86,12 +79,11 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	}
 
 	public void resetEncoder() {
-		liftUpMotor1.setSelectedSensorPosition(0, 0, 0);
-		liftUpMotor2.setSelectedSensorPosition(0, 0, 0);
+		leftLiftMotor.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	public double getPosition() {
-		return (liftUpMotor1.getSelectedSensorPosition(0) + liftUpMotor2.getSelectedSensorPosition(0))/2;
+		return leftLiftMotor.getSelectedSensorPosition(0);
 	}
 	
 	public boolean onTarget() {
@@ -100,7 +92,6 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 
 	public void setSetpoint(double i) {
 		positionController.setSetpoint(i);
-		positionController.enable();
 		
 	}
 	
@@ -116,21 +107,22 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		return positionController.getError();
 	}
 	
-	public void enable() {
+	public void enableClosedLoop() {
 		positionController.enable();
 	}
 	
-	public void disable() {
+	public void disableClosedLoop() {
 		positionController.disable();
 	}
 	
 	public void enableBrake() {
-		liftUpMotor1.setNeutralMode(NeutralMode.Brake);
+		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
+		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 	}
 	
 	public void enableCoast() {
-		liftUpMotor1.setNeutralMode(NeutralMode.Coast);
-		liftUpMotor2.setNeutralMode(NeutralMode.Coast);
+		leftLiftMotor.setNeutralMode(NeutralMode.Coast);
+		rightLiftMotor.setNeutralMode(NeutralMode.Coast);
 	}
 	
 	@Override
@@ -141,11 +133,11 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
 		toReturn.put("Lift Position", new double[] {getPosition()});
-		toReturn.put("Lift Current 1", new double[] {liftUpMotor1.getOutputCurrent()});
-		toReturn.put("Lift Output Percent 1", new double[] {liftUpMotor1.getMotorOutputPercent()});
+		toReturn.put("Lift Current 1", new double[] {leftLiftMotor.getOutputCurrent()});
+		toReturn.put("Lift Output Percent 1", new double[] {leftLiftMotor.getMotorOutputPercent()});
 		toReturn.put("Lift Position", new double[] {getPosition()});
-		toReturn.put("Lift Current 2", new double[] {liftUpMotor2.getOutputCurrent()});
-		toReturn.put("Lift Output Percent 2", new double[] {liftUpMotor2.getMotorOutputPercent()});
+		toReturn.put("Lift Current 2", new double[] {rightLiftMotor.getOutputCurrent()});
+		toReturn.put("Lift Output Percent 2", new double[] {rightLiftMotor.getMotorOutputPercent()});
 		return toReturn;
 	}
 	

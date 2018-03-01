@@ -47,7 +47,6 @@ public class Limelight implements DataProvider{
 			System.out.println("Limelight camera not connected, connect the Limelight camera and restart robot code.");
 			limeLightConnected = false;
 		} else {
-			System.out.println("LimeLight connected.");
 			limeLightConnected = true;
 		}
 	}

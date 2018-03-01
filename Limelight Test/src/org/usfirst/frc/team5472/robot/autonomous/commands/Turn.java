@@ -25,7 +25,7 @@ public class Turn extends Command{
 		turnController.reset();
 		turnController.setSetpoint(setpoint);
 		turnController.setContinuous();
-		turnController.setInputRange(0, 360);
+		turnController.setInputRange(-180, 180);
 		turnController.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
 		turnController.setAbsoluteTolerance(0.25);
 		turnController.enable();

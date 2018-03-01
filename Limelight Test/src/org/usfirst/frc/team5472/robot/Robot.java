@@ -16,7 +16,6 @@ import org.usfirst.frc.team5472.robot.subsystems.LedSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,6 +31,7 @@ public class Robot extends TimedRobot implements DataProvider{
 	public static LiftSubsystem lift;
 	public static LedSubsystem led;
 	public static Limelight limelight;
+	public static Cameras cameras;
 	private static DataLogger logger;
 	
 	
@@ -44,6 +44,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		lift = new LiftSubsystem();
 		led = new LedSubsystem();
 		limelight = new Limelight();
+		cameras = new Cameras();
 		auto = new Autonomous();
 		controls = new Controls();
 		logger = new DataLogger();
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		drive.resetHeading();
 		drive.drive(0.0, 0.0);
 		lift.resetEncoder();
+		lift.disableClosedLoop();
 		logger.end();
 	}
 
@@ -67,7 +69,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		if (auto != null)
 			auto.checkGameSpecificData();
 		
-		SmartDashboard.putNumber("Pressure: ", getPressure());
+		SmartDashboard.putNumber("Pressure", getPressure());
 	}
 
 	@Override
@@ -76,6 +78,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		drive.resetHeading();
 		drive.drive(0.0, 0.0);
 		lift.resetEncoder();
+		lift.enableClosedLoop();
 		logger.start();
 		auto.start();
 	}
@@ -91,19 +94,20 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.appendData(this);
 		logger.writeFrame();
 		
-		SmartDashboard.putNumber("Pressure: ", getPressure());
+		SmartDashboard.putNumber("Pressure", getPressure());
 	}
 
 	@Override
 	public void teleopInit() {
+		auto.end();
 		limelight.setLed(false);
 		drive.resetEncoders();
 		drive.resetHeading();
 		drive.drive(0.0, 0.0);
 		lift.resetEncoder();
+		lift.disableClosedLoop();
 		drive.highGear();
 		logger.start();
-		auto.end();
 	}
 	
 	@Override
@@ -119,9 +123,8 @@ public class Robot extends TimedRobot implements DataProvider{
 		
 		SmartDashboard.putNumber("Pressure: ", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.getRaw());
-		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.getRaw());
-		
-		}
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.getRaw());	
+	}
 	
 	@Override
 	public void testInit() {
@@ -133,7 +136,7 @@ public class Robot extends TimedRobot implements DataProvider{
 	}
 	
 	public double getPressure() {
-		return (250 * (pressureSensor.getVoltage() / 4.95)) - 29;
+		return (250 * (pressureSensor.getVoltage() / 4.95));
 	}
 	
 	public HashMap<String, double[]> getData(){

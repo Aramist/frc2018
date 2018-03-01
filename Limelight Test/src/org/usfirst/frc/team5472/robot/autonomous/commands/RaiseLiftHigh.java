@@ -17,11 +17,11 @@ public class RaiseLiftHigh extends Command{
 	
 	@Override
 	public void execute() {
-		lift.setSetpoint(33000);
+		lift.setSetpoint(33500);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return lift.getPosition() > 31000;
+		return lift.getPosition() > 32000;
 	}
 }

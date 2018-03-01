@@ -1,6 +1,17 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
-import org.usfirst.frc.team5472.robot.autonomous.commands.PassAutoLine;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXL;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXR;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWLX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXL;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXR;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWLX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXL;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXR;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWLX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous {
 
-	private static enum StartingPosition{
-		CENTER("center"), LEFT("left"), RIGHT("right");
+	public static enum StartingPosition{
+		CENTER("Center"), LEFT("Left"), RIGHT("Right");
 		
 		private String name;
 		
@@ -24,8 +35,8 @@ public class Autonomous {
 		}
 	}
 	
-	private static enum Plan{
-		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Switch and Scale");
+	public static enum Plan{
+		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Both Switch and Scale");
 		
 		private String name;
 		
@@ -42,7 +53,7 @@ public class Autonomous {
 	private SendableChooser<StartingPosition> starting = new SendableChooser<>();
 	private SendableChooser<Plan> plan = new SendableChooser<>();
 	
-	private Command selectedCommand = null;
+	private Command command = null;
 	private String gameSpecificData = "";
 
 	public Autonomous() {
@@ -54,39 +65,128 @@ public class Autonomous {
 		plan.addObject(Plan.SWITCH.toString(), Plan.SWITCH);
 		plan.addObject(Plan.SCALE.toString(), Plan.SCALE);
 		
-		SmartDashboard.putData(starting);
-		SmartDashboard.putData(plan);
+		SmartDashboard.putData("Autonomous Starting Position", starting);
+		SmartDashboard.putData("Autonomous Task", plan);
 	}
 
 	public void start() {
-		selectedCommand = new PassAutoLine();
-		selectedCommand.start();
-//		StartingPosition startPos = starting.getSelected();
-//		Plan thePlan = plan.getSelected();
-//		switch(startPos) {
-//		case CENTER:
-//			startingCenter(thePlan);
-//		case LEFT:
-//			startingLeft(thePlan);
-//		case RIGHT:
-//			startingRight(thePlan);
-//		}
+		StartingPosition startPos = starting.getSelected();
+		Plan thePlan = plan.getSelected();
+		
+		switch(startPos) {
+		case CENTER:
+			startingCenter(thePlan);
+		case LEFT:
+			startingLeft(thePlan);
+		case RIGHT:
+			startingRight(thePlan);
+		}
+		if (command != null)
+			command.start();
 	}
 	
-	public void startingCenter(Plan thePlan) {}
-	public void startingLeft(Plan thePlan) {}
-	public void startingRight(Plan thePlan) {}
+	public void startingCenter(Plan task) {
+		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
+		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
+		
+		switch(task) {
+			case SWITCH:
+				if(rightSwitchOwnership)
+					command = new CSWRX();
+				else
+					command = new CSWLX();
+				break;
+			case SCALE:
+				if(rightScaleOwnership)
+					command = new CSCXR();
+				else
+					command = new CSCXL();
+				break;
+			case BOTH:
+				command = null;
+				break;
+//				if(rightSwitchOwnership && rightScaleOwnership)
+//					command = new CBORR();
+//				else if(rightSwitchOwnership && !rightScaleOwnership)
+//					command = new CBORL();
+//				else if (!rightSwitchOwnership && rightScaleOwnership)
+//					command = new CBOLR();
+//				else
+//					command = new CBOLL();
+		}
+	}
+	
+	public void startingLeft(Plan task) {
+		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
+		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
+		
+		switch(task) {
+			case SWITCH:
+				if(rightSwitchOwnership)
+					command = new LSWRX();
+				else
+					command = new LSWLX();
+				break;
+			case SCALE:
+				if(rightScaleOwnership)
+					command = new LSCXR();
+				else
+					command = new LSCXL();
+				break;
+			case BOTH:
+				command = null;
+				break;
+//				if(rightSwitchOwnership && rightScaleOwnership)
+//					command = new LBORR();
+//				else if(rightSwitchOwnership && !rightScaleOwnership)
+//					command = new LBORL();
+//				else if (!rightSwitchOwnership && rightScaleOwnership)
+//					command = new LBOLR();
+//				else
+//					command = new LBOLL();
+		}
+	}
+	
+	public void startingRight(Plan task) {
+		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
+		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
+		
+		switch(task) {
+			case SWITCH:
+				if(rightSwitchOwnership)
+					command = new RSWRX();
+				else
+					command = new RSWLX();
+				break;
+			case SCALE:
+				if(rightScaleOwnership)
+					command = new RSCXR();
+				else
+					command = new RSCXL();	
+				break;
+			case BOTH:
+				command = null;
+				break;
+//				if(rightSwitchOwnership && rightScaleOwnership)
+//					command = new RBORR();
+//				else if(rightSwitchOwnership && !rightScaleOwnership)
+//					command = new RBORL();
+//				else if (!rightSwitchOwnership && rightScaleOwnership)
+//					command = new RBOLR();
+//				else
+//					command = new RBOLL();
+		}
+	}
 
 	public void end() {
-		if (selectedCommand != null)
-			selectedCommand.cancel();
+		if (command != null)
+			command.cancel();
 	}
 
 	public void checkGameSpecificData() {
 		if (!this.gameSpecificData.equals(""))
 			return;
 		String gameSpecificData = DriverStation.getInstance().getGameSpecificMessage();
-		if (gameSpecificData != null)
-			this.gameSpecificData = gameSpecificData;
+		this.gameSpecificData = gameSpecificData.toUpperCase();
 	}
 }

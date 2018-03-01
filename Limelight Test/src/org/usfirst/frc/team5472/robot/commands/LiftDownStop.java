@@ -1,13 +1,9 @@
 package org.usfirst.frc.team5472.robot.commands;
 
-
-
-
 import org.usfirst.frc.team5472.robot.Controls;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftDownStop extends Command{

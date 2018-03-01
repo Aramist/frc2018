@@ -5,7 +5,7 @@ public class Constants {
 	public static final double WHEEL_DIAMETER = 0.1016;
 	public static final double ROBOT_WIDTH = 0.7112;
 	public static final double ROBOT_LENGTH = 0.8382;
-	public static final double V_CONSTANT = 0.30;
+	public static final double V_CONSTANT = 0.40;
 	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
 	
 	public static final double LEFT_ENCODER_TICKS_PER_METER = 12300;
@@ -29,7 +29,7 @@ public class Constants {
 	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.5;
 	public static final double DRIVE_AUTO_TURN_P = 0.1;
 	public static final double DRIVE_AUTO_TURN_I = 0.0;
-	public static final double DRIVE_AUTO_TURN_D = 0.2;
+	public static final double DRIVE_AUTO_TURN_D = 0.25;
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
 
 	public static final int INTAKE_LEFT_MOTOR_CAN = 6;
@@ -39,12 +39,12 @@ public class Constants {
 	public static final double INTAKE_INPUT_SPEED = 1.0;
 	public static final double INTAKE_OUTPUT_SPEED = 1.0;
 	
-	public static final int LIFT_TALON_CAN1 = 10;
-	public static final int LIFT_TALON_CAN2 = 8;
-	public static final double LIFT_PIDF_P = 0.0001;
+	public static final int LIFT_TALON_CAN_LEFT = 10;
+	public static final int LIFT_TALON_CAN_RIGHT = 8;
+	public static final double LIFT_PIDF_P = 0.001;
 	public static final double LIFT_PIDF_I = 0.0000;
-	public static final double LIFT_PIDF_D = 0.0000;
-	public static final double LIFT_PIDF_F = 0.0000;
+	public static final double LIFT_PIDF_D = 0.001;
+	public static final double LIFT_PIDF_F = 0.3;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;

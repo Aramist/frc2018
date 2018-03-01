@@ -8,6 +8,7 @@ import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LiftDownStop;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
+import org.usfirst.frc.team5472.robot.commands.SwitchCamera;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,6 +25,8 @@ public class Controls {
 	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1);
 	
 	private JoystickButton highButton = new JoystickButton(playerOne, 4);
+	
+	private JoystickButton switchCamera = new JoystickButton(playerTwo, 1);
 	
 	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH);
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
@@ -42,6 +45,8 @@ public class Controls {
 		intakeOut.whenReleased(new IntakeStop());
 
 		toggleGrip.whenPressed(new GripToggle());
+		
+		switchCamera.whenPressed(new SwitchCamera());
 		
 		highLimit.whileActive(new LiftStop());
 		lowLimit.whileActive(new LiftDownStop());

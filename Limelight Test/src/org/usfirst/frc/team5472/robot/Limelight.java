@@ -39,12 +39,11 @@ public class Limelight implements DataProvider{
 	private NetworkTable limeLightTable;
 	
 	private void checkConnection() {
-		System.out.println("Testing Connection");
 		limeLightTable = NetworkTableInstance.getDefault().getTable("limelight");
 		if(limeLightTable.getKeys().size() < 20) {
 			//Usually it has 25 keys, it will have 0 if the Limelight hasn't been connected
 			//If a key has been set before checking this, the size will not be zero
-			System.out.println("Limelight camera not connected, connect the Limelight camera and restart robot code.");
+			//System.out.println("Limelight camera not connected, connect the Limelight camera and restart robot code.");
 			limeLightConnected = false;
 		} else {
 			limeLightConnected = true;

@@ -94,6 +94,12 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.appendData(this);
 		logger.writeFrame();
 		
+
+		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
+		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
+		
+		SmartDashboard.putNumber("Lift Position", lift.getPosition());
+		
 		SmartDashboard.putNumber("Pressure", getPressure());
 	}
 
@@ -123,7 +129,12 @@ public class Robot extends TimedRobot implements DataProvider{
 		
 		SmartDashboard.putNumber("Pressure: ", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.getRaw());
-		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.getRaw());	
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.getRaw());
+		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
+		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
+		SmartDashboard.putNumber("Heading", drive.getHeading());
+		SmartDashboard.putNumber("Lift Position", lift.getPosition());
+		SmartDashboard.putNumber("Lift Percent Output", lift.getPercentOutput());
 	}
 	
 	@Override

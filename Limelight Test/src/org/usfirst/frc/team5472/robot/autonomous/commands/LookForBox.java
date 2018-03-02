@@ -2,7 +2,6 @@ package org.usfirst.frc.team5472.robot.autonomous.commands;
 
 import org.usfirst.frc.team5472.robot.Limelight;
 import org.usfirst.frc.team5472.robot.Robot;
-import org.usfirst.frc.team5472.robot.autonomous.Recorder;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -20,11 +19,8 @@ public class LookForBox extends Command{
 	private Limelight limelight;
 	private double targetAppeared;
 	
-	private Recorder backtrack;
-	
 	public LookForBox() {
 		requires(Robot.drive);
-		backtrack = new Recorder();
 	}
 	
 	@Override
@@ -32,7 +28,6 @@ public class LookForBox extends Command{
 		drive = Robot.drive;
 		limelight = Robot.limelight;
 		drive.resetHeading();
-		backtrack.start();
 	}
 	
 	@Override
@@ -61,10 +56,6 @@ public class LookForBox extends Command{
 	@Override
 	protected boolean isFinished() {
 		return finished;
-	}
-	
-	public Recorder getRecorder() {
-		return backtrack;
 	}
 	
 }

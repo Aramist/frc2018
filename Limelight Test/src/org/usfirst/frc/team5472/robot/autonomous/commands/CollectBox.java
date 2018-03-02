@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5472.robot.autonomous.commands;
 
-import org.usfirst.frc.team5472.robot.autonomous.PlayRecording;
 import org.usfirst.frc.team5472.robot.commands.BoxPipeline;
 import org.usfirst.frc.team5472.robot.commands.EnableVision;
 import org.usfirst.frc.team5472.robot.commands.GripClose;
@@ -19,12 +18,11 @@ public class CollectBox extends CommandGroup
 		addParallel(new GripOpen());
 		LookForBox lfb = new LookForBox();
 		addSequential(lfb);
-		addSequential(new ApproachBox(lfb.getRecorder()));
+		addSequential(new ApproachBox());
 		addSequential(new IntakePull());
 		addSequential(new GripClose());
 		addSequential(new Delay(0.5));
 		addSequential(new IntakeStop());
 		addSequential(new RaiseLiftLow());
-		addSequential(new PlayRecording(lfb.getRecorder(), true));
 	}
 }

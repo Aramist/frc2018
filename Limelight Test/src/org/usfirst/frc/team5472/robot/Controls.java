@@ -1,9 +1,12 @@
 package org.usfirst.frc.team5472.robot;
 
+import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHigh;
+import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftLow;
 import org.usfirst.frc.team5472.robot.commands.GripToggle;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
 import org.usfirst.frc.team5472.robot.commands.IntakePush;
+import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LiftDownStop;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
@@ -22,6 +25,8 @@ public class Controls {
 
 	private JoystickButton intakeIn = new JoystickButton(playerOne, 5);
 	private JoystickButton intakeOut = new JoystickButton(playerOne, 6);
+	private JoystickButton intakeSlowOut = new JoystickButton(playerTwo, 2);
+	
 	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1);
 	
 	private JoystickButton highButton = new JoystickButton(playerOne, 4);
@@ -32,6 +37,8 @@ public class Controls {
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
 	
 	
+	private POVButton tempHigh = new POVButton(playerTwo, POVButton.POVAngle.TOP);
+	private POVButton tempLow = new POVButton(playerTwo, POVButton.POVAngle.BOTTOM);
 
 	
 	public Controls() {
@@ -43,6 +50,8 @@ public class Controls {
 		intakeIn.whenReleased(new IntakeStop());
 		intakeOut.whenPressed(new IntakePush());
 		intakeOut.whenReleased(new IntakeStop());
+		intakeSlowOut.whenPressed(new IntakePushSlow());
+		intakeSlowOut.whenReleased(new IntakeStop());
 
 		toggleGrip.whenPressed(new GripToggle());
 		
@@ -50,6 +59,9 @@ public class Controls {
 		
 		highLimit.whileActive(new LiftStop());
 		lowLimit.whileActive(new LiftDownStop());
+		
+		tempHigh.whenPressed(new RaiseLiftHigh());
+		tempLow.whenPressed(new RaiseLiftLow());
 	}
 
 	public Joystick getPlayerOne() {

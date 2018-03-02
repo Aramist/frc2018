@@ -5,11 +5,10 @@ import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakePush extends Command{
+public class IntakePushSlow extends Command{
 	
 	private IntakeSubsystem intake;
 	private boolean finished;
-	
 	
 	@Override
 	public void initialize() {
@@ -19,7 +18,7 @@ public class IntakePush extends Command{
 	
 	@Override
 	public void execute() {
-		intake.reverse(false);
+		intake.reverse(true);
 		finished = true;
 	}
 	

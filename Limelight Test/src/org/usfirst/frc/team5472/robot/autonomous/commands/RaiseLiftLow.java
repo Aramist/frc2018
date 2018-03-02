@@ -17,7 +17,7 @@ public class RaiseLiftLow extends Command{
 	
 	@Override
 	public void execute() {
-		lift.setSetpoint(17000);
+		lift.setSetpoint(12000);
 		finished = lift.onTarget();
 	}
 	

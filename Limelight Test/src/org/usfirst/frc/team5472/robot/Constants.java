@@ -8,13 +8,13 @@ public class Constants {
 	public static final double V_CONSTANT = 0.40;
 	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
 	
-	public static final double LEFT_ENCODER_TICKS_PER_METER = 12300;
-	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12800;
+	public static final double LEFT_ENCODER_TICKS_PER_METER = 11895;
+	public static final double RIGHT_ENCODER_TICKS_PER_METER = 11690;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	
-	public static final double ROBOT_MAX_VELOCITY = 5.0; // m/s
-	public static final double DRIVE_FOLLOWER_P = 0.6;
+	public static final double ROBOT_MAX_VELOCITY = 4.0; // m/s
+	public static final double DRIVE_FOLLOWER_P = 1.0;
 	public static final double DRIVE_FOLLOWER_I = 0.0;
 	public static final double DRIVE_FOLLOWER_D = 0.2;
 	public static final double DRIVE_FOLLOWER_V = 1.0 / ROBOT_MAX_VELOCITY;
@@ -26,10 +26,10 @@ public class Constants {
 	public static final int DRIVE_RIGHT_FOLLOWER_CAN = 3;
 	public static final int DRIVE_SHIFT_SOLENOID = 0;
 	
-	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.5;
-	public static final double DRIVE_AUTO_TURN_P = 0.1;
-	public static final double DRIVE_AUTO_TURN_I = 0.0;
-	public static final double DRIVE_AUTO_TURN_D = 0.25;
+	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.4;
+	public static final double DRIVE_AUTO_TURN_P = 0.0200;
+	public static final double DRIVE_AUTO_TURN_I = 0.0000;
+	public static final double DRIVE_AUTO_TURN_D = 0.0000;
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
 
 	public static final int INTAKE_LEFT_MOTOR_CAN = 6;
@@ -38,13 +38,23 @@ public class Constants {
 	public static final int INTAKE_SOLENOID_ID_BACK = 2;
 	public static final double INTAKE_INPUT_SPEED = 1.0;
 	public static final double INTAKE_OUTPUT_SPEED = 1.0;
+	public static final double INTAKE_OUTPUT_SLOW_SPEED = 0.4;
+
 	
 	public static final int LIFT_TALON_CAN_LEFT = 10;
 	public static final int LIFT_TALON_CAN_RIGHT = 8;
-	public static final double LIFT_PIDF_P = 0.001;
-	public static final double LIFT_PIDF_I = 0.0000;
-	public static final double LIFT_PIDF_D = 0.001;
-	public static final double LIFT_PIDF_F = 0.3;
+//	public static final double LIFT_PIDF_P = 0.0001; SAVE
+//	public static final double LIFT_PIDF_I = 0.0000;
+//	public static final double LIFT_PIDF_D = 0.0000;
+//	public static final double LIFT_PIDF_F = 0.0000;
+//	public static final int LIFT_PIDF_INTZONE = 40;
+	
+	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -0.5;
+	
+	public static final double LIFT_PIDF_P = 0.00018;
+	public static final double LIFT_PIDF_I = 0.000003;
+	public static final double LIFT_PIDF_D = 0.0000;
+	public static final double LIFT_PIDF_F = 0.2200;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;

@@ -35,6 +35,12 @@ public class Forward extends Command{
 	}
 	
 	@Override
+	public void execute() {
+		System.out.println("Setpoint: " + controller.getSetpoint());
+		System.out.println("Error:    " + controller.getError());
+	}
+	
+	@Override
 	public void end() {
 		controller.disable();
 		drive.drive(-0.1, -0.1);

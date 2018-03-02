@@ -6,17 +6,12 @@ import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.DataProvider;
 import org.usfirst.frc.team5472.robot.commands.JoystickDriveCommand;
 
-import com.ctre.phoenix.motion.MotionProfileStatus;
-import com.ctre.phoenix.motion.SetValueMotionProfile;
-import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -27,13 +22,43 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem implements DataProvider{
 
-	private AHRS navx;
+	private AHRS navx = new AHRS(SPI.Port.kMXP);
 	private TalonSRX left, right, leftFollower, rightFollower;
 	private ControlMode controlMode;
 	private Solenoid shiftSolenoid;
+	
+	
+	
+	private final PIDOutput driveOutput = (double output) -> {
+		drive(output, output);
+	};
+
+	private final PIDOutput turnOutput = (double output) -> {
+		drive(-output, output);
+	};
+	
+	private final PIDSource drivePositionSource = new PIDSource() {
+		public double pidGet() {
+			return (getLeftPosition() + getRightPosition()) / 2;
+		}
+		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
+		public void setPIDSourceType(PIDSourceType t) {}
+	};
+	
+	private final PIDSource driveAngleSource = new PIDSource() {
+		public double pidGet() {
+			return getHeading();
+		}
+		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
+		public void setPIDSourceType(PIDSourceType t) {}
+	};
+	
+	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
+			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
+	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, driveAngleSource, turnOutput);
+
 
 	public DriveSubsystem() {
-		navx = new AHRS(SPI.Port.kMXP);
 
 		left = new TalonSRX(Constants.DRIVE_LEFT_TALON_CAN);
 		right = new TalonSRX(Constants.DRIVE_RIGHT_TALON_CAN);
@@ -47,10 +72,12 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		right.setInverted(true);
 		rightFollower.setInverted(true);
 		
-		leftFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-		leftFollower.setSensorPhase(true);
-		rightFollower.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-		rightFollower.setSensorPhase(true);
+		//This got flipped around for some reason. 
+		
+		left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		left.setSensorPhase(true);
+		right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		right.setSensorPhase(true);
 
 		controlMode = ControlMode.PercentOutput;
 		
@@ -63,6 +90,12 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		leftFollower.set(controlMode, 0);
 		right.set(controlMode, 0);
 		rightFollower.set(controlMode, 0);
+		
+		
+		turnAngleController.setInputRange(-180.0, 180.0);
+		turnAngleController.setContinuous(true);
+		turnAngleController.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
+		turnAngleController.setAbsoluteTolerance(2);
 		
 		highGear();
 	}
@@ -103,32 +136,32 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	}
 
 	public void resetEncoders() {
-		leftFollower.setSelectedSensorPosition(0, 0, 0);
-		rightFollower.setSelectedSensorPosition(0, 0, 0);
+		left.setSelectedSensorPosition(0, 0, 0);
+		right.setSelectedSensorPosition(0, 0, 0);
 	}
 
 	public int getLeftRaw() {
-		return leftFollower.getSelectedSensorPosition(0);
+		return left.getSelectedSensorPosition(0);
 	}
 
 	public double getLeftPosition() {
-		return leftFollower.getSelectedSensorPosition(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return left.getSelectedSensorPosition(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getLeftVelocity() {
-		return leftFollower.getSelectedSensorVelocity(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
+		return left.getSelectedSensorVelocity(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
 
 	public int getRightRaw() {
-		return rightFollower.getSelectedSensorPosition(0);
+		return right.getSelectedSensorPosition(0);
 	}
 
 	public double getRightPosition() {
-		return rightFollower.getSelectedSensorPosition(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return right.getSelectedSensorPosition(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getRightVelocity() {
-		return rightFollower.getSelectedSensorVelocity(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
+		return right.getSelectedSensorVelocity(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
 	public double getHeading() {
@@ -145,33 +178,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		return value > limit ? limit : value < -limit ? -limit : value;
 	}
 	
-	private final PIDOutput driveOutput = (double output) -> {
-		drive(output, output);
-	};
-	
-	private final PIDOutput turnOutput = (double output) -> {
-		drive(-output, output);
-	};
-	
-	private final PIDSource turnAngleSource = new PIDSource() {
-		public double pidGet() {
-			return getHeading();
-		}
-		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
-		public void setPIDSourceType(PIDSourceType t) {}
-	};
-	
-	private final PIDSource drivePositionSource = new PIDSource() {
-		public double pidGet() {
-			return (getLeftPosition() + getRightPosition()) / 2;
-		}
-		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
-		public void setPIDSourceType(PIDSourceType t) {}
-	};
-	
-	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
-																			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
-	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, turnAngleSource, turnOutput);
 	
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
@@ -188,6 +194,9 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		});
 		toReturn.put("Drive Motor Encoder Velocity", new double[] {
 				getLeftVelocity(), getRightVelocity()
+		});
+		toReturn.put("Robot Heading", new double[] {
+				getHeading()
 		});
 		return toReturn;
 	}

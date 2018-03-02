@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5472.robot.commands;
 
+import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.Controls;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
@@ -26,13 +27,13 @@ public class LiftDefault extends Command {
 		if(DriverStation.getInstance().isAutonomous())
 			return;
 		double x = controls.getLiftUpAxis();
-		double y = -controls.getLiftDownAxis() / 3.0;
+		double y = controls.getLiftDownAxis() * Constants.LIFT_REVERSE_OUTPUT_LIMIT;
 		
 				
 		lift.setPercent(x + y);
 		if(lift.getPosition() < 8000)
 			lift.enableBrake();
-		}
+	}
 		
 	
 

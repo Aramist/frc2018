@@ -33,9 +33,9 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		leftLiftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		leftLiftMotor.setInverted(true);
-		leftLiftMotor.setSensorPhase(false);
+		leftLiftMotor.setSensorPhase(true);
 		leftLiftMotor.configPeakOutputForward(1.0, 10);
-		leftLiftMotor.configPeakOutputReverse(-0.3, 10);
+		leftLiftMotor.configPeakOutputReverse(-0.5, 10);
 		leftLiftMotor.configForwardSoftLimitThreshold(35000, 10);
 		leftLiftMotor.configForwardSoftLimitEnable(true, 10);
 		leftLiftMotor.configReverseSoftLimitThreshold(0, 10);
@@ -45,7 +45,8 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setInverted(false);
 		rightLiftMotor.configPeakOutputForward(1.0, 10);
-		rightLiftMotor.configPeakOutputReverse(-0.3, 10);
+		rightLiftMotor.configPeakOutputReverse(Constants.LIFT_REVERSE_OUTPUT_LIMIT, 10);
+		
 		
 		positionOutput = (double output) -> {
 			setPercent(output);
@@ -72,6 +73,10 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		SmartDashboard.putNumber("Motor Percent Output", percent);
 		SmartDashboard.putNumber("Left Lift Motor Current", leftLiftMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Right Lift Motor Current", rightLiftMotor.getOutputCurrent());
+	}
+	
+	public double getPercentOutput() {
+		return leftLiftMotor.getMotorOutputPercent();
 	}
 
 	public void hold() {

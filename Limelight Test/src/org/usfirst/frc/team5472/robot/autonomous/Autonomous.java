@@ -73,14 +73,20 @@ public class Autonomous {
 		StartingPosition startPos = starting.getSelected();
 		Plan thePlan = plan.getSelected();
 		
+		SmartDashboard.putString("Game Data", gameSpecificData);
+		
 		switch(startPos) {
 		case CENTER:
 			startingCenter(thePlan);
+			break;
 		case LEFT:
 			startingLeft(thePlan);
+			break;
 		case RIGHT:
 			startingRight(thePlan);
+			break;
 		}
+		
 		if (command != null)
 			command.start();
 	}
@@ -184,9 +190,6 @@ public class Autonomous {
 	}
 
 	public void checkGameSpecificData() {
-		if (!this.gameSpecificData.equals(""))
-			return;
-		String gameSpecificData = DriverStation.getInstance().getGameSpecificMessage();
-		this.gameSpecificData = gameSpecificData.toUpperCase();
+		this.gameSpecificData = DriverStation.getInstance().getGameSpecificMessage().toUpperCase();
 	}
 }

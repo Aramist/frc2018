@@ -110,7 +110,6 @@ public class Robot extends TimedRobot implements DataProvider{
 		drive.resetEncoders();
 		drive.resetHeading();
 		drive.drive(0.0, 0.0);
-		lift.resetEncoder();
 		lift.disableClosedLoop();
 		drive.highGear();
 		logger.start();

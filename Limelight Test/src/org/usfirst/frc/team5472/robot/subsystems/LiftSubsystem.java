@@ -45,6 +45,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setInverted(false);
 		rightLiftMotor.configPeakOutputForward(1.0, 10);
+		leftLiftMotor.configPeakOutputReverse(-0.5, 10);
 		rightLiftMotor.configPeakOutputReverse(Constants.LIFT_REVERSE_OUTPUT_LIMIT, 10);
 		
 		

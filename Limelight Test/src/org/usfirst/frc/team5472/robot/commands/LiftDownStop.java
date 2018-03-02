@@ -20,9 +20,9 @@ public class LiftDownStop extends Command{
 	
 	@Override
 	public void execute() {
-		if(controls.getLiftUpAxis() == 0)
-		lift.setPercent(0.05);
-		else {
+		if(controls.getLiftDownAxis() > 0) {
+			lift.setPercent(0.05);
+		}else {
 			return;
 		}
 	}

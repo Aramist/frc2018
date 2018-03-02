@@ -39,7 +39,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		leftLiftMotor.configForwardSoftLimitThreshold(35000, 10);
 		leftLiftMotor.configForwardSoftLimitEnable(true, 10);
 		leftLiftMotor.configReverseSoftLimitThreshold(0, 10);
-		leftLiftMotor.configReverseSoftLimitEnable(true, 10);
+		leftLiftMotor.configReverseSoftLimitEnable(false, 10);
 		
 		rightLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_RIGHT);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
@@ -67,7 +67,17 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController.setOutputRange(-0.0, 1.0);
 		positionController.setAbsoluteTolerance(50);
 	}
-
+	
+	public void autoPeakOutput() {
+		leftLiftMotor.configPeakOutputForward(0.5, 10);
+		rightLiftMotor.configPeakOutputForward(0.5, 10);
+	}
+	
+	public void teleopPeakOutput() {
+		leftLiftMotor.configPeakOutputForward(1.0, 10);
+		rightLiftMotor.configPeakOutputForward(1.0, 10);
+	}
+	
 	public void setPercent(double percent) {
 		leftLiftMotor.set(ControlMode.PercentOutput, percent);
 		rightLiftMotor.set(ControlMode.PercentOutput, percent);

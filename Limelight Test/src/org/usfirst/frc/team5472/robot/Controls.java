@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHigh;
-import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftLow;
 import org.usfirst.frc.team5472.robot.commands.GripToggle;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
@@ -36,11 +34,6 @@ public class Controls {
 	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH);
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
 	
-	
-	private POVButton tempHigh = new POVButton(playerTwo, POVButton.POVAngle.TOP);
-	private POVButton tempLow = new POVButton(playerTwo, POVButton.POVAngle.BOTTOM);
-
-	
 	public Controls() {
 		shiftGear.whenPressed(new ShiftGear());
 		shiftGear.whenReleased(new ShiftGear());
@@ -59,9 +52,6 @@ public class Controls {
 		
 		highLimit.whileActive(new LiftStop());
 		lowLimit.whileActive(new LiftDownStop());
-		
-		tempHigh.whenPressed(new RaiseLiftHigh());
-		tempLow.whenPressed(new RaiseLiftLow());
 	}
 
 	public Joystick getPlayerOne() {

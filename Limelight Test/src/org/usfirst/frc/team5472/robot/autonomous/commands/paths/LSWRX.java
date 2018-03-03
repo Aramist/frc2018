@@ -16,13 +16,17 @@ public class LSWRX extends CommandGroup {
 	public LSWRX() {
 		addParallel(new GripClose());
 		
-		addSequential(new Forward(5.81));
-		addSequential(new Turn(-90));
-		addParallel(new RaiseLiftLow());
-		addSequential(new Forward(3.90 + Constants.ROBOT_WIDTH + 2 * Constants.V_CONSTANT));
-		addSequential(new Turn(-180));
+		addSequential(new Forward(5.28), 3);
+		addSequential(new Turn(-90), 2);
+		addParallel(new RaiseLiftLow(), 2);
+		addSequential(new Forward(4.77), 3);
+		addSequential(new Turn(-180), 2);
+		addSequential(new Forward(1.27), 1);
+		addSequential(new Turn(-270), 2);
+		addSequential(new Forward(0.40), 1);
 		addSequential(new IntakePush());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
+		addSequential(new Forward(-0.7));
 	}
 }

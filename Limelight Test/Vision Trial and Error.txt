@@ -1,0 +1,15 @@
+Vision testing for autonomously driving to boxes.
+
+At the beginning, the robot had a base speed of 0.1 (ControlMode.PercentOutput), which was too slow. This was later increased
+to 0.3 and then 0.4.
+
+At one point the robot began to successfully grab the box in 4 out of 5 tests, however, when the box was moved, it became
+apparent that the results of the vision system were highly dependent on the ambient lighting.
+
+It is currently (2/1/2018 17:00) unknown whether the problem with lighting adaptability has been solved with the tweaks made
+to the vision system, but it now successfully grabs the cube in every test when the cube's center is within the robot's FOV of
++-30 degrees. The next goal is to create a Command that will have the robot turn around to look for targets (power cubes) if it
+does not see any in its immediate field of view.
+
+As of now (2/1/2018 17:21) the robot is now capable of turning around (+- 30 degrees from starting heading) to search for targets in
+its surroundings.

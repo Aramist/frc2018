@@ -34,7 +34,6 @@ public class Robot extends TimedRobot implements DataProvider{
 	public static Cameras cameras;
 	private static DataLogger logger;
 	
-	
 	private AnalogInput pressureSensor;
 	
 	@Override

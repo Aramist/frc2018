@@ -64,7 +64,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController = new PIDController(Constants.LIFT_PIDF_P, Constants.LIFT_PIDF_I, Constants.LIFT_PIDF_D, Constants.LIFT_PIDF_F, positionSource, positionOutput);
 		positionController.setSetpoint(0.0);
 		positionController.setInputRange(0, 34000);
-		positionController.setOutputRange(-0.0, 1.0);
+		positionController.setOutputRange(0.0, 1.0);
 		positionController.setAbsoluteTolerance(50);
 	}
 	

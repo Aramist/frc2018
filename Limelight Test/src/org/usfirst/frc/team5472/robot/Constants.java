@@ -30,7 +30,7 @@ public class Constants {
 	public static final double DRIVE_AUTO_TURN_P = 0.0200;
 	public static final double DRIVE_AUTO_TURN_I = 0.0000;
 	public static final double DRIVE_AUTO_TURN_D = 0.0000;
-	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.04;
+	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.02;
 
 	public static final int INTAKE_LEFT_MOTOR_CAN = 6;
 	public static final int INTAKE_RIGHT_MOTOR_CAN = 7;

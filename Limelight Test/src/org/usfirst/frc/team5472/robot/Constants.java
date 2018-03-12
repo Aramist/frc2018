@@ -49,7 +49,7 @@ public class Constants {
 //	public static final double LIFT_PIDF_F = 0.0000;
 //	public static final int LIFT_PIDF_INTZONE = 40;
 	
-	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -0.5;
+	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -1.5;
 	
 	public static final double LIFT_PIDF_P = 0.00018;
 	public static final double LIFT_PIDF_I = 0.000003;

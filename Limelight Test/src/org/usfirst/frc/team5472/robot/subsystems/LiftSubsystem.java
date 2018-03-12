@@ -30,7 +30,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	public LiftSubsystem() {
 		
 		leftLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_LEFT);
-		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
+		leftLiftMotor.setNeutralMode(NeutralMode.Coast);
 		leftLiftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		leftLiftMotor.setInverted(true);
 		leftLiftMotor.setSensorPhase(true);
@@ -42,7 +42,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		leftLiftMotor.configReverseSoftLimitEnable(false, 10);
 		
 		rightLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_RIGHT);
-		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
+		rightLiftMotor.setNeutralMode(NeutralMode.Coast);
 		rightLiftMotor.setInverted(false);
 		rightLiftMotor.configPeakOutputForward(1.0, 10);
 		leftLiftMotor.configPeakOutputReverse(-0.5, 10);

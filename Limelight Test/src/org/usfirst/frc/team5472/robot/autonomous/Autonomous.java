@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
+import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHigh;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWLX;
@@ -67,6 +68,7 @@ public class Autonomous {
 		
 		SmartDashboard.putData("Autonomous Starting Position", starting);
 		SmartDashboard.putData("Autonomous Task", plan);
+		
 	}
 
 	public void start() {
@@ -140,7 +142,7 @@ public class Autonomous {
 					command = new LSCXL();
 				break;
 			case BOTH:
-				command = null;
+				command = new RaiseLiftHigh();
 				break;
 //				if(rightSwitchOwnership && rightScaleOwnership)
 //					command = new LBORR();

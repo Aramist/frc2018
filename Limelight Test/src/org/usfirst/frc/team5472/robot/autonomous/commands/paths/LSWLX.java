@@ -16,13 +16,13 @@ public class LSWLX extends CommandGroup {
 	public LSWLX() {
 		addParallel(new GripClose());
 		
-		addSequential(new Forward(3.6), 3);
+		addSequential(new Forward(3.6), 4);
 		addParallel(new RaiseLiftLow(), 2);
-		addSequential(new Turn(-95), 2);
+		addSequential(new Turn(-85), 2);
 		addSequential(new Forward(Constants.V_CONSTANT), 0.5);
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
-		addSequential(new Forward(-Constants.V_CONSTANT), 0.5);
+		addSequential(new Forward(-1.00), 0.5);
 	}
 }

@@ -16,7 +16,7 @@ public class LiftZero extends Command{
 	
 	@Override
 	public void execute() {
-		lift.setSetpoint(0);
+		lift.setSetpoint(100);
 		finished = lift.onTarget();
 	}
 	

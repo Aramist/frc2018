@@ -6,7 +6,7 @@ import org.usfirst.frc.team5472.robot.commands.IntakePull;
 import org.usfirst.frc.team5472.robot.commands.IntakePush;
 import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
-import org.usfirst.frc.team5472.robot.commands.LiftDownStop;
+import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
 
@@ -46,7 +46,7 @@ public class Controls {
 		toggleGrip.whenPressed(new GripToggle());
 		
 		highLimit.whileActive(new LiftStop());
-		lowLimit.whileActive(new LiftDownStop());
+		lowLimit.whileActive(new LiftZeroEncoder());
 	}
 
 	public Joystick getPlayerOne() {

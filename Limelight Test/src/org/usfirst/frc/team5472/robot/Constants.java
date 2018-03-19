@@ -5,11 +5,11 @@ public class Constants {
 	public static final double WHEEL_DIAMETER = 0.1016;
 	public static final double ROBOT_WIDTH = 0.7112;
 	public static final double ROBOT_LENGTH = 0.8382;
-	public static final double V_CONSTANT = 0.40;
+	public static final double V_CONSTANT = 1.20;
 	public static final double ROBOT_WHEELBASE_WIDTH = 0.6731;
 	
-	public static final double LEFT_ENCODER_TICKS_PER_METER = 11895;
-	public static final double RIGHT_ENCODER_TICKS_PER_METER = 11690;
+	public static final double LEFT_ENCODER_TICKS_PER_METER = 12833;
+	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12833;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	
@@ -43,18 +43,12 @@ public class Constants {
 	
 	public static final int LIFT_TALON_CAN_LEFT = 10;
 	public static final int LIFT_TALON_CAN_RIGHT = 8;
-//	public static final double LIFT_PIDF_P = 0.0001; SAVE
-//	public static final double LIFT_PIDF_I = 0.0000;
-//	public static final double LIFT_PIDF_D = 0.0000;
-//	public static final double LIFT_PIDF_F = 0.0000;
-//	public static final int LIFT_PIDF_INTZONE = 40;
+	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -1.0;
 	
-	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -1.5;
-	
-	public static final double LIFT_PIDF_P = 0.00018;
-	public static final double LIFT_PIDF_I = 0.000003;
+	public static final double LIFT_PIDF_P = 0.00030;
+	public static final double LIFT_PIDF_I = 0.000002;
 	public static final double LIFT_PIDF_D = 0.0000;
-	public static final double LIFT_PIDF_F = 0.2200;
+	public static final double LIFT_PIDF_F = 0.2500;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;

@@ -102,6 +102,9 @@ public class Robot extends TimedRobot implements DataProvider{
 		SmartDashboard.putNumber("Lift Position", lift.getPosition());
 		
 		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putNumber("Heading", drive.getHeading());
+		
+		SmartDashboard.putNumber("Lift Closed-Loop Error", lift.getError());
 	}
 
 	@Override
@@ -115,6 +118,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		lift.teleopPeakOutput();
 		drive.highGear();
 		logger.start();
+		
 	}
 	
 	@Override
@@ -130,7 +134,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		
 		SmartDashboard.putNumber("Pressure: ", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
-//		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
 		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
 		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
 		SmartDashboard.putNumber("Heading", drive.getHeading());

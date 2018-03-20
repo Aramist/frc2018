@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5472.robot.autonomous.commands.paths;
 
-import org.usfirst.frc.team5472.robot.Constants;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Delay;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Forward;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftLow;

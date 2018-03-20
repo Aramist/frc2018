@@ -5,7 +5,7 @@ import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakePull extends Command{
+public class IntakePullSlow extends Command{
 	
 	private IntakeSubsystem intake;
 	private boolean finished;
@@ -18,7 +18,7 @@ public class IntakePull extends Command{
 	
 	@Override
 	public void execute() {
-		intake.start(false);
+		intake.start(true);
 		finished = true;
 	}
 	

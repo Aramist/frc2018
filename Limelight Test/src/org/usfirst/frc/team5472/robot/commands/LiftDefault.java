@@ -36,7 +36,7 @@ public class LiftDefault extends Command {
 		double down = controls.getLiftDownAxis() * Constants.LIFT_REVERSE_OUTPUT_LIMIT;
 		double absdown = Math.abs(down);
 		
-		if (lift.getPosition() < 4000 && absdown > 0.05) {
+		if (lift.getPosition() < 3000 && absdown > 0.05) {
 			//The lift is near the bottom and the operator wishes to lower it
 			lift.enableBrake();
 			lift.setPercent(0);

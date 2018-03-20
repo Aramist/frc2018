@@ -3,11 +3,12 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.commands.GripToggle;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
+import org.usfirst.frc.team5472.robot.commands.IntakePullSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakePush;
 import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
-import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
+import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,9 +21,10 @@ public class Controls {
 
 	private JoystickButton shiftGear = new JoystickButton(playerOne, 3);
 
-	private JoystickButton intakeIn = new JoystickButton(playerOne, 5);
-	private JoystickButton intakeOut = new JoystickButton(playerOne, 6);
-	private JoystickButton intakeSlowOut = new JoystickButton(playerTwo, 2);
+	private JoystickButton intakeLowSpeedIn = new JoystickButton(playerOne, 5);
+	private JoystickButton intakeLowSpeedOut = new JoystickButton(playerOne, 6);
+	private TriggerButton intakeHighSpeedIn = new TriggerButton(playerOne, 2);
+	private TriggerButton intakeHighSpeedOut = new TriggerButton(playerOne, 3);
 	
 	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1);
 	
@@ -36,12 +38,15 @@ public class Controls {
 		shiftGear.whenReleased(new ShiftGear());
 		highButton.whenPressed(new HighGear());
 		
-		intakeIn.whenPressed(new IntakePull());
-		intakeIn.whenReleased(new IntakeStop());
-		intakeOut.whenPressed(new IntakePush());
-		intakeOut.whenReleased(new IntakeStop());
-		intakeSlowOut.whenPressed(new IntakePushSlow());
-		intakeSlowOut.whenReleased(new IntakeStop());
+		intakeHighSpeedIn.whenPressed(new IntakePull());
+		intakeHighSpeedIn.whenReleased(new IntakeStop());
+		intakeHighSpeedOut.whenPressed(new IntakePush());
+		intakeHighSpeedOut.whenReleased(new IntakeStop());
+		
+		intakeLowSpeedIn.whenPressed(new IntakePullSlow());
+		intakeLowSpeedIn.whenReleased(new IntakeStop());
+		intakeLowSpeedOut.whenPressed(new IntakePushSlow());
+		intakeLowSpeedOut.whenReleased(new IntakeStop());
 
 		toggleGrip.whenPressed(new GripToggle());
 		

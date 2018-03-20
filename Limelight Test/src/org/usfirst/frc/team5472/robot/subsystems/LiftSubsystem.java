@@ -35,7 +35,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		leftLiftMotor.setInverted(true);
 		leftLiftMotor.setSensorPhase(true);
 		leftLiftMotor.configPeakOutputForward(1.0, 10);
-		leftLiftMotor.configPeakOutputReverse(-0.5, 10);
+		leftLiftMotor.configPeakOutputReverse(-1.0, 10);
 		leftLiftMotor.configForwardSoftLimitThreshold(35000, 10);
 		leftLiftMotor.configForwardSoftLimitEnable(true, 10);
 		leftLiftMotor.configReverseSoftLimitThreshold(0, 10);
@@ -64,7 +64,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController = new PIDController(Constants.LIFT_PIDF_P, Constants.LIFT_PIDF_I, Constants.LIFT_PIDF_D, Constants.LIFT_PIDF_F, positionSource, positionOutput);
 		positionController.setSetpoint(0.0);
 		positionController.setInputRange(0, 34000);
-		positionController.setOutputRange(-0.4, 1.0);
+		positionController.setOutputRange(-1.0 , 1.0);
 		positionController.setAbsoluteTolerance(50);
 	}
 	

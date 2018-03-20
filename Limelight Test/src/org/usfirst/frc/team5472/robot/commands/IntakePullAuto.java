@@ -18,7 +18,7 @@ public class IntakePullAuto extends Command{
 	
 	@Override
 	public void execute() {
-		intake.start();
+		intake.start(false);
 		finished = true;
 	}
 	

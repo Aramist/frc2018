@@ -26,7 +26,7 @@ public class CSWLX extends CommandGroup{
 		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH));
 		addSequential(new Turn(45), 1);
 		addParallel(new RaiseLiftLow());
-		addSequential(new Forward(1.80));
+		addSequential(new Forward(1.65));
 		addSequential(new Turn(10), 1);
 		addSequential(new Forward(0.5), 1);
 		addSequential(new IntakePushSlow());

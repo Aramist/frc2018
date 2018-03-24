@@ -36,9 +36,9 @@ public class Constants {
 	public static final int INTAKE_RIGHT_MOTOR_CAN = 7;
 	public static final int INTAKE_SOLENOID_ID_FORW = 1;
 	public static final int INTAKE_SOLENOID_ID_BACK = 2;
-	public static final double INTAKE_INPUT_SPEED = 1.0;
+	public static final double INTAKE_INPUT_SPEED = 1.00;
 	public static final double INTAKE_INPUT_SLOW_SPEED = 0.40;
-	public static final double INTAKE_OUTPUT_SPEED = 1.0;
+	public static final double INTAKE_OUTPUT_SPEED = 1.00;
 	public static final double INTAKE_OUTPUT_SLOW_SPEED = 0.40;
 
 	

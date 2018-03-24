@@ -10,6 +10,7 @@ import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
 import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
+import org.usfirst.frc.team5472.robot.commands.TakeSnapshot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,18 +20,23 @@ public class Controls {
 	private Joystick playerOne = new Joystick(0);
 	private Joystick playerTwo = new Joystick(1);
 
-	private JoystickButton shiftGear = new JoystickButton(playerOne, 3);
+	private JoystickButton shiftGear = new JoystickButton(playerOne, 3); // X Button
 
-	private JoystickButton intakeLowSpeedIn = new JoystickButton(playerOne, 5);
-	private JoystickButton intakeLowSpeedOut = new JoystickButton(playerOne, 6);
-	private TriggerButton intakeHighSpeedIn = new TriggerButton(playerOne, 2);
-	private TriggerButton intakeHighSpeedOut = new TriggerButton(playerOne, 3);
+	private JoystickButton intakeLowSpeedIn = new JoystickButton(playerOne, 5); // Left Shoulder
+	private JoystickButton intakeLowSpeedOut = new JoystickButton(playerOne, 6); // Right Shoulder
+	private TriggerButton intakeHighSpeedIn = new TriggerButton(playerOne, 2); // Left Bottom
+	private TriggerButton intakeHighSpeedOut = new TriggerButton(playerOne, 3); // Right Bottom
 	
-	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1);
+	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1); // A Button
 	
-	private JoystickButton highButton = new JoystickButton(playerOne, 4);
+	private JoystickButton highButton = new JoystickButton(playerOne, 4); // Y Button
 	
-	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH);
+	//temporary
+	private JoystickButton takeSnapshot = new JoystickButton(playerTwo, 4); // Y Button
+	//temporary
+	
+	
+	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH, true);
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
 	
 	public Controls() {
@@ -49,6 +55,8 @@ public class Controls {
 		intakeLowSpeedOut.whenReleased(new IntakeStop());
 
 		toggleGrip.whenPressed(new GripToggle());
+		
+		takeSnapshot.whenPressed(new TakeSnapshot());
 		
 		highLimit.whileActive(new LiftStop());
 		lowLimit.whileActive(new LiftZeroEncoder());

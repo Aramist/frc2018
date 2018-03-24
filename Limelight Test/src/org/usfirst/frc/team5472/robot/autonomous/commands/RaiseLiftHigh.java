@@ -13,11 +13,11 @@ public class RaiseLiftHigh extends Command{
 	@Override
 	public void initialize() {
 		lift = Robot.lift;
+		lift.setSetpoint(31000);
 	}
 	
 	@Override
 	public void execute() {
-		lift.setSetpoint(31000);
 	}
 	
 	@Override

@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftSubsystem extends Subsystem implements DataProvider{
 
@@ -81,9 +80,6 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	public void setPercent(double percent) {
 		leftLiftMotor.set(ControlMode.PercentOutput, percent);
 		rightLiftMotor.set(ControlMode.PercentOutput, percent);
-		SmartDashboard.putNumber("Motor Percent Output", percent);
-		SmartDashboard.putNumber("Left Lift Motor Current", leftLiftMotor.getOutputCurrent());
-		SmartDashboard.putNumber("Right Lift Motor Current", rightLiftMotor.getOutputCurrent());
 	}
 	
 	public double getPercentOutput() {
@@ -108,7 +104,6 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 
 	public void setSetpoint(double i) {
 		positionController.setSetpoint(i);
-		
 	}
 	
 	public void addSetpoint(double d) {
@@ -154,11 +149,11 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
 		toReturn.put("Lift Position", new double[] {getPosition()});
-		toReturn.put("Lift Current 1", new double[] {leftLiftMotor.getOutputCurrent()});
-		toReturn.put("Lift Output Percent 1", new double[] {leftLiftMotor.getMotorOutputPercent()});
-		toReturn.put("Lift Position", new double[] {getPosition()});
-		toReturn.put("Lift Current 2", new double[] {rightLiftMotor.getOutputCurrent()});
-		toReturn.put("Lift Output Percent 2", new double[] {rightLiftMotor.getMotorOutputPercent()});
+		toReturn.put("Lift Current", new double[] {
+				leftLiftMotor.getOutputCurrent(),
+				rightLiftMotor.getOutputCurrent()
+		});
+		toReturn.put("Lift Output Percent", new double[] {leftLiftMotor.getMotorOutputPercent()});
 		return toReturn;
 	}
 	

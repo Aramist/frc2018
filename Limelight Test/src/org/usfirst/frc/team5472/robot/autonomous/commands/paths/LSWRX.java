@@ -31,7 +31,7 @@ public class LSWRX extends CommandGroup {
 		addSequential(new Forward(-0.7), 1);
 
 		addSequential(new LiftZero(), 3);
-//		addParallel(new GripOpen());
+		
 		addParallel(new IntakePull());
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());

@@ -1,26 +1,28 @@
-package org.usfirst.frc.team5472.robot.autonomous.commands;
+package org.usfirst.frc.team5472.robot.commands;
 
+import org.usfirst.frc.team5472.robot.Limelight;
 import org.usfirst.frc.team5472.robot.Robot;
-import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RaiseLiftLow extends Command{
+public class TakeSnapshot extends Command{
 	
-	private LiftSubsystem lift;
 	private boolean finished;
-
+	private Limelight instance;
+	
+	public TakeSnapshot() {
+	}
+	
 	@Override
 	public void initialize() {
-		lift = Robot.lift;
-		lift.setSetpoint(12000);
+		instance = Robot.limelight;
 	}
 	
 	@Override
 	public void execute() {
-		finished = lift.onTarget();
+		instance.takeSnapshot();
+		finished = true;
 	}
-	
 	
 	@Override
 	protected boolean isFinished() {

@@ -53,7 +53,7 @@ public class IntakeSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public void reverseAuto() {
-		double speed = 1.00;
+		double speed = 0.60;
 		leftSide.set(MODE, -speed);
 		rightSide.set(MODE, -speed);
 	}

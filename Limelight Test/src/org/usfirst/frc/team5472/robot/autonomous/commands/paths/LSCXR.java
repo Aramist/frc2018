@@ -12,7 +12,7 @@ import org.usfirst.frc.team5472.robot.commands.EnableVision;
 import org.usfirst.frc.team5472.robot.commands.GripClose;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
-import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
+import org.usfirst.frc.team5472.robot.commands.IntakePushAuto;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LowGear;
 
@@ -24,16 +24,16 @@ public class LSCXR extends CommandGroup {
 		addParallel(new GripClose());
 
 		addParallel(new RaiseLiftHalf(), 3);
-		addSequential(new Forward(5.50), 6);
+		addSequential(new Forward(4.8), 6); // First distance. 
 		addSequential(new Turn(-90), 2);
 		
-		addSequential(new Forward(4.6), 6);
+		addSequential(new Forward(4.2), 6); // Second distance. From 4.6
 		addSequential(new Turn(0), 2);
 		
 		addParallel(new LowGear());
 		addSequential(new RaiseLiftHigh(), 4);
-		addSequential(new Forward(0.8), 2);
-		addSequential(new IntakePushSlow());
+		addSequential(new Forward(1.05), 2); // Third distance. From 0.8
+		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
 		

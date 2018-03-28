@@ -1,24 +1,26 @@
 package org.usfirst.frc.team5472.robot.commands;
 
+import org.usfirst.frc.team5472.robot.Limelight;
 import org.usfirst.frc.team5472.robot.Robot;
-import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakePull extends Command{
+public class TakeSnapshot extends Command{
 	
-	private IntakeSubsystem intake;
 	private boolean finished;
+	private Limelight instance;
+	
+	public TakeSnapshot() {
+	}
 	
 	@Override
 	public void initialize() {
-		intake = Robot.intake;
-		finished = false;
+		instance = Robot.limelight;
 	}
 	
 	@Override
 	public void execute() {
-		intake.start(false);
+		instance.takeSnapshot();
 		finished = true;
 	}
 	

@@ -4,10 +4,12 @@ import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LBOLL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RBORR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWLX;
@@ -67,6 +69,7 @@ public class Autonomous {
 		
 		SmartDashboard.putData("Autonomous Starting Position", starting);
 		SmartDashboard.putData("Autonomous Task", plan);
+		
 	}
 
 	public void start() {
@@ -140,16 +143,17 @@ public class Autonomous {
 					command = new LSCXL();
 				break;
 			case BOTH:
-				command = null;
-				break;
-//				if(rightSwitchOwnership && rightScaleOwnership)
+				if(rightSwitchOwnership && rightScaleOwnership)
 //					command = new LBORR();
-//				else if(rightSwitchOwnership && !rightScaleOwnership)
+					command = new LSCXR();
+				else if(rightSwitchOwnership && !rightScaleOwnership)
 //					command = new LBORL();
-//				else if (!rightSwitchOwnership && rightScaleOwnership)
+					command = new LSCXL();
+				else if (!rightSwitchOwnership && rightScaleOwnership)
 //					command = new LBOLR();
-//				else
-//					command = new LBOLL();
+					command = new LSCXR();
+				else
+					command = new LBOLL();
 		}
 	}
 	
@@ -171,16 +175,17 @@ public class Autonomous {
 					command = new RSCXL();	
 				break;
 			case BOTH:
-				command = null;
-				break;
-//				if(rightSwitchOwnership && rightScaleOwnership)
-//					command = new RBORR();
-//				else if(rightSwitchOwnership && !rightScaleOwnership)
+				if(rightSwitchOwnership && rightScaleOwnership)
+					command = new RBORR();
+				else if(rightSwitchOwnership && !rightScaleOwnership)
 //					command = new RBORL();
-//				else if (!rightSwitchOwnership && rightScaleOwnership)
+					command = new RSCXL();
+				else if (!rightSwitchOwnership && rightScaleOwnership)
 //					command = new RBOLR();
-//				else
+					command = new RSCXR();
+				else
 //					command = new RBOLL();
+					command = new RSCXL();
 		}
 	}
 

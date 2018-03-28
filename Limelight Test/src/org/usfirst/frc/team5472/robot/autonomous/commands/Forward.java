@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Forward extends Command{
 	
 	private double distance;
+	private double angle;
 	
 	private DriveSubsystem drive;
 	private PIDController controller;
@@ -32,12 +33,18 @@ public class Forward extends Command{
 		controller.setInputRange(-10, 10);
 		controller.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
 		controller.enable();
+		
+		angle = drive.getHeading();
 	}
 	
 	@Override
 	public void execute() {
-		System.out.println("Setpoint: " + controller.getSetpoint());
-		System.out.println("Error:    " + controller.getError());
+		if (distance > 2) {
+			double error = angle - drive.getHeading();
+			double output = (drive.getLeftPercent() + drive.getRightPercent()) / 2.0;
+			
+			drive.drive(output - 0.1 * error, output + 0.1 * error);
+		}
 	}
 	
 	@Override

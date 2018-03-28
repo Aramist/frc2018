@@ -61,6 +61,8 @@ public class Robot extends TimedRobot implements DataProvider{
 		lift.resetEncoder();
 		lift.disableClosedLoop();
 		logger.end();
+		
+		limelight.setLed(false);
 	}
 
 	@Override
@@ -68,7 +70,10 @@ public class Robot extends TimedRobot implements DataProvider{
 		if (auto != null)
 			auto.checkGameSpecificData();
 		
-		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putNumber("Pressure[0]", getPressure());
+		SmartDashboard.putBoolean("Upper Lift Limit[0]", controls.highLimit.get());
+		SmartDashboard.putBoolean("Lower Lift Limit[0]", controls.lowLimit.get());
+		
 		limelight.setLed(false);
 	}
 
@@ -95,13 +100,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.appendData(this);
 		logger.writeFrame();
 		
-
-		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
-		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
-		
-		SmartDashboard.putNumber("Lift Position", lift.getPosition());
-		
-		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putNumber("Lift Closed-Loop Error", lift.getError());
 	}
 
 	@Override
@@ -115,6 +114,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		lift.teleopPeakOutput();
 		drive.highGear();
 		logger.start();
+		
 	}
 	
 	@Override
@@ -127,15 +127,6 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.appendData(led);
 		logger.appendData(this);
 		logger.writeFrame();
-		
-		SmartDashboard.putNumber("Pressure: ", getPressure());
-		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
-//		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
-		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
-		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
-		SmartDashboard.putNumber("Heading", drive.getHeading());
-		SmartDashboard.putNumber("Lift Position", lift.getPosition());
-		SmartDashboard.putNumber("Lift Percent Output", lift.getPercentOutput());
 	}
 	
 	@Override
@@ -164,6 +155,12 @@ public class Robot extends TimedRobot implements DataProvider{
 		});
 		toReturn.put("Pressure", new double[] {
 				getPressure()
+		});
+		toReturn.put("Low Limit Switch", new double[] {
+				controls.lowLimit.get() ? 1.0 : 0.0
+		});
+		toReturn.put("Low Limit Switch", new double[] {
+				controls.highLimit.get() ? 1.0 : 0.0
 		});
 		return toReturn;
 	}

@@ -26,6 +26,9 @@ public class Limelight implements DataProvider{
 	private static final int SWITCH_DETECTION = 0;
 	private static final int BOX_DETECTION = 1;
 	
+	private static final String SNAPSHOT = "snapshot";
+	private static final int TAKE_SNAPSHOT = 1;
+	
 	//Getters
 	private static final String TARGET_EXISTS = "tv";
 	private static final String VERTICAL_ANGLE = "ty";
@@ -46,6 +49,8 @@ public class Limelight implements DataProvider{
 			//System.out.println("Limelight camera not connected, connect the Limelight camera and restart robot code.");
 			limeLightConnected = false;
 		} else {
+			if(!limeLightConnected)
+				System.out.println("Limelight Connected");
 			limeLightConnected = true;
 		}
 	}
@@ -67,6 +72,10 @@ public class Limelight implements DataProvider{
 	public boolean getVisionProcessingEnabled() {
 		int asAnInt = limeLightTable.getEntry(CAMERA_MODE).getNumber(MODE_VISION_PROCESSING).intValue();
 		return asAnInt == MODE_VISION_PROCESSING ? true : false;
+	}
+	
+	public void takeSnapshot() {
+		limeLightTable.getEntry(SNAPSHOT).setNumber(TAKE_SNAPSHOT);
 	}
 	
 	public void setLed(boolean enabled) {

@@ -5,7 +5,7 @@ import org.usfirst.frc.team5472.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakePull extends Command{
+public class IntakePullAuto extends Command{
 	
 	private IntakeSubsystem intake;
 	private boolean finished;

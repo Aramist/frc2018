@@ -34,10 +34,10 @@ public class IntakeSubsystem extends Subsystem implements DataProvider{
 	protected void initDefaultCommand() {
 	}
 	
-	public void start() {
-		
-		leftSide.set(MODE, Constants.INTAKE_INPUT_SPEED);
-		rightSide.set(MODE, Constants.INTAKE_INPUT_SPEED);
+	public void start(boolean slow) {
+		double speed = slow ? Constants.INTAKE_INPUT_SLOW_SPEED : Constants.INTAKE_INPUT_SPEED;
+		leftSide.set(MODE, speed);
+		rightSide.set(MODE, speed);
 	}
 	
 	public void reverse(boolean slow) {
@@ -46,8 +46,14 @@ public class IntakeSubsystem extends Subsystem implements DataProvider{
 		rightSide.set(MODE, -speed);
 	}
 	
+	public void startAuto() {
+		double speed = 0.50;
+		leftSide.set(MODE, speed);
+		rightSide.set(MODE, speed);
+	}
+	
 	public void reverseAuto() {
-		double speed = 0.8;
+		double speed = 0.60;
 		leftSide.set(MODE, -speed);
 		rightSide.set(MODE, -speed);
 	}

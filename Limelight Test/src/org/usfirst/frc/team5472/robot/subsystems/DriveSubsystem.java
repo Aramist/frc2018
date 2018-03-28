@@ -151,6 +151,10 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	public double getLeftVelocity() {
 		return left.getSelectedSensorVelocity(0) / Constants.LEFT_ENCODER_TICKS_PER_METER;
 	}
+	
+	public double getLeftPercent() {
+		return left.getMotorOutputPercent();
+	}
 
 	public int getRightRaw() {
 		return right.getSelectedSensorPosition(0);
@@ -164,6 +168,10 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		return right.getSelectedSensorVelocity(0) / Constants.RIGHT_ENCODER_TICKS_PER_METER;
 	}
 
+	public double getRightPercent() {
+		return right.getMotorOutputPercent();
+	}
+	
 	public double getHeading() {
 		return -navx.getAngle();
 	}

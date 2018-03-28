@@ -5,7 +5,7 @@ import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RaiseLiftHigh extends Command{
+public class RaiseLiftHalf extends Command{
 	
 	private LiftSubsystem lift;
 	
@@ -13,15 +13,15 @@ public class RaiseLiftHigh extends Command{
 	@Override
 	public void initialize() {
 		lift = Robot.lift;
-		lift.setSetpoint(31000);
 	}
 	
 	@Override
 	public void execute() {
+		lift.setSetpoint(20000);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return lift.getPosition() > 32000;
+		return lift.getPosition() > 20000;
 	}
 }

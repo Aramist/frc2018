@@ -64,7 +64,7 @@ public class ApproachBox extends Command{
 				targetStamp = Timer.getFPGATimestamp();
 			double error = 10 + limelight.getHorizontalAngle();
 			double pGain = error * Constants.LIMELIGHT_APPROACH_BOX_KP;
-			drive.drive(0.3 + pGain, 0.3 - pGain);
+			drive.drive(0.5 + pGain, 0.5 - pGain);
 		}
 	}
 	

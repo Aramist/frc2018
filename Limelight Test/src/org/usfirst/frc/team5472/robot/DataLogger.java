@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DataLogger {
 	
 	
@@ -21,6 +22,7 @@ public class DataLogger {
 	
 	private StringBuilder currentFrame;
 	private PrintWriter output;
+	private double startTime = 0.0;
 	
 	public DataLogger() {
 		currentFrame = new StringBuilder();
@@ -31,19 +33,26 @@ public class DataLogger {
 			output.append(currentFrame.toString());
 			output.append("\n");
 			currentFrame.delete(0, currentFrame.length());
-			currentFrame.append("Timestamp: " + Timer.getFPGATimestamp() + "\n");
+			currentFrame.append("Timestamp: " + (Timer.getFPGATimestamp() - startTime) + "\n");
 		}
 	}
 	
 	public void start() {
-		currentFrame.append("Timestamp: " + Timer.getFPGATimestamp() + "\n");
+		startTime = Timer.getFPGATimestamp();
+		currentFrame.append("Timestamp: " + 0.0 + "\n");
 		
 		boolean auto = DriverStation.getInstance().isAutonomous();
 		boolean disabled = DriverStation.getInstance().isDisabled();
 		boolean teleop = DriverStation.getInstance().isOperatorControl();
 		
+		int matchnumber = DriverStation.getInstance().getMatchNumber();
+		
 		String fileName = auto ? "Autonomous " : disabled ? "Disabled " : teleop ? "Teleop " : "Test ";
-		fileName += LocalDateTime.now().toString() + ".log";
+
+		if(matchnumber == 0)
+			fileName += LocalDateTime.now().toString() + ".log";
+		else
+			fileName += "Match " + matchnumber + ".log";
 		
 		try {
 			this.output = new PrintWriter(new FileOutputStream(Paths.get(DIRECTORY + fileName).toFile()));
@@ -65,6 +74,9 @@ public class DataLogger {
 		for(Entry<String, double[]> entry : provider.getData().entrySet()) {
 			currentFrame.append("\t" + entry.getKey());
 			double[] val = entry.getValue();
+			for(int idx = 0; idx < val.length; idx++) {
+				SmartDashboard.putNumber(entry.getKey() + "[" + idx + "]", val[idx]);
+			}
 			currentFrame.append(": [");
 			for(int i = 0; i < val.length - 1; i++) {
 				currentFrame.append(fmt.format(val[i]) + ", ");

@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DataLogger {
 	
 	
@@ -74,9 +73,9 @@ public class DataLogger {
 		for(Entry<String, double[]> entry : provider.getData().entrySet()) {
 			currentFrame.append("\t" + entry.getKey());
 			double[] val = entry.getValue();
-			for(int idx = 0; idx < val.length; idx++) {
-				SmartDashboard.putNumber(entry.getKey() + "[" + idx + "]", val[idx]);
-			}
+//			for(int idx = 0; idx < val.length; idx++) {
+//				SmartDashboard.putNumber(entry.getKey() + "[" + idx + "]", val[idx]);
+//			}
 			currentFrame.append(": [");
 			for(int i = 0; i < val.length - 1; i++) {
 				currentFrame.append(fmt.format(val[i]) + ", ");

@@ -9,7 +9,7 @@ public class Cameras {
 	
 	public Cameras() {
 		cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		cam0.setResolution(640, 480);
+		cam0.setResolution(320, 240);
 	}
 	
 }

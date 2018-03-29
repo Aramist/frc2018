@@ -70,9 +70,9 @@ public class Robot extends TimedRobot implements DataProvider{
 		if (auto != null)
 			auto.checkGameSpecificData();
 		
-		SmartDashboard.putNumber("Pressure[0]", getPressure());
-		SmartDashboard.putBoolean("Upper Lift Limit[0]", controls.highLimit.get());
-		SmartDashboard.putBoolean("Lower Lift Limit[0]", controls.lowLimit.get());
+		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
 		
 		limelight.setLed(false);
 	}
@@ -101,6 +101,10 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.writeFrame();
 		
 		SmartDashboard.putNumber("Lift Closed-Loop Error", lift.getError());
+		
+		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
 	}
 
 	@Override
@@ -127,6 +131,10 @@ public class Robot extends TimedRobot implements DataProvider{
 		logger.appendData(led);
 		logger.appendData(this);
 		logger.writeFrame();
+		
+		SmartDashboard.putNumber("Pressure", getPressure());
+		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
+		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
 	}
 	
 	@Override

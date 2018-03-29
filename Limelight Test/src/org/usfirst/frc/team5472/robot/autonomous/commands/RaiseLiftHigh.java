@@ -13,6 +13,7 @@ public class RaiseLiftHigh extends Command{
 	@Override
 	public void initialize() {
 		lift = Robot.lift;
+		lift.enableClosedLoop();
 		lift.setSetpoint(31000);
 	}
 	
@@ -22,6 +23,6 @@ public class RaiseLiftHigh extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		return lift.getPosition() > 32000;
+		return lift.getPosition() > 31000;
 	}
 }

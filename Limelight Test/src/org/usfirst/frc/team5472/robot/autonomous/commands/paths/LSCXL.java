@@ -27,29 +27,29 @@ public class LSCXL extends CommandGroup {
 		
 		addParallel(new RaiseLiftHalf(), 4);
 		addSequential(new Forward(4.862), 4);
-		addSequential(new Turn(-19), 3);
+		addSequential(new Turn(-19), 2);
 		
-		addSequential(new RaiseLiftHigh(), 4);
+		addSequential(new RaiseLiftHigh(), 1.5);
 		addSequential(new LowGear());
-//		addSequential(new Forward(1.3700), 2); // From uncommented
+		addSequential(new Forward(1.00), 1); // From 1.37
 		addSequential(new IntakePushAuto()); // From IntakePushSlow()
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
 		
-		addSequential(new Forward(-0.700), 1);
-		addSequential(new LiftZero(), 3);
+		addSequential(new Forward(-0.400), 0.4); // From -0.7 
+		addParallel(new LiftZero(), 2);
 		
-		addSequential(new Turn(-140), 2);
+		addSequential(new Turn(-160), 1.5); // From 140
 		addSequential(new HighGear());
 		
 		addParallel(new IntakePull());
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());
 		addParallel(new GripOpen());
-		addSequential(new ApproachBox(), 3);
-//		addSequential(new IntakeStop()); // From uncommented
+		addSequential(new ApproachBox(), 1.5);
+//		addSequential(new IntakeStop());
 		addSequential(new GripClose());
 		addSequential(new IntakePullSlow());
-		addSequential(new Forward(-0.600));
+		addSequential(new Forward(-0.600), 0.5);
 	}
 }

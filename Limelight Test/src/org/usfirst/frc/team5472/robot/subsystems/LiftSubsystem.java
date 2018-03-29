@@ -126,6 +126,10 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController.disable();
 	}
 	
+	public boolean closedLoopEnabled() {
+		return positionController.isEnabled();
+	}
+	
 	public void enableBrake() {
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);

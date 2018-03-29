@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RaiseLiftLow extends Command{
 	
 	private LiftSubsystem lift;
-	private boolean finished;
 
 	@Override
 	public void initialize() {
@@ -18,13 +17,12 @@ public class RaiseLiftLow extends Command{
 	
 	@Override
 	public void execute() {
-		finished = lift.onTarget();
 	}
 	
 	
 	@Override
 	protected boolean isFinished() {
-		return finished;
+		return lift.getPosition() > 11000;
 	}
 	
 }

@@ -7,22 +7,52 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftZero extends Command{
 	
+//	private LiftSubsystem lift;
+//	private boolean finished;
+//	
+//	public LiftZero() {
+//		lift = Robot.lift;
+//	}
+//	
+//	@Override
+//	public void execute() {
+//		lift.setSetpoint(100);
+//		finished = lift.onTarget();
+//	}
+//	
+//	@Override
+//	protected boolean isFinished() {
+//		return finished;
+//	}
+//	
+	
 	private LiftSubsystem lift;
-	private boolean finished;
 	
 	public LiftZero() {
 		lift = Robot.lift;
 	}
 	
 	@Override
+	public void initialize() {
+		lift.disableClosedLoop();
+	}
+	
+	@Override
 	public void execute() {
-		lift.setSetpoint(100);
-		finished = lift.onTarget();
+		if(lift.getPosition() > 4500) {
+			lift.enableCoast();
+			lift.setPercent(0.00);
+		} else {
+			if(!lift.closedLoopEnabled()) {
+				lift.enableBrake();
+				lift.enableClosedLoop();
+				lift.setSetpoint(100);
+			}
+		}
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return finished;
+		return lift.closedLoopEnabled() && lift.onTarget();
 	}
-	
 }

@@ -16,14 +16,14 @@ public class RBORR extends CommandGroup {
 		addSequential(new RSCXR());
 		
 		addParallel(new RaiseLiftHalf());
-		addSequential(new Delay(1));
+		addSequential(new Delay(0.5));
 		addSequential(new IntakeStop());
-		addSequential(new Turn(135), 1);
-		addSequential(new Forward(0.7), 1);
+		addSequential(new Turn(170), 1.5);
+		addSequential(new Forward(0.7), 0.7);
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
-		addSequential(new Forward(-0.6), 1);
+		addSequential(new Forward(-0.6), 0.5);
 		addSequential(new LiftZero());
 	}
 }

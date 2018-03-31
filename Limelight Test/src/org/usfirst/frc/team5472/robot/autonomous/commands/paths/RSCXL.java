@@ -27,7 +27,7 @@ public class RSCXL extends CommandGroup {
 		addSequential(new Forward(4.80), 6);
 		addSequential(new Turn(90), 2);
 		
-		addSequential(new Forward(4.2), 6); // From 4.6
+		addSequential(new Forward(4.6), 6); // From 4.2
 		addSequential(new Turn(0), 2);
 		
 		addParallel(new LowGear());
@@ -38,7 +38,7 @@ public class RSCXL extends CommandGroup {
 		addSequential(new IntakeStop());
 		
 		addSequential(new Forward(-0.7), 1);
-		addSequential(new LiftZero(), 3);
+		addParallel(new LiftZero(), 2);
 		addSequential(new Turn(160), 3);
 		addSequential(new HighGear());
 		

@@ -3,6 +3,7 @@ package org.usfirst.frc.team5472.robot.autonomous.commands.paths;
 import org.usfirst.frc.team5472.robot.autonomous.commands.ApproachBox;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Delay;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Forward;
+import org.usfirst.frc.team5472.robot.autonomous.commands.LiftZero;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHalf;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHigh;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Turn;
@@ -37,6 +38,7 @@ public class LSCXR extends CommandGroup {
 		addSequential(new IntakeStop());
 		
 		addSequential(new Forward(-0.7), 1);
+		addParallel(new LiftZero(), 2);
 		addSequential(new Turn(-160), 3);
 		addSequential(new HighGear());
 		

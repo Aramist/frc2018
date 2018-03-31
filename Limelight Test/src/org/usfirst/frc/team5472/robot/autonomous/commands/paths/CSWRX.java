@@ -25,9 +25,9 @@ public class CSWRX extends CommandGroup{
 		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH), 1);
 		addSequential(new Turn(-45), 1);
 		addParallel(new RaiseLiftLow());
-		addSequential(new Forward(1.65), 1.5);
+		addSequential(new Forward(1.45), 1.5); // From 1.65
 		addSequential(new Turn(-10), 1);
-		addSequential(new Forward(0.5), 1);
+		addSequential(new Forward(0.7), 1); // From 0.5
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1.0));
 		addSequential(new IntakeStop());

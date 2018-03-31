@@ -39,7 +39,7 @@ public class CSWLX extends CommandGroup{
 		addParallel(new IntakePull());
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());
-		addSequential(new ApproachBox(), 3);
+		addSequential(new ApproachBox(), 2.5);
 		addSequential(new GripClose());
 		addSequential(new IntakePullAuto());
 		addSequential(new Forward(-0.8), 1);

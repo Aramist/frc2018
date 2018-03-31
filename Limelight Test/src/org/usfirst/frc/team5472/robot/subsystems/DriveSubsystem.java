@@ -180,6 +180,20 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		navx.zeroYaw();
 	}
 	
+	public void setBrake() {
+		left.setNeutralMode(NeutralMode.Brake);
+		leftFollower.setNeutralMode(NeutralMode.Brake);
+		right.setNeutralMode(NeutralMode.Brake);
+		rightFollower.setNeutralMode(NeutralMode.Brake);
+	}
+	
+	public void setCoast() {
+		left.setNeutralMode(NeutralMode.Brake);
+		leftFollower.setNeutralMode(NeutralMode.Coast);
+		right.setNeutralMode(NeutralMode.Brake);
+		rightFollower.setNeutralMode(NeutralMode.Coast);
+	}
+	
 	// Autonomous Stuff
 	public static double truncate(double value, double limit) {
 		limit = Math.abs(limit);

@@ -39,15 +39,15 @@ public class CSWRX extends CommandGroup{
 		addParallel(new IntakePull());
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());
-		addSequential(new ApproachBox(), 3);
+		addSequential(new ApproachBox(), 1.5);
 		addSequential(new GripClose());
 		addSequential(new IntakePullAuto());
 		addSequential(new Forward(-0.8), 1);
 		addSequential(new IntakeStop());
-		
+
+		addParallel(new RaiseLiftLow(), 3);
 		addSequential(new Turn(0), 1);
 		addSequential(new Forward(0.8), 1);
-		addSequential(new RaiseLiftLow(), 3);
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());

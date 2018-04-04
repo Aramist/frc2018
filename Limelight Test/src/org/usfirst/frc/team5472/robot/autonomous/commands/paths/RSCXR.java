@@ -31,11 +31,11 @@ public class RSCXR extends CommandGroup {
 		addParallel(new RaiseLiftHalf(), 4);
 		addSequential(new Forward(4.862), 4);
 		addSequential(new EnableCoast());
-		addSequential(new Turn(19), 2);
+		addSequential(new Turn(25), 2); // From 19
 		
 		addSequential(new RaiseLiftHigh(), 1.5);
 		addSequential(new LowGear());
-		addSequential(new Forward(1.00), 1); // From 1.37
+		addSequential(new Forward(1.15), 1); // From 1.00
 		addSequential(new IntakePushAuto()); // From IntakePushSlow()
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());

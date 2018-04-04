@@ -13,11 +13,12 @@ public class RaiseLiftHalf extends Command{
 	@Override
 	public void initialize() {
 		lift = Robot.lift;
+		lift.enableClosedLoop();
+		lift.setSetpoint(16000);
 	}
 	
 	@Override
 	public void execute() {
-		lift.setSetpoint(20000);
 	}
 	
 	@Override

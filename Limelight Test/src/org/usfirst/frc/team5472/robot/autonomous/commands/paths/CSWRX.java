@@ -14,7 +14,6 @@ import org.usfirst.frc.team5472.robot.commands.GripOpen;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
 import org.usfirst.frc.team5472.robot.commands.IntakePullAuto;
 import org.usfirst.frc.team5472.robot.commands.IntakePushAuto;
-import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -23,35 +22,36 @@ public class CSWRX extends CommandGroup{
 	
 	public CSWRX() {
 		addParallel(new GripClose());
-		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH));
+		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH), 1);
 		addSequential(new Turn(-45), 1);
 		addParallel(new RaiseLiftLow());
-		addSequential(new Forward(1.65));
+		addSequential(new Forward(1.45), 1.5); // From 1.65
 		addSequential(new Turn(-10), 1);
-		addSequential(new Forward(0.5), 1);
-		addSequential(new IntakePushSlow());
+		addSequential(new Forward(0.7), 1); // From 0.5
+		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1.0));
 		addSequential(new IntakeStop());
-		addSequential(new Forward(-1.6), 3);
+		addSequential(new Forward(-1.3), 1.5);
 		
 		addSequential(new Turn(35), 2);
-		addSequential(new LiftZero(), 3);
+		addSequential(new LiftZero(), 2);
 		addParallel(new GripOpen());
 		addParallel(new IntakePull());
 		addSequential(new EnableVision());
 		addSequential(new BoxPipeline());
-		addSequential(new ApproachBox(), 5);
+		addSequential(new ApproachBox(), 1.5);
 		addSequential(new GripClose());
 		addSequential(new IntakePullAuto());
-		addSequential(new Forward(-0.8));
+		addSequential(new Forward(-0.8), 1);
 		addSequential(new IntakeStop());
-		
-		addSequential(new Turn(0), 2);
+
+		addParallel(new RaiseLiftLow(), 3);
+		addSequential(new Turn(0), 1);
 		addSequential(new Forward(0.8), 1);
-		addSequential(new RaiseLiftLow(), 3);
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
+		addSequential(new Forward(-0.8), 1);
 	}
 	
 }

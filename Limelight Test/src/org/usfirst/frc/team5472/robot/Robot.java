@@ -47,7 +47,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		auto = new Autonomous();
 		controls = new Controls();
 		logger = new DataLogger();
-		
+
 		pressureSensor = new AnalogInput(0);
 		
 	}
@@ -86,6 +86,8 @@ public class Robot extends TimedRobot implements DataProvider{
 		lift.autoPeakOutput();
 		lift.enableClosedLoop();
 		logger.start();
+		
+//		drive.setBrake();
 		auto.start();
 	}
 
@@ -105,6 +107,9 @@ public class Robot extends TimedRobot implements DataProvider{
 		SmartDashboard.putNumber("Pressure", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
 		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
+		
+		SmartDashboard.putNumber("left auto", drive.getLeftPercent());
+		SmartDashboard.putNumber("right auto", drive.getRightPercent());
 	}
 
 	@Override
@@ -135,6 +140,14 @@ public class Robot extends TimedRobot implements DataProvider{
 		SmartDashboard.putNumber("Pressure", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
 		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
+		
+		
+		//temporary
+		SmartDashboard.putNumber("left", drive.getLeftPercent());
+		SmartDashboard.putNumber("right", drive.getRightPercent());
+		
+		
+		drive.getHeading();
 	}
 	
 	@Override

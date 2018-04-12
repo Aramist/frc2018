@@ -13,12 +13,14 @@ public class Constants {
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	
-	public static final double ROBOT_MAX_VELOCITY = 4.0; // m/s
-	public static final double DRIVE_FOLLOWER_P = 1.0;
-	public static final double DRIVE_FOLLOWER_I = 0.0;
-	public static final double DRIVE_FOLLOWER_D = 0.2;
-	public static final double DRIVE_FOLLOWER_V = 1.0 / ROBOT_MAX_VELOCITY;
-	public static final double DRIVE_FOLLOWER_A = 0;
+	public static final double DRIVE_DISTANCE_P = 1.1;
+	public static final double DRIVE_DISTANCE_I = 0.0;
+	public static final double DRIVE_DISTANCE_D = 6.0;
+	public static final double DRIVE_DISTANCE_F = 0.5;
+	
+	public static final double DRIVE_MAINTAIN_HEADING_P = 0.1;
+	public static final double DRIVE_MAINTAIN_HEADING_I = 0.0;
+	public static final double DRIVE_MAINTAIN_HEADING_D = 0.0;
 
 	public static final int DRIVE_LEFT_TALON_CAN = 1;
 	public static final int DRIVE_LEFT_FOLLOWER_CAN = 2;
@@ -26,10 +28,10 @@ public class Constants {
 	public static final int DRIVE_RIGHT_FOLLOWER_CAN = 3;
 	public static final int DRIVE_SHIFT_SOLENOID = 0;
 	
-	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 0.6;
-	public static final double DRIVE_AUTO_TURN_P = 0.0140;
+	public static final double DRIVE_AUTO_OUTPUT_LIMIT = 1.0;
+	public static final double DRIVE_AUTO_TURN_P = 2.0 / 90.0; // 0.014 in high gear
 	public static final double DRIVE_AUTO_TURN_I = 0.0000;
-	public static final double DRIVE_AUTO_TURN_D = 0.0000;
+	public static final double DRIVE_AUTO_TURN_D = 6.0 / 90.0;
 	public static final double LIMELIGHT_APPROACH_BOX_KP = 0.015;
 
 	public static final int INTAKE_LEFT_MOTOR_CAN = 6;
@@ -48,12 +50,13 @@ public class Constants {
 	
 	public static final double LIFT_PIDF_P = 0.00040;
 	public static final double LIFT_PIDF_I = 0.00000;
-	public static final double LIFT_PIDF_D = 0.0000;
+	public static final double LIFT_PIDF_D = 0.00000;
 	public static final double LIFT_PIDF_F = 0.00000;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;
 	public static final int LIMIT_SWITCH_LOW = 4;
+	public static final int LIMIT_SWITCH_INTAKE = 5;
 	
 	public static final int LED_RED_DIO = 0;
 	public static final int LED_GREEN_DIO = 1;

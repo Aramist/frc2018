@@ -2,8 +2,6 @@ package org.usfirst.frc.team5472.robot.autonomous.commands.paths;
 
 import org.usfirst.frc.team5472.robot.autonomous.commands.ApproachBox;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Delay;
-import org.usfirst.frc.team5472.robot.autonomous.commands.EnableBrake;
-import org.usfirst.frc.team5472.robot.autonomous.commands.EnableCoast;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Forward;
 import org.usfirst.frc.team5472.robot.autonomous.commands.LiftZero;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHalf;
@@ -27,15 +25,14 @@ public class RSCXR extends CommandGroup {
 	public RSCXR() {
 		addParallel(new GripClose());
 		
-		addParallel(new EnableBrake());
 		addParallel(new RaiseLiftHalf(), 4);
-		addSequential(new Forward(4.862), 4);
-		addSequential(new EnableCoast());
+		addSequential(new Forward(4.862), 3);
+
+		addSequential(new LowGear());
 		addSequential(new Turn(25), 2); // From 19
 		
 		addSequential(new RaiseLiftHigh(), 1.5);
-		addSequential(new LowGear());
-		addSequential(new Forward(1.15), 1); // From 1.00
+		addSequential(new Forward(1.25), 1); // From 1.00
 		addSequential(new IntakePushAuto()); // From IntakePushSlow()
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());

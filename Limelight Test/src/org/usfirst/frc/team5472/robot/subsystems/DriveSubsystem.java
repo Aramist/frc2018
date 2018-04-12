@@ -12,13 +12,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends Subsystem implements DataProvider{
 
@@ -26,37 +23,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	private TalonSRX left, right, leftFollower, rightFollower;
 	private ControlMode controlMode;
 	private Solenoid shiftSolenoid;
-	
-	
-	
-	private final PIDOutput driveOutput = (double output) -> {
-		drive(output, output);
-	};
-
-	private final PIDOutput turnOutput = (double output) -> {
-		drive(-output, output);
-	};
-	
-	private final PIDSource drivePositionSource = new PIDSource() {
-		public double pidGet() {
-			return (getLeftPosition() + getRightPosition()) / 2;
-		}
-		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
-		public void setPIDSourceType(PIDSourceType t) {}
-	};
-	
-	private final PIDSource driveAngleSource = new PIDSource() {
-		public double pidGet() {
-			return getHeading();
-		}
-		public PIDSourceType getPIDSourceType() {return PIDSourceType.kDisplacement;}
-		public void setPIDSourceType(PIDSourceType t) {}
-	};
-	
-	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
-			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
-	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, driveAngleSource, turnOutput);
-
 
 	public DriveSubsystem() {
 
@@ -72,8 +38,6 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		right.setInverted(true);
 		rightFollower.setInverted(true);
 		
-		//This got flipped around for some reason. 
-		
 		left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 		left.setSensorPhase(true);
 		right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
@@ -81,21 +45,15 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 
 		controlMode = ControlMode.PercentOutput;
 		
-		left.setNeutralMode(NeutralMode.Brake);
+		left.setNeutralMode(NeutralMode.Coast);
 		leftFollower.setNeutralMode(NeutralMode.Coast);
-		right.setNeutralMode(NeutralMode.Brake);
+		right.setNeutralMode(NeutralMode.Coast);
 		rightFollower.setNeutralMode(NeutralMode.Coast);
 
 		left.set(controlMode, 0);
 		leftFollower.set(controlMode, 0);
 		right.set(controlMode, 0);
 		rightFollower.set(controlMode, 0);
-		
-		
-		turnAngleController.setInputRange(-180.0, 180.0);
-		turnAngleController.setContinuous(true);
-		turnAngleController.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
-		turnAngleController.setAbsoluteTolerance(2);
 		
 		highGear();
 	}
@@ -123,6 +81,10 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 		setDefaultCommand(new JoystickDriveCommand());
 	}
 
+	public boolean isHighGear() {
+		return shiftSolenoid.get();
+	}
+	
 	public void shiftGear() {
 		shiftSolenoid.set(!shiftSolenoid.get());
 	}
@@ -173,6 +135,7 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public double getHeading() {
+		SmartDashboard.putData(navx);
 		return -navx.getAngle();
 	}
 
@@ -188,9 +151,9 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public void setCoast() {
-		left.setNeutralMode(NeutralMode.Brake);
+		left.setNeutralMode(NeutralMode.Coast);
 		leftFollower.setNeutralMode(NeutralMode.Coast);
-		right.setNeutralMode(NeutralMode.Brake);
+		right.setNeutralMode(NeutralMode.Coast);
 		rightFollower.setNeutralMode(NeutralMode.Coast);
 	}
 	

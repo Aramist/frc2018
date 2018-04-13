@@ -22,10 +22,16 @@ public class ApproachBox extends Command{
 	private double targetStamp;
 	private double targetLost;
 	
+	/**
+	 * Drives toward the nearest power cube using vision.
+	 */
 	public ApproachBox() {
 		requires(Robot.drive);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
+	 */
 	@Override
 	public void initialize() {
 		drive = Robot.drive;
@@ -38,6 +44,9 @@ public class ApproachBox extends Command{
 		targetLost = 0.0;
 	}
 	
+	/** 
+	 * While the target is visible, drive forward and use a simple P-only control loop to keep it centered in the camera's FOV.
+	 */
 	@Override
 	public void execute() {
 		if(!limelight.isConnected() && this.timeSinceInitialized() > 1.0) {
@@ -68,12 +77,18 @@ public class ApproachBox extends Command{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#end()
+	 */
 	@Override
 	public void end() {
-		Timer.delay(0.2);
+		Timer.delay(0.2); // Ensure the target is reached.
 		drive.drive(0.0, 0.0);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
+	 */
 	protected boolean isFinished() {
 		return finished;
 	}

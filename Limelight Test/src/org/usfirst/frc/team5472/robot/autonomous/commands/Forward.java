@@ -28,10 +28,21 @@ public class Forward extends Command{
 	private PIDSource drivePositionSource;
 	private PIDSource driveAngleSource;
 	
+	/**
+	 * Moves the robot straight forward at a predetermined maximum output using encoders for distance and gyro for angle correction.
+	 *
+	 * @param distance the distance
+	 */
 	public Forward(double distance) {
 		this(distance, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
 	}
 	
+	/**
+	 * Moves the robot straight forward at a given maximum output using encoders for distance and gyro for angle correction.
+	 *
+	 * @param distance the distance to travel, in meters.
+	 * @param maxSpeed the maximum output given to the speed controllers.
+	 */
 	public Forward(double distance, double maxSpeed) {
 		requires(Robot.drive);
 		this.distance = distance;
@@ -64,6 +75,9 @@ public class Forward extends Command{
 		headingController.setOutputRange(-0.1, 0.1);
 	}
 	
+	/**
+	 * Initializes PIDControllers and obtain initial conditions for position and angle.
+	 */
 	@Override
 	public void initialize() {
 		drive = Robot.drive;
@@ -79,6 +93,9 @@ public class Forward extends Command{
 		headingController.enable();
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#execute()
+	 */
 	@Override
 	public void execute() {
 		double driveOutput = driveController.get();
@@ -89,6 +106,9 @@ public class Forward extends Command{
 		drive.turn(driveOutput, -headingOutput);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#end()
+	 */
 	@Override
 	public void end() {
 		driveController.disable();
@@ -101,6 +121,9 @@ public class Forward extends Command{
 		drive.drive(0.0, 0.0);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
+	 */
 	@Override
 	public boolean isFinished() {
 		return driveController.onTarget();

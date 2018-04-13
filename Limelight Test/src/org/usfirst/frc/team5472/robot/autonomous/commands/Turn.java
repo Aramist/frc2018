@@ -10,16 +10,25 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * A Command used to turn the robot to a specified heading.
+ */
 public class Turn extends Command{
 	
 	private PIDSource angleSource;
 	private PIDOutput turnOutput;
 	private PIDController turnController;
+	
 	private double setpoint;
-	private boolean wasHigh;
+	private boolean wasHigh; // Whether the robot was in high gear before running the command
 	
 	private DriveSubsystem drive;
 	
+	/**
+	 * Initializes local variables and PID controllers.
+	 *
+	 * @param target the desired heading.
+	 */
 	public Turn(double target) {
 		setpoint = target;
 		drive = Robot.drive;
@@ -43,6 +52,9 @@ public class Turn extends Command{
 		turnController.setAbsoluteTolerance(2);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#initialize()
+	 */
 	@Override
 	public void initialize() {
 		wasHigh = drive.isHighGear();
@@ -52,15 +64,24 @@ public class Turn extends Command{
 		turnController.enable();
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#execute()
+	 */
 	@Override
 	public void execute() {
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
+	 */
 	@Override
 	public boolean isFinished() {
 		return turnController.onTarget();
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Command#end()
+	 */
 	@Override
 	public void end() {
 		turnController.reset();

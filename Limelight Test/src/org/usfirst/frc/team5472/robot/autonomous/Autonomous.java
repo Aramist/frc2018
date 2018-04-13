@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
-import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXL;
-import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWRX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LBOLL;
@@ -58,6 +56,9 @@ public class Autonomous {
 	private Command command = null;
 	private String gameSpecificData = "";
 
+	/**
+	 * Sends autonomous program selection sheet to driver station.
+	 */
 	public Autonomous() {
 		starting.addDefault(StartingPosition.CENTER.toString(), StartingPosition.CENTER);
 		starting.addObject(StartingPosition.LEFT.toString(), StartingPosition.LEFT);
@@ -72,6 +73,9 @@ public class Autonomous {
 		
 	}
 
+	/**
+	 * Uses input from the autonomous selection data to start the autonomous command.
+	 */
 	public void start() {
 		StartingPosition startPos = starting.getSelected();
 		Plan thePlan = plan.getSelected();
@@ -94,26 +98,35 @@ public class Autonomous {
 			command.start();
 	}
 	
+	/**
+	 * Chooses an autonomous command to run when the robot is starting in the center position.
+	 *
+	 * @param task the robot's goal.
+	 */
 	public void startingCenter(Plan task) {
 		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
-		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
+//		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
 		
 		switch(task) {
-			case SWITCH:
+			default:
 				if(rightSwitchOwnership)
 					command = new CSWRX();
 				else
 					command = new CSWLX();
 				break;
-			case SCALE:
-				if(rightScaleOwnership)
-					command = new CSCXR();
-				else
-					command = new CSCXL();
-				break;
-			case BOTH:
-				command = null;
-				break;
+//			case SWITCH:
+//				if(rightSwitchOwnership)
+//					command = new CSWRX();
+//				else
+//					command = new CSWLX();
+//				break;
+//			case SCALE:
+//				if(rightScaleOwnership)
+//					command = new CSCXR();
+//				else
+//					command = new CSCXL();
+//				break;
+//			case BOTH:
 //				if(rightSwitchOwnership && rightScaleOwnership)
 //					command = new CBORR();
 //				else if(rightSwitchOwnership && !rightScaleOwnership)
@@ -122,9 +135,15 @@ public class Autonomous {
 //					command = new CBOLR();
 //				else
 //					command = new CBOLL();
+//				break;
 		}
 	}
 	
+	/**
+	 * Chooses an autonomous command to run when the robot is starting in the left position.
+	 *
+	 * @param task the robot's goal.
+	 */
 	public void startingLeft(Plan task) {
 		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
 		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
@@ -157,6 +176,11 @@ public class Autonomous {
 		}
 	}
 	
+	/**
+	 * Chooses an autonomous command to run when the robot is starting in the right position.
+	 *
+	 * @param task the robot's goal.
+	 */
 	public void startingRight(Plan task) {
 		boolean rightSwitchOwnership = gameSpecificData.charAt(0) == 'R';
 		boolean rightScaleOwnership = gameSpecificData.charAt(1) == 'R';
@@ -189,11 +213,17 @@ public class Autonomous {
 		}
 	}
 
+	/**
+	 * Ends the currently running command, if any. Called at the end of the autonomous period (beginning of teleop).
+	 */
 	public void end() {
 		if (command != null)
 			command.cancel();
 	}
 
+	/**
+	 * Checks the FMS for game specific data (data related to the ownership of switch and scale).
+	 */
 	public void checkGameSpecificData() {
 		this.gameSpecificData = DriverStation.getInstance().getGameSpecificMessage().toUpperCase();
 	}

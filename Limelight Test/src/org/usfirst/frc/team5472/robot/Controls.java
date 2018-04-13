@@ -9,9 +9,7 @@ import org.usfirst.frc.team5472.robot.commands.IntakePush;
 import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
-import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
-import org.usfirst.frc.team5472.robot.commands.TakeSnapshot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -31,11 +29,6 @@ public class Controls {
 	private JoystickButton toggleGrip = new JoystickButton(playerOne, 1); // A Button
 	
 	private JoystickButton highButton = new JoystickButton(playerOne, 4); // Y Button
-	
-	//temporary
-	private JoystickButton takeSnapshot = new JoystickButton(playerTwo, 4); // Y Button
-	//temporary
-	
 	
 	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH, true);
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
@@ -58,10 +51,7 @@ public class Controls {
 
 		toggleGrip.whenPressed(new GripToggle());
 		
-		takeSnapshot.whenPressed(new TakeSnapshot());
-		
 		highLimit.whileActive(new LiftStop());
-		lowLimit.whileActive(new LiftZeroEncoder());
 		
 		intakeLimit.whenPressed(new ReportIntakeLimit());
 		intakeLimit.whenReleased(new ReportIntakeLimit());

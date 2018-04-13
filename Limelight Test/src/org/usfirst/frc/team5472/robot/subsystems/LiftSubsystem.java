@@ -26,6 +26,9 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	private PIDSource positionSource;
 	private PIDOutput positionOutput;
 	
+	/**
+	 * Instantiates the Lift Subsystem, both motor controllers, and the PIDController.
+	 */
 	public LiftSubsystem() {
 		
 		leftLiftMotor = new TalonSRX(Constants.LIFT_TALON_CAN_LEFT);
@@ -67,89 +70,159 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		positionController.setAbsoluteTolerance(50);
 	}
 	
+	/**
+	 * Configures the peak output of the speed controllers during the autonomous period.
+	 */
 	public void autoPeakOutput() {
 		leftLiftMotor.configPeakOutputForward(0.5, 10);
 		rightLiftMotor.configPeakOutputForward(0.5, 10);
 	}
 	
+	/**
+	 * Configures the peak output of the speed controllers during the teleoperated period.
+	 */
 	public void teleopPeakOutput() {
 		leftLiftMotor.configPeakOutputForward(1.0, 10);
 		rightLiftMotor.configPeakOutputForward(1.0, 10);
 	}
 	
+	/**
+	 * Sets the percent output of the lift speed controllers.
+	 *
+	 * @param percent the percent output of the speed controllers.
+	 */
 	public void setPercent(double percent) {
 		leftLiftMotor.set(ControlMode.PercentOutput, percent);
 		rightLiftMotor.set(ControlMode.PercentOutput, percent);
 	}
 	
+	/**
+	 * Gets the current percent output of the lift speed controllers.
+	 *
+	 * @return the percent output of the lift speed controllers.
+	 */
 	public double getPercentOutput() {
 		return leftLiftMotor.getMotorOutputPercent();
 	}
 
+	/**
+	 * Holds the lift at its current position.
+	 */
 	public void hold() {
 		setPercent(0.1);
 	}
 
+	/**
+	 * Resets the position of the lift encoder to zero.
+	 */
 	public void resetEncoder() {
 		leftLiftMotor.setSelectedSensorPosition(0, 0, 0);
 	}
 
+	/**
+	 * Gets the current position of the lift encoder.
+	 *
+	 * @return the position of the encoder.
+	 */
 	public double getPosition() {
 		return leftLiftMotor.getSelectedSensorPosition(0);
 	}
 	
+	/**
+	 * Gets whether the lift PIDController is on target.
+	 *
+	 * @return true, if on target.
+	 */
 	public boolean onTarget() {
 		return positionController.onTarget();
 	}
 
-	public void setSetpoint(double i) {
-		positionController.setSetpoint(i);
+	/**
+	 * Sets the setpoint of the lift PIDController
+	 *
+	 * @param set the new setpoint.
+	 */
+	public void setSetpoint(double set) {
+		positionController.setSetpoint(set);
 	}
 	
+	/**
+	 * Adds to the setpoint of the lift PIDController
+	 *
+	 * @param d the value to be added to the setpoint.
+	 */
 	public void addSetpoint(double d) {
 		setSetpoint(getSetpoint() + d);
 	}
 	
+	/**
+	 * Gets the current setpoint of the lift PIDController.
+	 *
+	 * @return the setpoint.
+	 */
 	public double getSetpoint() {
 		return positionController.getSetpoint();
 	}
 	
+	/**
+	 * Gets the current error of the lift PIDController.
+	 *
+	 * @return the error
+	 */
 	public double getError() {
 		return positionController.getError();
 	}
 	
+	/**
+	 * Enables closed loop control of the lift.
+	 */
 	public void enableClosedLoop() {
 		positionController.enable();
 	}
 	
+	/**
+	 * Disables closed loop control of the lift.
+	 */
 	public void disableClosedLoop() {
 		positionController.disable();
 	}
 	
+	/**
+	 * Gets whether closed loop control is currently enabled for the lift.
+	 *
+	 * @return true, if enabled
+	 */
 	public boolean closedLoopEnabled() {
 		return positionController.isEnabled();
 	}
 	
+	/**
+	 * Sets the neutral mode of the lift speed controllers to brake
+	 */
 	public void enableBrake() {
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 	}
 	
+	/**
+	 * Sets the neutral mode of the lift speed controllers to coast
+	 */
 	public void enableCoast() {
 		leftLiftMotor.setNeutralMode(NeutralMode.Coast);
 		rightLiftMotor.setNeutralMode(NeutralMode.Coast);
 	}
-	
-	public void zeroEncoder() {
-		leftLiftMotor.setSelectedSensorPosition(0, 0, 0);
-	}
-	
+		
+	/* (non-Javadoc)
+	 * @see edu.wpi.first.wpilibj.command.Subsystem#initDefaultCommand()
+	 */
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new LiftDefault());
-		
+		setDefaultCommand(new LiftDefault());	
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.usfirst.frc.team5472.robot.DataProvider#getData()
+	 */
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
 		toReturn.put("Lift Position", new double[] {getPosition()});

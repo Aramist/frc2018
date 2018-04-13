@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 
 public class LedSubsystem implements DataProvider{
 	
+	/**
+	 * An Enum created to hold all possible colors that can be displayed
+	 */
 	public static enum LedColor{
 		RED(true, false, false), GREEN(false, true, false), BLUE(false, false, true),
 		YELLOW(true, true, false), PURPLE(true, false, true), LIGHT_BLUE(false, true, true),
@@ -32,6 +35,9 @@ public class LedSubsystem implements DataProvider{
 	private DigitalOutput red, green, blue;
 	private LedColor currentColor;
 	
+	/**
+	 * Instantiates the Led Subsystem and the DigitalInputs used.
+	 */
 	public LedSubsystem() {
 		currentColor = LedColor.OFF;
 		red = new DigitalOutput(Constants.LED_RED_DIO);
@@ -39,6 +45,11 @@ public class LedSubsystem implements DataProvider{
 		blue = new DigitalOutput(Constants.LED_BLUE_DIO);
 	}
 	
+	/**
+	 * Sets the color of the LED strip.
+	 *
+	 * @param color the color to be used.
+	 */
 	public void setColor(LedColor color) {
 		currentColor = color;
 		red.set(color.getRed());
@@ -46,10 +57,18 @@ public class LedSubsystem implements DataProvider{
 		blue.set(color.getBlue());
 	}
 	
+	/**
+	 * Gets the current color of the LED strip.
+	 *
+	 * @return the color of the LED strip.
+	 */
 	public LedColor getColor() {
 		return currentColor;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.usfirst.frc.team5472.robot.DataProvider#getData()
+	 */
 	public HashMap<String, double[]> getData(){
 		HashMap<String, double[]> toReturn = new HashMap<>();
 		toReturn.put("LED Color", new double[] {

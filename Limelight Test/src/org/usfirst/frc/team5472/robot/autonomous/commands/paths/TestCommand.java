@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class TestCommand extends CommandGroup {
 
+	/**
+	 * This autonomous path exists purely for testing purposes and should not be mentioned in competition.
+	 */
 	public TestCommand() {
 		addSequential(new Forward(100.0, 0.4)); // 100 meters
 //		addSequential(new LowGear());

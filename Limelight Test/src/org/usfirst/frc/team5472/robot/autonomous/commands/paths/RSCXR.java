@@ -22,6 +22,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RSCXR extends CommandGroup {
 
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Right
+	 *   - Goal: Scale
+	 *   - Ownership:
+	 *     - Switch: Any
+	 *     - Scale:  Right
+	 */
 	public RSCXR() {
 		addParallel(new GripClose());
 		

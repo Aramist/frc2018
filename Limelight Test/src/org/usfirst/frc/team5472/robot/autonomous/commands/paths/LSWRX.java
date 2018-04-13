@@ -17,6 +17,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LSWRX extends CommandGroup {
 
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Left
+	 *   - Goal: Switch
+	 *   - Ownership:
+	 *     - Switch: Right
+	 *     - Scale:  Any
+	 */
 	public LSWRX() {
 		addParallel(new GripClose());
 		

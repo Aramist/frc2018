@@ -14,6 +14,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CSCXL extends CommandGroup {
 
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Center
+	 *   - Goal: Scale
+	 *   - Ownership:
+	 *     - Switch: Any
+	 *     - Scale:  Left
+	 */
 	public CSCXL() {
 		addParallel(new GripClose());
 		

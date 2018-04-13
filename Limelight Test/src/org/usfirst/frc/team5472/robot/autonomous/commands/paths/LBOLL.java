@@ -12,6 +12,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LBOLL extends CommandGroup{
 	
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Left
+	 *   - Goal: Both
+	 *   - Ownership:
+	 *     - Switch: Left
+	 *     - Scale:  Left
+	 */
 	public LBOLL() {
 		addSequential(new LSCXL());
 		

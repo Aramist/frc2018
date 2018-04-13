@@ -24,6 +24,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LSCXL extends CommandGroup {
 
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Left
+	 *   - Goal: Scale
+	 *   - Ownership:
+	 *     - Switch: Any
+	 *     - Scale:  Left
+	 */
 	public LSCXL() {
 		addParallel(new GripClose());
 		

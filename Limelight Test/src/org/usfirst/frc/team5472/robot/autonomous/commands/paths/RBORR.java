@@ -12,6 +12,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RBORR extends CommandGroup {
 	
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Right
+	 *   - Goal: Both
+	 *   - Ownership:
+	 *     - Switch: Right
+	 *     - Scale:  Right
+	 */
 	public RBORR() {
 		addSequential(new RSCXR());
 		

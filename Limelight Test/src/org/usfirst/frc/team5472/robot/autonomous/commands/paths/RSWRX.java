@@ -13,6 +13,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RSWRX extends CommandGroup {
 
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Right
+	 *   - Goal: Switch
+	 *   - Ownership:
+	 *     - Switch: Right
+	 *     - Scale:  Any
+	 */
 	public RSWRX() {
 		addParallel(new GripClose());
 		

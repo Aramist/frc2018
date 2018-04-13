@@ -20,6 +20,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CSWRX extends CommandGroup{
 	
+	/**
+	 * Autonomous path:
+	 *   - Starting Position: Center
+	 *   - Goal: Switch
+	 *   - Ownership:
+	 *     - Switch: Right
+	 *     - Scale:  Any
+	 */
 	public CSWRX() {
 		addParallel(new GripClose());
 		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH), 1);

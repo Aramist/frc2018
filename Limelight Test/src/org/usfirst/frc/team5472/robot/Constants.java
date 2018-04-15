@@ -10,8 +10,8 @@ public class Constants {
 	
 	public static final double LEFT_ENCODER_TICKS_PER_METER = 12833;
 	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12833;
-	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
-	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
+	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * Math.PI * WHEEL_DIAMETER;
+	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * Math.PI * WHEEL_DIAMETER;
 	
 	public static final double DRIVE_DISTANCE_P = 1.1;
 	public static final double DRIVE_DISTANCE_I = 0.0;

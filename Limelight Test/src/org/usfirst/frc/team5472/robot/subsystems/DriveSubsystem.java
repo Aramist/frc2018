@@ -92,7 +92,7 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	 */
 	public void turn(double throttle, double twist) {
 		left.set(controlMode, throttle + twist);
-		leftFollower.set(controlMode, throttle - twist);
+		leftFollower.set(controlMode, throttle - twist); //TODO: This looks wierd, check it out on Monday
 		right.set(controlMode, throttle - twist);
 		rightFollower.set(controlMode, throttle + twist);
 	}

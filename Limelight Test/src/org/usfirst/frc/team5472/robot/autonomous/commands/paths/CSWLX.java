@@ -1,14 +1,10 @@
 package org.usfirst.frc.team5472.robot.autonomous.commands.paths;
 
-import org.usfirst.frc.team5472.robot.Constants;
-import org.usfirst.frc.team5472.robot.autonomous.commands.ApproachBox;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Delay;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Forward;
 import org.usfirst.frc.team5472.robot.autonomous.commands.LiftZero;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftLow;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Turn;
-import org.usfirst.frc.team5472.robot.commands.BoxPipeline;
-import org.usfirst.frc.team5472.robot.commands.EnableVision;
 import org.usfirst.frc.team5472.robot.commands.GripClose;
 import org.usfirst.frc.team5472.robot.commands.GripOpen;
 import org.usfirst.frc.team5472.robot.commands.IntakePull;
@@ -22,36 +18,76 @@ public class CSWLX extends CommandGroup{
 	
 	public CSWLX() {
 		addParallel(new GripClose());
-		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH), 1);
+		addSequential(new Forward(0.66), 1);
 		addSequential(new Turn(45), 1);
 		addParallel(new RaiseLiftLow());
 		addSequential(new Forward(1.65), 1.5);
-		addSequential(new Turn(10), 1);
+		addSequential(new Turn(0), 1);
 		addSequential(new Forward(0.5), 1);
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1.0));
 		addSequential(new IntakeStop());
-		addSequential(new Forward(-1.3), 1.5);
 		
-		addSequential(new Turn(-35), 2);
-		addSequential(new LiftZero(), 2);
+		addSequential(new Forward(-0.5), 1.0);
+		addSequential(new Turn(45), 1);
+		addParallel(new LiftZero(), 1);
+		addSequential(new Forward(-1.65), 2);
+		addSequential(new Turn(0), 1);
+		
+		
 		addParallel(new GripOpen());
 		addParallel(new IntakePull());
-		addSequential(new EnableVision());
-		addSequential(new BoxPipeline());
-		addSequential(new ApproachBox(), 1.5);
+		addSequential(new Forward(1.2), 1.5);
 		addSequential(new GripClose());
 		addSequential(new IntakePullAuto());
-		addSequential(new Forward(-0.8), 1);
+		addSequential(new Forward(-1.2), 1.5);
 		addSequential(new IntakeStop());
 		
-		addParallel(new RaiseLiftLow(), 3);
-		addSequential(new Turn(0), 1);
-		addSequential(new Forward(0.8), 1);
+		addParallel(new RaiseLiftLow(), 2);
+		addSequential(new Turn(45), 2);
+		addSequential(new Forward(1.65), 1.5);
+		addSequential(new Turn(0), 2);
+		addSequential(new Forward(0.5), 1);
 		addSequential(new IntakePushAuto());
-		addSequential(new Delay(1));
+		addSequential(new Delay(1.0));
 		addSequential(new IntakeStop());
-		addSequential(new Forward(-0.8), 1);
+		addSequential(new Forward(-0.8));
+		
+		
+		
+		
+		
+//		addParallel(new GripClose());
+//		addSequential(new Forward(1.50 - Constants.ROBOT_LENGTH), 1);
+//		addSequential(new Turn(45), 1);
+//		addParallel(new RaiseLiftLow());
+//		addSequential(new Forward(1.65), 1.5);
+//		addSequential(new Turn(10), 1);
+//		addSequential(new Forward(0.5), 1);
+//		addSequential(new IntakePushAuto());
+//		addSequential(new Delay(1.0));
+//		addSequential(new IntakeStop());
+//		addSequential(new Forward(-1.3), 1.5);
+//		
+//		addSequential(new Turn(-35), 2);
+//		addSequential(new LiftZero(), 2);
+//		addParallel(new GripOpen());
+//		addParallel(new IntakePull());
+//		addSequential(new EnableVision());
+//		addSequential(new BoxPipeline());
+//		addSequential(new ApproachBox(), 1.5);
+//		addSequential(new GripClose());
+//		addSequential(new IntakePullAuto());
+//		addSequential(new Forward(-0.8), 1);
+//		addSequential(new IntakeStop());
+//		
+//		addParallel(new RaiseLiftLow(), 3);
+//		addSequential(new Turn(0), 1);
+//		addSequential(new Forward(0.8), 1);
+//		addSequential(new IntakePushAuto());
+//		addSequential(new Delay(1));
+//		addSequential(new IntakeStop());
+//		addSequential(new Forward(-0.8), 1);
 	}
 	
 }

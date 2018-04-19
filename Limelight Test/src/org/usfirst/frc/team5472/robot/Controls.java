@@ -9,6 +9,7 @@ import org.usfirst.frc.team5472.robot.commands.IntakePushSlow;
 import org.usfirst.frc.team5472.robot.commands.IntakeStop;
 import org.usfirst.frc.team5472.robot.commands.LiftStop;
 import org.usfirst.frc.team5472.robot.commands.LiftZeroEncoder;
+import org.usfirst.frc.team5472.robot.commands.ReportIntakeLimit;
 import org.usfirst.frc.team5472.robot.commands.ShiftGear;
 import org.usfirst.frc.team5472.robot.commands.TakeSnapshot;
 
@@ -38,6 +39,7 @@ public class Controls {
 	
 	public LimitSwitch highLimit = new LimitSwitch(Constants.LIMIT_SWITCH_HIGH, true);
 	public LimitSwitch lowLimit = new LimitSwitch(Constants.LIMIT_SWITCH_LOW, false);
+	public LimitSwitch intakeLimit = new LimitSwitch(Constants.LIMIT_SWITCH_INTAKE, true);
 	
 	public Controls() {
 		shiftGear.whenPressed(new ShiftGear());
@@ -60,6 +62,8 @@ public class Controls {
 		
 		highLimit.whileActive(new LiftStop());
 		lowLimit.whileActive(new LiftZeroEncoder());
+		intakeLimit.whenPressed(new ReportIntakeLimit());
+		intakeLimit.whenReleased(new ReportIntakeLimit());
 	}
 
 	public Joystick getPlayerOne() {

@@ -135,6 +135,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		SmartDashboard.putNumber("Pressure", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
 		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
+		
 	}
 	
 	@Override

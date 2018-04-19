@@ -54,7 +54,7 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	};
 	
 	public final PIDController drivePositionController = new PIDController(Constants.DRIVE_FOLLOWER_P, Constants.DRIVE_FOLLOWER_I, Constants.DRIVE_FOLLOWER_D,
-			Constants.DRIVE_FOLLOWER_V, drivePositionSource, driveOutput);
+			Constants.DRIVE_FOLLOWER_F, drivePositionSource, driveOutput);
 	public final PIDController turnAngleController = new PIDController(Constants.DRIVE_AUTO_TURN_P, Constants.DRIVE_AUTO_TURN_I, Constants.DRIVE_AUTO_TURN_D, driveAngleSource, turnOutput);
 
 
@@ -81,10 +81,8 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 
 		controlMode = ControlMode.PercentOutput;
 		
-		left.setNeutralMode(NeutralMode.Brake);
-		leftFollower.setNeutralMode(NeutralMode.Coast);
-		right.setNeutralMode(NeutralMode.Brake);
-		rightFollower.setNeutralMode(NeutralMode.Coast);
+		setCoast();
+		
 
 		left.set(controlMode, 0);
 		leftFollower.set(controlMode, 0);
@@ -133,6 +131,10 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 
 	public void lowGear() {
 		shiftSolenoid.set(false);
+	}
+	
+	public boolean isHighGear() {
+		return shiftSolenoid.get();
 	}
 
 	public void resetEncoders() {
@@ -188,9 +190,9 @@ public class DriveSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public void setCoast() {
-		left.setNeutralMode(NeutralMode.Brake);
+		left.setNeutralMode(NeutralMode.Coast);
 		leftFollower.setNeutralMode(NeutralMode.Coast);
-		right.setNeutralMode(NeutralMode.Brake);
+		right.setNeutralMode(NeutralMode.Coast);
 		rightFollower.setNeutralMode(NeutralMode.Coast);
 	}
 	

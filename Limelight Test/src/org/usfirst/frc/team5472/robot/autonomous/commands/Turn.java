@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Turn extends Command{
 	
 	private PIDController turnController;
+	private boolean wasHigh;
 	private double setpoint;
 	
 	private DriveSubsystem drive;
@@ -21,6 +22,8 @@ public class Turn extends Command{
 	
 	@Override
 	public void initialize() {
+		wasHigh = drive.isHighGear();
+		drive.lowGear();
 		turnController.reset();
 		turnController.setSetpoint(setpoint);
 		turnController.enable();
@@ -28,7 +31,7 @@ public class Turn extends Command{
 
 	@Override
 	public void execute() {
-		System.out.println(turnController.getError());
+		
 	}
 	
 	@Override
@@ -38,6 +41,8 @@ public class Turn extends Command{
 	
 	@Override
 	public void end() {
+		if(wasHigh)
+			drive.highGear();
 		turnController.reset();
 	}
 }

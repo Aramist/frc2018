@@ -14,6 +14,7 @@ import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.TestCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;

@@ -39,7 +39,7 @@ public class LiftZero extends Command{
 	
 	@Override
 	public void execute() {
-		if(lift.getPosition() > 4500) {
+		if(lift.getPosition() > 6500) {
 			lift.enableCoast();
 			lift.setPercent(0.00);
 		} else {

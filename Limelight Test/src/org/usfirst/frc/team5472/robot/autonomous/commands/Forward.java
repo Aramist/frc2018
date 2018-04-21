@@ -12,12 +12,21 @@ public class Forward extends Command{
 	
 	private double distance;
 	private double angle;
+	private boolean givenAngle;
 	
 	private DriveSubsystem drive;
 	private PIDController controller;
 	
 	public Forward(double distance) {
+		this.givenAngle = false;
 		this.distance = distance;
+		requires(Robot.drive);
+	}
+	
+	public Forward(double distance, double angle) {
+		this.givenAngle = true;
+		this.distance = distance;
+		this.angle = angle;
 		requires(Robot.drive);
 	}
 	
@@ -34,17 +43,15 @@ public class Forward extends Command{
 		controller.setOutputRange(-Constants.DRIVE_AUTO_OUTPUT_LIMIT, Constants.DRIVE_AUTO_OUTPUT_LIMIT);
 		controller.enable();
 		
-		angle = drive.getHeading();
+		if(!givenAngle)
+			angle = drive.getHeading();
 	}
 	
 	@Override
 	public void execute() {
-		if (distance > 2) {
-			double error = angle - drive.getHeading();
-			double output = (drive.getLeftPercent() + drive.getRightPercent()) / 2.0;
-			
-			drive.drive(output - 0.1 * error, output + 0.1 * error);
-		}
+		double error = angle - drive.getHeading();
+		double output = (drive.getLeftPercent() + drive.getRightPercent()) / 2.0;
+		drive.drive(output - 0.1 * error, output + 0.1 * error);
 	}
 	
 	@Override

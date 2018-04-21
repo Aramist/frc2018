@@ -18,18 +18,18 @@ public class CSWLX extends CommandGroup{
 	
 	public CSWLX() {
 		addParallel(new GripClose());
-		addSequential(new Forward(0.66), 1);
-		addSequential(new Turn(45), 1);
+		addSequential(new Forward(0.66), 0.5);
+		addSequential(new Turn(45), 0.8);
 		addParallel(new RaiseLiftLow());
-		addSequential(new Forward(1.65), 1.5);
+		addSequential(new Forward(1.85), 1.0);
 		addSequential(new Turn(0), 1);
 		addSequential(new Forward(0.5), 1);
 		addSequential(new IntakePushAuto());
-		addSequential(new Delay(1.0));
+		addSequential(new Delay(0.5));
 		addSequential(new IntakeStop());
 		
-		addSequential(new Forward(-0.5), 1.0);
-		addSequential(new Turn(45), 1);
+		addSequential(new Forward(-0.5), 0.6);
+		addSequential(new Turn(45), 0.8);
 		addParallel(new LiftZero(), 1);
 		addSequential(new Forward(-1.65), 2);
 		addSequential(new Turn(0), 1);
@@ -37,21 +37,62 @@ public class CSWLX extends CommandGroup{
 		
 		addParallel(new GripOpen());
 		addParallel(new IntakePull());
-		addSequential(new Forward(1.2), 1.5);
+		addSequential(new Forward(1.2), 1.0);
 		addSequential(new GripClose());
 		addSequential(new IntakePullAuto());
-		addSequential(new Forward(-1.2), 1.5);
+		addSequential(new Forward(-1.2), 1.0);
 		addSequential(new IntakeStop());
 		
 		addParallel(new RaiseLiftLow(), 2);
-		addSequential(new Turn(45), 2);
-		addSequential(new Forward(1.65), 1.5);
-		addSequential(new Turn(0), 2);
-		addSequential(new Forward(0.5), 1);
+		addSequential(new Turn(45), 1);
+		addSequential(new Forward(1.45), 1.0);
+		addSequential(new Turn(0), 1);
+		addSequential(new Forward(0.8), 0.8);
 		addSequential(new IntakePushAuto());
-		addSequential(new Delay(1.0));
+		addSequential(new Delay(0.5));
 		addSequential(new IntakeStop());
 		addSequential(new Forward(-0.8));
+		
+		
+		
+		
+		
+//		addParallel(new GripClose());
+//		addSequential(new Forward(0.66), 1);
+//		addSequential(new Turn(45), 1);
+//		addParallel(new RaiseLiftLow());
+//		addSequential(new Forward(1.85), 1.5);
+//		addSequential(new Turn(0), 1);
+//		addSequential(new Forward(0.5), 1);
+//		addSequential(new IntakePushAuto());
+//		addSequential(new Delay(1.0));
+//		addSequential(new IntakeStop());
+//		
+//		addSequential(new Forward(-0.5), 1.0);
+//		addSequential(new Turn(45), 1);
+//		addParallel(new LiftZero(), 1);
+//		addSequential(new Forward(-1.65), 2);
+//		addSequential(new Turn(0), 1);
+//		
+//		
+//		addParallel(new GripOpen());
+//		addParallel(new IntakePull());
+//		addSequential(new Forward(1.2), 1.5);
+//		addSequential(new GripClose());
+//		addSequential(new IntakePullAuto());
+//		addSequential(new Forward(-1.2), 1.5);
+//		addSequential(new IntakeStop());
+//		
+//		addParallel(new RaiseLiftLow(), 2);
+//		addSequential(new Turn(45), 2);
+//		addSequential(new Forward(1.65), 1.5);
+//		addSequential(new Turn(0), 2);
+//		addSequential(new Forward(0.5), 1);
+//		addSequential(new IntakePushAuto());
+//		addSequential(new Delay(1.0));
+//		addSequential(new IntakeStop());
+//		addSequential(new Forward(-0.8));
+		
 		
 		
 		

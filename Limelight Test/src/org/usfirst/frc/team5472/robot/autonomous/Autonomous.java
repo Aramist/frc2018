@@ -1,20 +1,20 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
-import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXL;
-import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.CSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.ExtremeLeft;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.ExtremeRight;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LBOLL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.LSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.PassAutoLine;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RBORR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWRX;
-import org.usfirst.frc.team5472.robot.autonomous.commands.paths.TestCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -39,7 +39,7 @@ public class Autonomous {
 	}
 	
 	public static enum Plan{
-		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Both Switch and Scale");
+		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Both Switch and Scale"), STRAIGHT("Drive Straight"), SCALE_OUTER("Outer Scale");
 		
 		private String name;
 		
@@ -67,6 +67,8 @@ public class Autonomous {
 		plan.addDefault(Plan.BOTH.toString(), Plan.BOTH);
 		plan.addObject(Plan.SWITCH.toString(), Plan.SWITCH);
 		plan.addObject(Plan.SCALE.toString(), Plan.SCALE);
+		plan.addObject(Plan.STRAIGHT.toString(), Plan.STRAIGHT);
+		plan.addObject(Plan.SCALE_OUTER.toString(), Plan.SCALE_OUTER);
 		
 		SmartDashboard.putData("Autonomous Starting Position", starting);
 		SmartDashboard.putData("Autonomous Task", plan);
@@ -108,21 +110,22 @@ public class Autonomous {
 				break;
 			case SCALE:
 				if(rightScaleOwnership)
-					command = new CSCXR();
+					command = new CSWRX();
 				else
-					command = new CSCXL();
+					command = new CSWLX();
 				break;
 			case BOTH:
+				if(rightScaleOwnership)
+					command = new CSWRX();
+				else
+					command = new CSWLX();
+				break;
+			case STRAIGHT:
 				command = null;
 				break;
-//				if(rightSwitchOwnership && rightScaleOwnership)
-//					command = new CBORR();
-//				else if(rightSwitchOwnership && !rightScaleOwnership)
-//					command = new CBORL();
-//				else if (!rightSwitchOwnership && rightScaleOwnership)
-//					command = new CBOLR();
-//				else
-//					command = new CBOLL();
+			case SCALE_OUTER:
+				command = null;
+				break;
 		}
 	}
 	
@@ -155,6 +158,19 @@ public class Autonomous {
 					command = new LSCXR();
 				else
 					command = new LBOLL();
+			case STRAIGHT:
+				if(rightSwitchOwnership)
+					command = new PassAutoLine();
+				else
+					command = new LSWLX();
+				break;
+			case SCALE_OUTER:
+				if(!rightScaleOwnership)
+					command = new ExtremeLeft();
+				else if(!rightSwitchOwnership)
+					command = new LSWLX();
+				else
+					command = new PassAutoLine();
 		}
 	}
 	
@@ -187,6 +203,19 @@ public class Autonomous {
 				else
 //					command = new RBOLL();
 					command = new RSCXL();
+			case STRAIGHT:
+				if(rightSwitchOwnership)
+					command = new RSWRX();
+				else
+					command = new PassAutoLine();
+				break;
+			case SCALE_OUTER:
+				if(rightScaleOwnership)
+					command = new ExtremeRight();
+				else if(rightSwitchOwnership)
+					command = new RSWRX();
+				else
+					command = new PassAutoLine();
 		}
 	}
 

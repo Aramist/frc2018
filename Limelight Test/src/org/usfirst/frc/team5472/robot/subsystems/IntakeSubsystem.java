@@ -47,7 +47,7 @@ public class IntakeSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public void startAuto() {
-		double speed = 0.50;
+		double speed = 0.60;
 		leftSide.set(MODE, speed);
 		rightSide.set(MODE, speed);
 	}

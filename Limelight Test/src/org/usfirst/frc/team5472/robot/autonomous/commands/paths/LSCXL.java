@@ -1,16 +1,13 @@
 package org.usfirst.frc.team5472.robot.autonomous.commands.paths;
 
-import org.usfirst.frc.team5472.robot.autonomous.commands.ApproachBox;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Delay;
 import org.usfirst.frc.team5472.robot.autonomous.commands.EnableBrake;
 import org.usfirst.frc.team5472.robot.autonomous.commands.EnableCoast;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Forward;
 import org.usfirst.frc.team5472.robot.autonomous.commands.LiftZero;
-import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHalf;
 import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftHigh;
+import org.usfirst.frc.team5472.robot.autonomous.commands.RaiseLiftMinimum;
 import org.usfirst.frc.team5472.robot.autonomous.commands.Turn;
-import org.usfirst.frc.team5472.robot.commands.BoxPipeline;
-import org.usfirst.frc.team5472.robot.commands.EnableVision;
 import org.usfirst.frc.team5472.robot.commands.GripClose;
 import org.usfirst.frc.team5472.robot.commands.GripOpen;
 import org.usfirst.frc.team5472.robot.commands.HighGear;
@@ -26,34 +23,45 @@ public class LSCXL extends CommandGroup {
 
 	public LSCXL() {
 		addParallel(new GripClose());
+		addParallel(new HighGear());
 		
 		addParallel(new EnableBrake());
-		addParallel(new RaiseLiftHalf(), 4);
-		addSequential(new Forward(4.862), 4);
+		addParallel(new RaiseLiftMinimum(), 4);
+		addSequential(new Forward(5.30), 3);
 		addSequential(new EnableCoast());
-		addSequential(new Turn(-19), 2);
+		addSequential(new Turn(-28), 2);
 		
-		addSequential(new RaiseLiftHigh(), 1.5);
+		addSequential(new RaiseLiftHigh(), 4);
 		addSequential(new LowGear());
-		addSequential(new Forward(1.00), 1); // From 1.37
-		addSequential(new IntakePushAuto()); // From IntakePushSlow()
+		addSequential(new Forward(2.0, -28), 1);
+		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
 		
-		addSequential(new Forward(-0.400), 0.4); // From -0.7 
-		addParallel(new LiftZero(), 2);
+		addSequential(new Forward(-0.400), 0.4);
+		addSequential(new LiftZero(), 2);
 		
-		addSequential(new Turn(-160), 1.5); // From 140
+		addSequential(new Turn(-160), 1.5);
 		addSequential(new HighGear());
 		
 		addParallel(new IntakePull());
-		addSequential(new EnableVision());
-		addSequential(new BoxPipeline());
+//		addSequential(new EnableVision());
+//		addSequential(new BoxPipeline());
 		addParallel(new GripOpen());
-		addSequential(new ApproachBox(), 1.5);
+		addSequential(new Forward(1.30), 1.5);
+//		addSequential(new ApproachBox(), 1.5);
 //		addSequential(new IntakeStop());
 		addSequential(new GripClose());
 		addSequential(new IntakePullSlow());
 		addSequential(new Forward(-0.600), 0.5);
+		addSequential(new Turn(0));
+		addParallel(new LowGear());
+		addSequential(new RaiseLiftHigh(), 4.00);
+		addSequential(new Forward(0.8), 1);
+		addSequential(new IntakePushAuto());
+		addSequential(new Delay(1));
+		addSequential(new Forward(-0.5), 1);
+		addSequential(new LiftZero());
+		addSequential(new IntakeStop());
 	}
 }

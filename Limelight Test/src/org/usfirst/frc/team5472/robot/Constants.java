@@ -44,10 +44,10 @@ public class Constants {
 	public static final int LIFT_TALON_CAN_RIGHT = 8;
 	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -1.0;
 	
-	public static final double LIFT_PIDF_P = 0.00400;
+	public static final double LIFT_PIDF_P = 0.00040;
 	public static final double LIFT_PIDF_I = 0.00000;
 	public static final double LIFT_PIDF_D = 0.00000;
-	public static final double LIFT_PIDF_F = 0.20000;
+	public static final double LIFT_PIDF_F = 0.00000;
 	public static final int LIFT_PIDF_INTZONE = 40;
 	
 	public static final int LIMIT_SWITCH_HIGH = 3;

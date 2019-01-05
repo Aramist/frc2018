@@ -44,7 +44,7 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 		rightLiftMotor.setNeutralMode(NeutralMode.Coast);
 		rightLiftMotor.setInverted(false);
 		rightLiftMotor.configPeakOutputForward(1.0, 10);
-		leftLiftMotor.configPeakOutputReverse(-0.5, 10);
+		leftLiftMotor.configPeakOutputReverse(-1.0, 10);
 		rightLiftMotor.configPeakOutputReverse(Constants.LIFT_REVERSE_OUTPUT_LIMIT, 10);
 		
 		
@@ -68,8 +68,8 @@ public class LiftSubsystem extends Subsystem implements DataProvider{
 	}
 	
 	public void autoPeakOutput() {
-		leftLiftMotor.configPeakOutputForward(0.5, 10);
-		rightLiftMotor.configPeakOutputForward(0.5, 10);
+		leftLiftMotor.configPeakOutputForward(1.0, 10);
+		rightLiftMotor.configPeakOutputForward(1.0, 10);
 	}
 	
 	public void teleopPeakOutput() {

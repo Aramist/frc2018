@@ -60,6 +60,7 @@ public class Robot extends TimedRobot implements DataProvider{
 		drive.drive(0.0, 0.0);
 		lift.resetEncoder();
 		lift.disableClosedLoop();
+		intake.stop();
 		logger.end();
 		
 		limelight.setLed(false);
@@ -105,6 +106,9 @@ public class Robot extends TimedRobot implements DataProvider{
 		SmartDashboard.putNumber("Pressure", getPressure());
 		SmartDashboard.putBoolean("Upper Lift Limit", controls.highLimit.get());
 		SmartDashboard.putBoolean("Lower Lift Limit", controls.lowLimit.get());
+		
+		SmartDashboard.putNumber("Left Encoder", drive.getLeftPosition());
+		SmartDashboard.putNumber("Right Encoder", drive.getRightPosition());
 	}
 
 	@Override

@@ -24,22 +24,22 @@ public class RSCXL extends CommandGroup {
 		addParallel(new GripClose());
 
 		addParallel(new RaiseLiftHalf(), 3);
-		addSequential(new Forward(4.80), 6);
+		addSequential(new Forward(5.50), 4);
 		addSequential(new Turn(90), 2);
 		
-		addSequential(new Forward(4.6), 6); // From 4.2
+		addSequential(new Forward(4.9), 4); // From 4.2
 		addSequential(new Turn(0), 2);
 		
 		addParallel(new LowGear());
 		addSequential(new RaiseLiftHigh(), 4);
-		addSequential(new Forward(1.05), 2); // From 0.8
+		addSequential(new Forward(1.05), 1); // From 0.8
 		addSequential(new IntakePushAuto());
 		addSequential(new Delay(1));
 		addSequential(new IntakeStop());
 		
-		addSequential(new Forward(-0.7), 1);
+		addSequential(new Forward(-1.0), 1);
 		addParallel(new LiftZero(), 2);
-		addSequential(new Turn(160), 3);
+		addSequential(new Turn(200), 3);
 		addSequential(new HighGear());
 		
 		addParallel(new IntakePull());
@@ -48,6 +48,6 @@ public class RSCXL extends CommandGroup {
 		addSequential(new ApproachBox(), 3);
 		addSequential(new IntakeStop());
 		addSequential(new GripClose());
-		addSequential(new Forward(-0.600));
+		addSequential(new Forward(-0.600), 1);
 	}
 }

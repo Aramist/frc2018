@@ -10,6 +10,7 @@ public class Constants {
 	
 	public static final double LEFT_ENCODER_TICKS_PER_METER = 12833;
 	public static final double RIGHT_ENCODER_TICKS_PER_METER = 12833;
+	public static final int TICKS_PER_REV = 4096;
 	public static final double LEFT_ENCODER_TICKS_PER_REV = LEFT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	public static final double RIGHT_ENCODER_TICKS_PER_REV = RIGHT_ENCODER_TICKS_PER_METER * 2 * Math.PI * WHEEL_DIAMETER;
 	
@@ -42,7 +43,7 @@ public class Constants {
 	
 	public static final int LIFT_TALON_CAN_LEFT = 10;
 	public static final int LIFT_TALON_CAN_RIGHT = 8;
-	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -1.0;
+	public static final double LIFT_REVERSE_OUTPUT_LIMIT = -0.5;
 	
 	public static final double LIFT_PIDF_P = 0.00040;
 	public static final double LIFT_PIDF_I = 0.00000;

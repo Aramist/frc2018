@@ -15,6 +15,7 @@ import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXL;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSCXR;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWLX;
 import org.usfirst.frc.team5472.robot.autonomous.commands.paths.RSWRX;
+import org.usfirst.frc.team5472.robot.autonomous.commands.paths.StraightPath;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -39,7 +40,7 @@ public class Autonomous {
 	}
 	
 	public static enum Plan{
-		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Both Switch and Scale"), STRAIGHT("Drive Straight"), SCALE_OUTER("Outer Scale");
+		SWITCH("Switch only"), SCALE("Scale only"), BOTH("Both Switch and Scale"), STRAIGHT("Drive Straight"), SCALE_OUTER("Outer Scale"), DRIVE_STRAIGHT_MOTION_PROFILE("Motion Profile Straight");
 		
 		private String name;
 		
@@ -51,6 +52,8 @@ public class Autonomous {
 		public String toString() {
 			return name;
 		}
+		
+		
 	}
 	
 	private SendableChooser<StartingPosition> starting = new SendableChooser<>();
@@ -69,6 +72,7 @@ public class Autonomous {
 		plan.addObject(Plan.SCALE.toString(), Plan.SCALE);
 		plan.addObject(Plan.STRAIGHT.toString(), Plan.STRAIGHT);
 		plan.addObject(Plan.SCALE_OUTER.toString(), Plan.SCALE_OUTER);
+		plan.addObject(Plan.DRIVE_STRAIGHT_MOTION_PROFILE.toString(), Plan.DRIVE_STRAIGHT_MOTION_PROFILE);
 		
 		SmartDashboard.putData("Autonomous Starting Position", starting);
 		SmartDashboard.putData("Autonomous Task", plan);
@@ -125,6 +129,9 @@ public class Autonomous {
 				break;
 			case SCALE_OUTER:
 				command = null;
+				break;
+			case DRIVE_STRAIGHT_MOTION_PROFILE:
+				command = new StraightPath();
 				break;
 		}
 	}

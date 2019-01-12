@@ -18,11 +18,11 @@ import jaci.pathfinder.followers.EncoderFollower;
 public class StraightPath extends Command {
 
 	
-	private static final double P_CONST = 1.0;
-	private static final double D_CONST = 0.0;
-	private static final double V_CONST = 0.0;
-	private static final double A_CONST = 0.0;
-	private static final double GYRO_CONST = 0.4;
+	private static final double P_CONST = 0.8;
+	private static final double D_CONST = 0.3;
+	private static final double V_CONST = 0;
+	private static final double A_CONST = 0;
+	private static final double GYRO_CONST = 0;
 	
 	EncoderFollower rightEncoder;
 	EncoderFollower leftEncoder;
@@ -95,6 +95,7 @@ public class StraightPath extends Command {
 	}
 	
 	protected boolean isFinished() {
-		return leftEncoder.isFinished() && rightEncoder.isFinished();
+		//return leftEncoder.isFinished() && rightEncoder.isFinished();
+		return false;
 	}
 }
